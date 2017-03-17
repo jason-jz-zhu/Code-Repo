@@ -7,21 +7,11 @@
 
 class Solution(object):
     def levelOrder(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[int]]
-        """
-        if not root: return []
-        q = []
-        q.append(root)
-        result = []
+        # write your code here
+        if not root:
+            return []
+        res, q = [], [root]
         while q:
-            tempResult = []
-            temp = q
-            q = []
-            for ele in temp:
-                if ele: tempResult.append(ele.val)
-                if ele.left: q.append(ele.left)
-                if ele.right: q.append(ele.right)
-            result.append(tempResult)
-        return result
+            res.append([node.val for node in q])
+            q = [ kid for node in q for kid in (node.left, node.right) if kid]
+        return res
