@@ -3,28 +3,31 @@ class Solution(object):
         """
         :type nums: List[int]
         :type target: int
-        :rtype: int
+        :rtype: bool
         """
         if nums is None or len(nums) == 0:
-            return -1
+            return False
+
         start, end = 0, len(nums) - 1
         while start + 1 < end:
-            mid = start + (end - start) / 2
+            mid = (end - start) / 2 + start
             if nums[mid] == target:
-                return mid
+                return True
             if nums[mid] < nums[end]:
                 if nums[mid] < target and target <= nums[end]:
                     start = mid
                 else:
                     end = mid
-            else:
+            elif nums[mid] > nums[end]:
                 if nums[start] <= target and target < nums[mid]:
                     end = mid
                 else:
                     start = mid
+            else:
+                end -= 1
+
         if nums[start] == target:
-            return start
+            return True
         if nums[end] == target:
-            return end
-        return -1
-        
+            return True
+        return False
