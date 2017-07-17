@@ -1,3 +1,7 @@
+# Given points = [[4,6],[4,7],[4,4],[2,5],[1,1]], origin = [0, 0], k = 3
+# return [[1,1],[2,5],[4,4]]
+
+
 # Definition for a point.
 # class Point:
 #     def __init__(self, a=0, b=0):

@@ -1,3 +1,4 @@
+# O(n)
 class Solution(object):
     def hIndex(self, citations):
         """
@@ -21,6 +22,21 @@ class Solution(object):
                 return i
         return 0
 
+# O(nlogn)
+class Solution(object):
+    def hIndex(self, citations):
+        """
+        :type citations: List[int]
+        :rtype: int
+        """
+        if citations is None or len(citations) == 0:
+            return 0
+        citations.sort()
+        i = 0
+        size = len(citations)
+        while i < size and citations[size-1-i] > i:
+            i += 1
+        return i
 
 class Solution(object):
     def hIndex(self, citations):
