@@ -5,11 +5,7 @@ class Solution(object):
         :type y: int
         :rtype: int
         """
-        res = 0
-        tmp = x ^ y
-        for i in xrange(32):
-            res += (tmp >> i) & 1
-        return res
+        return bin(x ^ y).count('1')
 
 class Solution(object):
     def hammingDistance(self, x, y):
@@ -18,7 +14,12 @@ class Solution(object):
         :type y: int
         :rtype: int
         """
-        return bin(x ^ y).count('1')
+        res = 0
+        tmp = x ^ y
+        for i in xrange(32):
+            res += (tmp >> i) & 1
+        return res
+
 
 class Solution(object):
     def hammingDistance(self, x, y):
