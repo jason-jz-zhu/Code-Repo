@@ -20,7 +20,7 @@ class Solution(object):
             if sort[j] != nums[j]:
                 end = j
                 break
-        return end - start + 1s
+        return end - start + 1
 
 class Solution(object):
     def findUnsortedSubarray(self, nums):

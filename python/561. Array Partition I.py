@@ -11,3 +11,14 @@ class Solution(object):
                 res += sort[i]
 
         return res
+
+class Solution(object):
+    def arrayPairSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if nums is None or len(nums) == 0:
+            return -1
+
+        return sum(sorted(nums)[::2])

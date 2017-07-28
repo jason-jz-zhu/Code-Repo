@@ -4,4 +4,7 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        return sum(max(prices[i + 1] - prices[i], 0) for i in xrange(len(prices) - 1))
+        if prices is None or len(prices) == 0:
+            return 0
+
+        return sum([max(prices[i] - prices[i - 1], 0) for i in xrange(1, len(prices))])
