@@ -11,7 +11,7 @@ class Solution(object):
             return True
 
         head, tail = 0, len(s) - 1
-        while head <= tail:
+        while head < tail:
             while head < tail and not s[head].isalpha() and not s[head].isdigit():
                 head += 1
             while head < tail and not s[tail].isalpha() and not s[tail].isdigit():
