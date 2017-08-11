@@ -4,6 +4,17 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
+        import collections
+        counter = collections.Counter(nums)
+        return sum([1 for val in counter.values() if val > 1]) > 0
+
+
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
         if nums is None or len(nums) == 0:
             return False
 
