@@ -23,11 +23,6 @@ class Solution(object):
                 res.append(nums1[i])
                 i, j = i + 1, j + 1
         return res
-        
-class Solution(object):
-    def intersect(self, nums1, nums2):
-        a, b = map(collections.Counter, (nums1, nums2))
-        return list((a & b).elements())
 
 class Solution(object):
     def intersect(self, nums1, nums2):

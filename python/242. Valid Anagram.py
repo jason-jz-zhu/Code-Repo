@@ -5,17 +5,13 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        if len(s) != len(s):
+        if len(s) != len(t):
             return False
-        dict = {}
-        for c in s:
-            dict[c] = dict.get(c, 0) + 1
-
+        hashmap = collections.Counter(s)
         for c in t:
-            if c not in dict:
+            if c not in hashmap:
                 return False
-            dict[c] -= 1
-            if dict[c] == 0:
-                del dict[c]
-
-        return len(dict) == 0
+            hashmap[c] -= 1
+            if hashmap[c] == 0:
+                del hashmap[c]
+        return len(hashmap) == 0

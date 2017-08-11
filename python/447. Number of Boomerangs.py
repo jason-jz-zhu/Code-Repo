@@ -9,15 +9,16 @@ class Solution(object):
         res, n = 0, len(points)
 
         for i in xrange(n):
-            hash = {}
+            hashmap = collections.defaultdict(int)
             # calculate how many j points to i point have same distance
             for j in xrange(n):
+                if i == j:
+                    continue
                 dist = ((points[j][0] - points[i][0]) ** 2) + ((points[j][1] - points[i][1]) ** 2)
-                hash[dist] = hash.get(dist, 0) + 1
+                hashmap[dist] += 1
             # loop hash
-            for key, item in hash.iteritems():
-                if item >= 2:
-                    res += item * (item - 1)
+            for key, val in hashmap.iteritems():
+                if val >= 2:
+                    res += val * (val - 1)
 
         return res
-            

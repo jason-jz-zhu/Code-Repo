@@ -5,14 +5,12 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        hash = {}
-        for e in s:
-            hash[e] = hash.get(e, 0) + 1
+        hashmap = collections.Counter(s)
         for e in t:
-            if hash.get(e, 0) == 0:
+            if hashmap[e] == 0:
                 return e
             else:
-                hash[e] -= 1
+                hashmap[e] -= 1
 
 class Solution(object):
     def findTheDifference(self, s, t):

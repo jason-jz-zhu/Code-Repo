@@ -13,11 +13,15 @@ class Solution(object):
             for j in xrange(len(grid[0])):
                 if grid[i][j] == 0: continue
                 # left side
-                if j == 0 or grid[i][j - 1] == 0: res += 1
+                if j == 0 or grid[i][j - 1] == 0:
+                    res += 1
                 # top side
-                if i == 0 or grid[i - 1][j] == 0: res += 1
+                if i == 0 or grid[i - 1][j] == 0:
+                    res += 1
                 # right side
-                if j == len(grid[0]) - 1 or grid[i][j + 1] == 0: res += 1
+                if j == len(grid[0]) - 1 or grid[i][j + 1] == 0:
+                    res += 1
                 # bottom side
-                if i == len(grid) - 1 or grid[i + 1][j] == 0: res += 1
+                if i == len(grid) - 1 or grid[i + 1][j] == 0:
+                    res += 1
         return res
