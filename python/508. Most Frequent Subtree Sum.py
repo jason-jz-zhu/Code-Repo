@@ -11,16 +11,19 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        if root is None:
-            return []
-
-        c = collections.Counter()
+        import collections
         def getSum(node):
             if node is None:
                 return 0
             s = node.val + getSum(node.left) + getSum(node.right)
             c[s] += 1
             return s
+
+        if root is None:
+            return []
+
+        c = collections.defaultdict(int)
+
         getSum(root)
         frequent = max(c.values())
-        return [s for s in c.keys() if c[s] == frequent]
+        return [s for s in c.keys() if c[s] == frequent]        
