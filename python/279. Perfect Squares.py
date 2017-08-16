@@ -1,3 +1,33 @@
+# accept and bfs
+class Solution(object):
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n < 2:
+            return n
+
+        psList = []
+        i = 1
+        while i * i <= n:
+            psList.append(i * i)
+            i += 1
+        res = 0
+        toCheck = [n]
+        while toCheck:
+            res += 1
+            tmp = set()
+            for x in toCheck:
+                for y in psList:
+                    if x == y:
+                        return res
+                    if x < y:
+                        break
+                    tmp.add(x - y)
+            toCheck = tmp
+        return res
+        
 # not accept and dp
 class Solution(object):
     def numSquares(self, n):
@@ -17,29 +47,3 @@ class Solution(object):
                     dp[i + j * j] = min(dp[i] + 1, dp[i + j * j])
 
         return dp[n]
-
-# accept and bfs
-class Solution(object):
-    def numSquares(self, n):
-        if n < 2:
-            return n
-        lst = []
-        i = 1
-        while i * i <= n:
-            lst.append( i * i )
-            i += 1
-        cnt = 0
-        toCheck = {n}
-        while toCheck:
-            cnt += 1
-            temp = set()
-            for x in toCheck:
-                for y in lst:
-                    if x == y:
-                        return cnt
-                    if x < y:
-                        break
-                    temp.add(x-y)
-            toCheck = temp
-
-        return cnt
