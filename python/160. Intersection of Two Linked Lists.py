@@ -10,9 +10,10 @@ class Solution(object):
         :type head1, head1: ListNode
         :rtype: ListNode
         """
-        if headA = None or headB = None: return None
+        if headA is None or headB is None:
+            return None
         pa, pb = headA, headB
-        while pa is not pb:
+        while pa != pb:
             pa = headB if pa is None else pa.next
             pb = headA if pb is None else pb.next
         return pa

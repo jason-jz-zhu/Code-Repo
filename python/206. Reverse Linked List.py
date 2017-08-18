@@ -14,7 +14,7 @@ class Solution(object):
             return None
 
         pre = None
-        while head is not None:
+        while head:
             tmp = head.next
             head.next = pre
             pre = head
@@ -38,4 +38,3 @@ class Solution(object):
         tmp = head.next
         head.next = pre
         return self._reverse(tmp, head)
-        
