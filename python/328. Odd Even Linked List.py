@@ -10,14 +10,14 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if not head or not head.next:
-            return head
-        pre, cur = head, head.next
-        while cur and cur.next:
-            temp = pre.next
-            pre.next = cur.next
-            cur.next = cur.next.next
-            pre.next.next = temp
-            cur = cur.next
-            pre = pre.next
+        if not head:
+            return None
+        odd_tail, curr = head, head.next
+        while curr and curr.next:
+            even_head = odd_tail.next
+            odd_tail.next = curr.next
+            odd_tail = odd_tail.next
+            curr.next = odd_tail.next
+            odd_tail.next = even_head
+            curr = curr.next
         return head

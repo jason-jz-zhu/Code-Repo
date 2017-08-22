@@ -11,26 +11,19 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
-        if head is None:
-            return None
-
-        if k <= 0:
+        if not head or not head.next:
             return head
 
-        p, n = head, 0
-        # loop the list and count the length
-        while p:
+        n, curr = 1, head
+        while curr.next:
+            curr = curr.next
             n += 1
-            if p.next is None:
-                p.next = head
-                break
-            else:
-                p = p.next
+        curr.next = head
 
-        actual_k = n - k % n
-        for i in xrange(actual_k - 1):
-            head = head.next
-        tail = head
-        head = head.next
+        curr, tail = head, curr
+        for _ in xrange(n - k % n):
+            tail = curr
+            curr = curr.next
         tail.next = None
-        return head
+
+        return curr
