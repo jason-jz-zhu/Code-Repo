@@ -5,9 +5,16 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        start, tail = 0, len(numbers) - 1
-        while start < tail:
-            if numbers[start] + numbers[tail] == target: 
-                return [start + 1, tail + 1]
-            if target < numbers[start] + numbers[tail]: tail = tail -1
-            if target > numbers[start] + numbers[tail]: start = start + 1
+        if numbers is None or len(numbers) == 0:
+            return []
+
+        start, end = 0, len(numbers) - 1
+        while start + 1 < end:
+            if numbers[start] + numbers[end] == target:
+                return [start + 1, end + 1]
+            elif numbers[start] + numbers[end] < target:
+                start += 1
+            else:
+                end -= 1
+        if numbers[start] + numbers[end] == target:
+            return [start + 1, end + 1]
