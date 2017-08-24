@@ -28,11 +28,10 @@ class BSTIterator(object):
         """
         node = self.stack.pop()
         res = node.val
-        if node.right is not None:
-            node = node.right
-            while node is not None:
-                self.stack.append(node)
-                node = node.left
+        node = node.right
+        while node:
+            self.stack.append(node)
+            node = node.left
         return res
 
 # Your BSTIterator will be called like this:

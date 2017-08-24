@@ -11,40 +11,38 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        pre = -sys.maxint
         stack = []
-        p = root
-        while stack or p:
-            while p:
-                stack.append(p)
-                p = p.left
-            p = stack.pop()
-            if p.val <= pre:
-                return False
-            pre = p.val
-            p = p.right
-
+        pre = -sys.maxint
+        node = root
+        while stack or node:
+            if node:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack.pop()
+                if node.val <= pre:
+                    return False
+                pre = node.val
+                node = node.right
         return True
 
 # traverse
-class Solution:
-    """
-    @param root: The root of binary tree.
-    @return: True if the binary tree is BST, or false
-    """
-    pre = None
-    isBST = True
+class Solution(object):
     def isValidBST(self, root):
-        # write your code here
-        self.traverse(root)
-        return self.isBST
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def helper (root):
+            if root:
+                helper(root.left)
+                if root.val <= self.pre:
+                    self.res = False
+                    return
+                self.pre = root.val
+                helper(root.right)
 
-    def traverse(self, root):
-        if root is None:
-            return
-        self.traverse(root.left)
-        if self.pre is not None and self.pre >= root.val:
-            self.isBST = False
-            return
-        self.pre = root.val
-        self.traverse(root.right)
+        self.pre = -sys.maxint
+        self.res = True
+        helper(root)
+        return self.res

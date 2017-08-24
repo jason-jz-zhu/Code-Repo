@@ -13,19 +13,47 @@
 
 class Solution(object):
     def sortedListToBST(self, head):
-        current, length = head, 0
-        while current is not None:
-            current, length = current.next, length + 1
-        self.head = head
-        return self.sortedListToBSTRecu(0, length)
+        """
+        :type head: ListNode
+        :rtype: TreeNode
+        """
+        def helper(head, tail):
+            slow, fast = head, head
+            if head == tail:
+                return None
+            while fast != tail and fast.next != tail:
+                fast = fast.next.next
+                slow = slow.next
+            cur = TreeNode(slow.val)
+            cur.left = helper(head, slow)
+            cur.right = helper(slow.next, tail)
+            return cur
+        
+        if not head:
+            return None
+        return helper(head, None)
 
-    def sortedListToBSTRecu(self, start, end):
+
+
+
+
+
+
+class Solution(object):
+    def sortedListToBST(self, head):
+        cur, l = head, 0
+        while cur:
+            cur, l = cur.next, l + 1
+        self.head = head
+        return self.helper(0, l)
+
+    def helper(self, start, end):
         if start == end:
             return None
         mid = start + (end - start) / 2
-        left = self.sortedListToBSTRecu(start, mid)
-        current = TreeNode(self.head.val)
-        current.left = left
+        left = self.helper(start, mid)
+        cur = TreeNode(self.head.val)
+        cur.left = left
         self.head = self.head.next
-        current.right = self.sortedListToBSTRecu(mid + 1, end)
-        return current
+        cur.right = self.helper(mid + 1, end)
+        return cur

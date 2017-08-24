@@ -13,12 +13,12 @@ class Solution(object):
             if nums[mid] == target:
                 return mid
             if nums[mid] < nums[end]:
-                if nums[mid] < target and target <= nums[end]:
+                if nums[mid] < target <= nums[end]:
                     start = mid
                 else:
                     end = mid
             else:
-                if nums[start] <= target and target < nums[mid]:
+                if nums[start] <= target < nums[mid]:
                     end = mid
                 else:
                     start = mid
@@ -27,4 +27,3 @@ class Solution(object):
         if nums[end] == target:
             return end
         return -1
-        
