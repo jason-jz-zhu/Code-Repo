@@ -33,4 +33,4 @@ class Solution(object):
                 start = mid
             else:
                 end = mid
-        return start if nums[start] >= nums[end] else end
+        return start if nums[start] > nums[end] else end

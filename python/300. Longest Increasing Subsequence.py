@@ -1,23 +1,20 @@
-# dp
 class Solution(object):
     def lengthOfLIS(self, nums):
         """
         :type nums: List[int]
         :rtype: int
         """
-        if nums is None or len(nums) == 0:
+        if nums is None or not nums:
             return 0
-        n = len(nums)
-        dp = [1] * n
-        for i in xrange(n):
+
+        dp = [1] * len(nums)
+        for i in xrange(len(nums)):
             for j in xrange(i):
-                if nums[i] > nums[j]:
-                    if dp[i] < dp[j] + 1:
-                        dp[i] = dp[j] + 1
-
+                if nums[j] < nums[i]:
+                    dp[i] = max(dp[i], dp[j] + 1)
         return max(dp)
-
 # binary search
+# 特别注意的是list数组的值可能不是一个真实的LIS
 class Solution(object):
     def lengthOfLIS(self, nums):
         """

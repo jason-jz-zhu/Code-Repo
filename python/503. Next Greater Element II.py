@@ -11,4 +11,4 @@ class Solution(object):
                 stack.pop()
             res[i % len(nums)] = stack[-1] if stack else -1
             stack.append(nums[i % len(nums)])
-        return ress
+        return res
