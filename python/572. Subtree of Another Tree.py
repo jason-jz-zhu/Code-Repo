@@ -44,11 +44,3 @@ class Solution(object):
             return x.val == y.val and \
                    isSame(x.left, y.left) and \
                    isSame(x.right, y.right)
-
-        def preOrderTraverse(s, t):
-            return s != None and \
-                   (isSame(s, t) or \
-                    preOrderTraverse(s.left, t) or \
-                    preOrderTraverse(s.right, t))
-
-        return preOrderTraverse(s, t)
