@@ -13,9 +13,10 @@ class Solution(object):
         res = [0] * length
 
         for update in updates:
-            res[update[0]] += update[2]
-            if update[1] + 1 < length:
-                res[update[1] + 1] -= update[2]
+            start, end, inc = update
+            res[start] += inc
+            if end + 1 < length:
+                res[end + 1] -= inc
 
         for i in xrange(1, length):
             res[i] += res[i - 1]
