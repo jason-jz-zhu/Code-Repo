@@ -1,16 +1,16 @@
-class Solution:
-    """
-    @param nums: A list of integers
-    @return: An integer denote the sum of maximum subarray
-    """
+class Solution(object):
     def maxSubArray(self, nums):
-        # write your code here
-        if nums is None:
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if nums is None or len(nums) == 0:
             return 0
 
-        maxsofar = max_cur = nums[0]
-        for num in nums[1:]:
-            max_cur = max(num, max_cur + num)
-            maxsofar = max(maxsofar, max_cur)
+        max_so_far = max_ending_here = nums[0]
 
-        return maxsofar
+        for num in nums[1:]:
+            max_ending_here = max(num, max_ending_here + num)
+            max_so_far = max(max_ending_here, max_so_far)
+
+        return max_so_far

@@ -5,13 +5,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        hash = {}
-        for num in nums:
-            hash[num] = hash.get(num, 0) + 1
-
-        for key, value in hash.iteritems():
-            if value > len(nums) / 2:
-                return key
+        import collections
+        if nums is None or len(nums) == 0:
+            return None
+        counter = collections.Counter(nums)
+        for num, cnt in counter.iteritems():
+            if cnt > len(nums)/2:
+                return num
         return None
 
 # boyer-moore vote algorithm

@@ -4,11 +4,13 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        resultMax = 0
+        if prices is None or len(prices) == 0:
+            return 0
+        res = 0
         low = sys.maxint
         for price in prices:
-            if price -low > resultMax:
-                resultMax = price - low
+            if price - low > res:
+                res = price - low
             if price < low:
                 low = price
-        return resultMax
+        return res

@@ -15,17 +15,14 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        if nums is None or len(nums) == 0:
-            return False
+        import collections
+        hashmap = collections.defaultdict(int)
 
-        # init hash
-        hash = {}
         for num in nums:
-            hash[num] = hash.get(num, 0) + 1
+            hashmap[num] += 1
 
-        # scan hash
-        for key, value in hash.iteritems():
-            if value >= 2:
+        for val in hashmap.values():
+            if val > 1:
                 return True
 
         return False
