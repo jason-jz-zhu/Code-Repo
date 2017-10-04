@@ -4,7 +4,10 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        res, left, right = 0, 0, len(height) - 1
+        if height is None or len(height) < 2:
+            return 0
+        res = 0
+        left, right = 0, len(height) - 1
         while left < right:
             res = max(res, min(height[left], height[right]) * (right - left))
             if height[left] < height[right]:

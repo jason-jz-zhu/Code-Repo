@@ -34,3 +34,28 @@ class Solution(object):
         f_part = nums[: l - k]
         s_part = nums[l - k:]
         nums[:] = s_part + f_part
+
+
+class Solution(object):
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        if nums is None or len(nums) == 0:
+            return
+
+        l = len(nums)
+        idx = 0
+        cur = nums[0]
+        distance = 0
+
+        for _ in range(l):
+            idx = (idx + k) % l
+            nums[idx], cur = cur, nums[idx]
+
+            distance = (distance + k) % l
+            if distance == 0:
+                idx = (idx + 1) % l
+                cur = nums[idx]
