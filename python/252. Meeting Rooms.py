@@ -12,8 +12,13 @@ class Solution(object):
         """
         if intervals is None:
             return False
+
+        if len(intervals) == 0:
+            return True
+
         sorted_intervals = sorted(intervals, key=lambda x: x.start)
-        for i in xrange(1, len(sorted_intervals)):
-            if sorted_intervals[i].start < sorted_intervals[i-1].end:
+
+        for i in range(1, len(sorted_intervals)):
+            if sorted_intervals[i].start < sorted_intervals[i - 1].end:
                 return False
         return True
