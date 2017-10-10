@@ -5,6 +5,11 @@ class Solution(object):
         :type dict: List[str]
         :rtype: str
         """
+        if s is None or len(s) == 0:
+            return ''
+        if dict is None or len(dict) == 0:
+            return s
+
         check = [0] * len(s)
         for d in dict:
             pos = s.find(d)
@@ -13,11 +18,12 @@ class Solution(object):
                 pos = s.find(d, pos + 1)
 
         res, pre = [], 0
-        for i in xrange(len(s)):
+        for i in range(len(s)):
             if pre != check[i]:
                 res += '</b>' if pre else '<b>'
                 pre = check[i]
             res += s[i]
         if pre:
             res += '</b>'
+
         return ''.join(res)

@@ -6,20 +6,25 @@ class Solution(object):
         :type upper: int
         :rtype: List[str]
         """
+        def getRange(lower, upper):
+            if lower == upper:
+                return '{}'.format(lower)
+            else:
+                return '{}->{}'.format(lower, upper)
+
+        if nums is None:
+            return []
+        if len(nums) == 0:
+            return [getRange(lower, upper)]
+
         res = []
-        pre = lower - 1
+        prev = lower - 1
+        size = len(nums)
+        for i in range(size + 1):
+            curr = upper + 1 if i == size else nums[i]
 
-        for i in xrange(len(nums) + 1):
-            cur = upper + 1 if i == len(nums) else nums[i]
+            if curr - prev >= 2:
+                res.append(getRange(prev + 1, curr - 1))
 
-            if cur - pre >= 2:
-                res.append(self.getRange(pre + 1, cur - 1))
-
-            pre = cur
+            prev = curr
         return res
-
-    def getRange(self, lower, upper):
-        if lower == upper:
-            return '{}'.format(lower)
-        else:
-            return '{}->{}'.format(lower, upper)

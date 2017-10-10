@@ -4,24 +4,23 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        if nums is None or len(nums) == 0:
+            return -1
+
         start, end = 1, len(nums) - 1
         while start + 1 < end:
-            mid = (end - start) / 2 + start
-            if self.check_smaller_cnt(mid, nums) <= mid:
-                start = mid
-            else:
+            mid = start + (end - start) / 2
+            cnt = sum(1 for num in nums if num <= mid)
+            if mid < cnt:
                 end = mid
+            else:
+                start = mid
 
-        if self.check_smaller_cnt(start, nums) <= start:
-            return end
-        return start
+        cnt = sum(1 for num in nums if num <= start)
+        if start < cnt:
+            return start
+        return end
 
-    def check_smaller_cnt(self, mid, nums):
-        cnt = 0
-        for num in nums:
-            if num <= mid:
-                cnt += 1
-        return cnt
 
 class Solution(object):
     def findDuplicate(self, nums):
@@ -29,7 +28,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if len(nums) <= 1:
+        if nums is None or len(nums) <= 1:
             return -1
 
         slow, fast = nums[0], nums[nums[0]]
@@ -37,9 +36,8 @@ class Solution(object):
             slow = nums[slow]
             fast = nums[nums[fast]]
 
-        finder = 0
-        while slow != finder:
-            finder = nums[finder]
+        slow = 0
+        while slow != fast:
             slow = nums[slow]
-
+            fast = nums[fast]
         return slow
