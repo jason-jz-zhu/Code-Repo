@@ -10,7 +10,15 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if head is None or self.isSorted(head):
+        def isSorted(head):
+            curr = head
+            while curr and curr.next:
+                if curr.val > curr.next.val:
+                    return False
+                curr = curr.next
+            return True
+
+        if head is None or isSorted(head):
             return head
 
         dummy = ListNode(0)
@@ -20,17 +28,10 @@ class Solution(object):
             prev = dummy
             while prev.next.val < curr.val:
                 prev = prev.next
+
             if prev == sorted_tail:
                 curr, sorted_tail = curr.next, curr
             else:
                 curr.next, prev.next, sorted_tail.next = prev.next, curr, curr.next
                 curr = sorted_tail.next
         return dummy.next
-
-    def isSorted(self, head):
-        curr = head
-        while curr and curr.next:
-            if curr.val > curr.next.val:
-                return False
-            curr = curr.next
-        return True
