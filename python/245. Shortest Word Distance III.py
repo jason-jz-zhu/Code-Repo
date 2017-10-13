@@ -9,10 +9,11 @@ class Solution(object):
         size = len(words)
         i1, i2 = size, -size
         res = sys.maxint
-        for i in xrange(size):
+        for i in range(size):
             if words[i] == word1:
                 i1 = i2 if word1 == word2 else i
             if words[i] == word2:
                 i2 = i
             res = min(res, abs(i1 - i2))
+
         return res

@@ -6,6 +6,9 @@ class Solution(object):
         :type ops: List[List[int]]
         :rtype: int
         """
+        if ops is None or len(ops) == 0 or len(ops[0]) == 0:
+            return m * n
+
         for op in ops:
             m = min(m, op[0])
             n = min(n, op[1])
