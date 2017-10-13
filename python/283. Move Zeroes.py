@@ -5,16 +5,18 @@ class Solution(object):
         :rtype: void Do not return anything, modify nums in-place instead.
         """
         if nums is None or len(nums) == 0:
-            return None
-        insert_pos = 0
-        for num in nums:
-            if num != 0:
-                nums[insert_pos] = num
-                insert_pos += 1
+            return
 
-        while insert_pos < len(nums):
-            nums[insert_pos] = 0
-            insert_pos += 1
+        end = 0
+        for i in range(len(nums)):
+            if nums[i] != 0:
+                nums[end] = nums[i]
+                end += 1
+
+        while end < len(nums):
+            nums[end] = 0
+            end += 1
+        
 
 class Solution(object):
     def moveZeroes(self, nums):
