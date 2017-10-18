@@ -9,24 +9,24 @@ class Solution(object):
 
         nums.sort()
         res = []
-        for i in xrange(len(nums) - 2):
+        for i in range(len(nums) - 2):
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
 
             target = -nums[i]
-            left, right = i + 1, len(nums) - 1
-            while left < right:
-                s = nums[left] + nums[right]
+            start, end = i + 1, len(nums) - 1
+            while start < end:
+                s = nums[start] + nums[end]
                 if s == target:
-                    res.append([nums[i], nums[left], nums[right]])
-                    left += 1
-                    right -= 1
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
-                elif s > target:
-                    right -= 1
+                    res.append([nums[i], nums[start], nums[end]])
+                    start += 1
+                    end -= 1
+                    while start < end and nums[start] == nums[start - 1]:
+                        start += 1
+                    while start < end and nums[end] == nums[end + 1]:
+                        end -= 1
+                elif s < target:
+                    start += 1
                 else:
-                    left += 1
+                    end -= 1
         return res

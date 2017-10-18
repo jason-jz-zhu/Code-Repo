@@ -7,28 +7,29 @@ class Solution(object):
         """
         if nums is None or len(nums) < 4:
             return []
-        res = []
+
         nums.sort()
-        l = len(nums)
-        for i in xrange(l - 3):
+        res = []
+        for i in range(len(nums) - 3):
             if i != 0 and nums[i] == nums[i - 1]:
                 continue
-            for j in xrange(i + 1, l - 2):
+            for j in range(i + 1, len(nums) - 2):
                 if j != i + 1 and nums[j] == nums[j - 1]:
                     continue
-                s = target - nums[i]- nums[j]
-                left, right = j + 1, l - 1
-                while left < right:
-                    if nums[left] + nums[right] == s:
-                        res.append([nums[i], nums[j], nums[left], nums[right]])
-                        right -= 1
-                        left += 1
-                        while left < right and nums[left] == nums[left - 1]:
-                            left += 1
-                        while left < right and nums[right] == nums[right + 1]:
-                            right -= 1
-                    elif nums[left] + nums[right] > s:
-                        right -= 1
+                target_tmp = target - nums[i] - nums[j]
+                start, end = j + 1, len(nums) - 1
+                while start < end:
+                    s = nums[start] + nums[end]
+                    if s == target_tmp:
+                        res.append([nums[i], nums[j], nums[start], nums[end]])
+                        start += 1
+                        end -= 1
+                        while start < end and nums[start] == nums[start - 1]:
+                            start += 1
+                        while start < end and nums[end] == nums[end + 1]:
+                            end -= 1
+                    elif s < target_tmp:
+                        start += 1
                     else:
-                        left += 1
+                        end -= 1
         return res

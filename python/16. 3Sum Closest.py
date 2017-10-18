@@ -7,21 +7,19 @@ class Solution(object):
         """
         if nums is None or len(nums) < 3:
             return None
+
         nums.sort()
         res = sys.maxint
-        for i in xrange(len(nums) - 2):
-            left, right = i + 1, len(nums) - 1
-            while left < right:
-                s = nums[i] + nums[left] + nums[right]
-                if (abs(s - target) < abs(res)):
+        for i in range(len(nums) - 2):
+            start, end = i + 1, len(nums) - 1
+            while start < end:
+                s = nums[i] + nums[start] + nums[end]
+                if abs(s - target) < abs(res):
                     res = s - target
                 if s == target:
-                    return target
+                    return s
                 elif s < target:
-                    left += 1
+                    start += 1
                 else:
-                    right -= 1
-
-        return target + res
-
-        
+                    end -= 1
+        return res + target

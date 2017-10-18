@@ -7,15 +7,16 @@ class Solution(object):
         """
         if nums is None or len(nums) < 3:
             return 0
+
         nums.sort()
         res = 0
-        for i in xrange(len(nums) - 2):
-            left, right = i + 1, len(nums) - 1
-            while left < right:
-                s = nums[i] + nums[left] + nums[right]
+        for i in range(len(nums) - 2):
+            start, end = i + 1, len(nums) - 1
+            while start < end:
+                s = nums[i] + nums[start] + nums[end]
                 if s >= target:
-                    right -= 1
+                    end -= 1
                 else:
-                    res += right - left
-                    left += 1
+                    res += (end - start)
+                    start += 1
         return res

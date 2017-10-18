@@ -9,12 +9,12 @@ class Solution(object):
             return []
 
         start, end = 0, len(numbers) - 1
-        while start + 1 < end:
-            if numbers[start] + numbers[end] == target:
+        while start < end:
+            s = numbers[start] + numbers[end]
+            if s == target:
                 return [start + 1, end + 1]
-            elif numbers[start] + numbers[end] < target:
+            elif s < target:
                 start += 1
             else:
                 end -= 1
-        if numbers[start] + numbers[end] == target:
-            return [start + 1, end + 1]
+        return []

@@ -5,15 +5,15 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: float
         """
-        l = len(nums1) + len(nums2)
-        if l % 2 == 1:
-            return self.find_kth(nums1, nums2, l / 2 + 1)
+        size = len(nums1) + len(nums2)
+        if size % 2 == 1:
+            return self.findKth(nums1, nums2, size / 2 + 1)
         else:
-            smaller = self.find_kth(nums1, nums2, l / 2)
-            bigger = self.find_kth(nums1, nums2, l / 2 + 1)
+            smaller = self.findKth(nums1, nums2, size / 2)
+            bigger = self.findKth(nums1, nums2, size / 2 + 1)
             return (smaller + bigger) / 2.0
 
-    def find_kth(self, A, B, k):
+    def findKth(self, A, B, k):
         if len(A) == 0:
             return B[k - 1]
         if len(B) == 0:
@@ -25,5 +25,5 @@ class Solution(object):
         b = B[k / 2 - 1] if len(B) >= k / 2 else None
 
         if b is None or (a is not None and a < b):
-            return self.find_kth(A[k / 2:], B, k - k / 2)
-        return self.find_kth(A, B[k / 2:], k - k / 2)
+            return self.findKth(A[k / 2:], B, k - k / 2)
+        return self.findKth(A, B[k / 2:], k - k / 2)
