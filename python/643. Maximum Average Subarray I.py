@@ -7,9 +7,12 @@ class Solution(object):
         """
         if nums is None or len(nums) < k:
             return -sys.maxint
-        run_sum = [0]
-        for num in nums:
-            run_sum.append(num + run_sum[-1])
 
-        res = max([run_sum[i + k] - run_sum[i] for i in xrange(len(nums) - k + 1)])
-        return res / float(k)
+        s = sum(nums[: k])
+        res = s
+        end = k
+        while end < len(nums):
+            s += nums[end] - nums[end - k]
+            res = max(res, s)
+            end += 1
+        return res / 1.0 / k

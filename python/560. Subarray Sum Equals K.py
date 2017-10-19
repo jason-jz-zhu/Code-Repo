@@ -5,12 +5,13 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        if nums is None or len(nums) == 0:
-            return -1
         import collections
-        s = res = 0
+        if nums is None or len(nums) == 0:
+            return 0
+
         hashmap = collections.defaultdict(int)
         hashmap[0] = 1
+        s = res = 0
         for num in nums:
             s += num
             if s - k in hashmap:

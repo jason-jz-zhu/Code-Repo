@@ -5,6 +5,25 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        import collections
+        if tasks is None:
+            return -1
+        counter = collections.Counter(tasks)
+        m = max(counter.values())
+
+        res = m + (m - 1) * n - 1
+        for val in counter.values():
+            if val == m:
+                res += 1
+        return max(res, len(tasks))
+
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
         if tasks is None:
             return -1
         hashmap = collections.defaultdict(int)

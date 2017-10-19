@@ -8,20 +8,19 @@ class Solution(object):
         """
         if nums is None or len(nums) == 0:
             return 0
-        n = len(nums)
-        res = n + 1
-        left = right = sum = 0
-        while right < n:
-            while right < n and sum < s:
-                sum += nums[right]
-                right += 1
 
-            if sum < s: break
-            while left < right and sum >= s:
-                res = min(res, right - left)
-                sum -= nums[left]
-                left += 1
-        return 0 if res == n+1 else res
+        r_sum = start = end = 0
+        res = float('inf')
+        while end < len(nums):
+            if r_sum < s:
+                r_sum += nums[end]
+            end += 1
+            while r_sum >= s:
+                res = min(res, end - start)
+                r_sum -= nums[start]
+                start += 1
+
+        return 0 if res == float('inf') else res
 
 #  nlog(n)
 class Solution(object):
