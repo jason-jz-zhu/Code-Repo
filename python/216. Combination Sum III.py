@@ -5,14 +5,15 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
-        Solution.res = []
-        self.dfs(k, n, 1, [])
-        return Solution.res
+        res = []
+        self.dfs(k, n, 1, [], res)
+        return res
 
-    def dfs(self, k, n, num, partition):
-        if n == 0 and len(partition) == k:
-            Solution.res.append(partition)
+    def dfs(self, k, n, index, path, res):
+        if n == 0 and len(path) == k:
+            res.append(path)
+            return
         if n < 0:
             return
-        for i in xrange(num, 10):
-            self.dfs(k, n - i, i + 1, partition + [i])
+        for i in range(index, 10):
+            self.dfs(k, n - i, i + 1, path + [i], res)

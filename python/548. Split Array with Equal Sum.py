@@ -5,23 +5,23 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        if len(nums) < 7:
+        if nums is None or len(nums) < 7:
             return False
+        size = len(nums)
+        r_sum = [0] * size
+        r_sum[0] = nums[0]
+        for i in range(1, size):
+            r_sum[i] += r_sum[i - 1] + nums[i]
 
-        runSum = [0] * len(nums)
-        runSum[0] = nums[0]
-        for i in xrange(len(nums)):
-            runSum[i] = nums[i] + runSum[i - 1]
+        for j in range(3, size - 3):
+            s = set()
+            for i in range(1, j - 1):
+                if r_sum[i - 1] == r_sum[j - 1] - r_sum[i]:
+                    s.add(r_sum[i - 1])
 
-        for j in xrange(3, len(nums)- 3):
-            lookup = set()
-            for i in xrange(1, j - 1):
-                if runSum[i - 1] == runSum[j - 1] - runSum[i]:
-                    lookup.add(runSum[i - 1])
-            for k in xrange(j + 2, len(nums) - 1):
-                if runSum[-1] - runSum[k] == runSum[k - 1] - runSum[j] and \
-                    runSum[k - 1] - runSum[j] in lookup:
-                        return True
+            for k in range(j + 1, size - 1):
+                s3 = r_sum[k - 1] - r_sum[j]
+                s4 = r_sum[size - 1] - r_sum[k]
+                if s3 == s4 and s3 in s:
+                    return True
         return False
-
-                

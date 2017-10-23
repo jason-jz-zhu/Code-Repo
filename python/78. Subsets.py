@@ -6,8 +6,8 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         res = []
-        if nums is None:
-            return res
+        if nums is None or len(nums) == 0:
+            return []
         self.dfs(nums, 0, [], res)
         return res
 

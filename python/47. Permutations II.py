@@ -1,25 +1,25 @@
-# using recursively and dfs to search
 class Solution(object):
     def permuteUnique(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+        if nums is None or len(nums) == 0:
+            return []
         res = []
-        if nums is None:
-            return res
-        visited = [False for i in xrange(len(nums))]
-        self.dfs(sorted(nums), [], res, visited)
+        visited = [False] * len(nums)
+        self.dfs(sorted(nums), visited, [], res)
         return res
 
-    def dfs(self, nums, path, res, visited):
+    def dfs(self, nums, visited, path, res):
         if len(path) == len(nums):
             res.append(path)
-        for i in xrange(len(nums)):
-            if visited[i] or (i != 0 and nums[i] == nums[i-1] and not visited[i-1]):
+            return
+        for i in range(len(nums)):
+            if visited[i] or (i != 0 and nums[i] == nums[i - 1] and not visited[i - 1]):
                 continue
             visited[i] = True
-            self.dfs(nums, path+[nums[i]], res, visited)
+            self.dfs(nums, visited, path + [nums[i]], res)
             visited[i] = False
 
 # using iteratively and reduce function

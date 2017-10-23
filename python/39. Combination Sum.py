@@ -5,19 +5,19 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        Solution.res = []
         if candidates is None or len(candidates) == 0:
-            return Solution.res
-        candidates.sort()
-        partition = []
-        self.dfs(candidates, target, 0, partition)
-        return Solution.res
+            return []
 
-    def dfs(self, candidates, target, start_index, partition):
+        res = []
+        self.dfs(candidates, target, 0, [], res)
+        return res
+
+    def dfs(self, candidates, target, index, path, res):
         if target == 0:
-            Solution.res.append(partition)
+            res.append(path)
             return
         if target < 0:
             return
-        for i in xrange(start_index, len(candidates)):
-            self.dfs(candidates, target - candidates[i], i, partition + [candidates[i]])
+        for i in range(index, len(candidates)):
+            self.dfs(candidates, target - candidates[i], i, path + [candidates[i]], res)
+        

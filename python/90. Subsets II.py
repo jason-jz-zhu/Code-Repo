@@ -5,6 +5,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+        if nums is None or len(nums) == 0:
+            return []
         res = []
         self.dfs(sorted(nums), 0, [], res)
         return res

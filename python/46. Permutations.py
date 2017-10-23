@@ -1,23 +1,23 @@
-# using recursively and dfs to search
 class Solution(object):
     def permute(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+        if nums is None or len(nums) == 0:
+            return []
         res = []
-        if nums is None:
-            return res
         self.dfs(nums, [], res)
         return res
 
     def dfs(self, nums, path, res):
         if len(path) == len(nums):
             res.append(path)
-        for i in xrange(len(nums)):
+            return
+        for i in range(len(nums)):
             if nums[i] in path:
                 continue
-            self.dfs(nums, path+[nums[i]], res)
+            self.dfs(nums, path + [nums[i]], res)
 
 # using iteratively and reduce function
 class Solution(object):
