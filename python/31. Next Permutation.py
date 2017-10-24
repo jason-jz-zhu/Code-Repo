@@ -7,25 +7,24 @@ class Solution(object):
         if nums is None or len(nums) < 2:
             return
         first_num = -1
-        # from right to left, find the first num which is smaller than before
-        for i in xrange(len(nums) - 2, -1, -1):
+        # 1. from right to left, find the first num which is smaller than before
+        for i in range(len(nums) - 2, -1, -1):
             if nums[i] < nums[i + 1]:
                 first_num = i
                 break
+        # 2.
         if first_num == -1:
             nums.reverse()
             return
-        # from right to first_num, find the first num which is larger than first_num, and swap them
-        for j in xrange(len(nums) - 1, first_num, -1):
+        # 3. from right to first_num, find the first num which is larger than first_num, and swap them
+        for j in range(len(nums) - 1, first_num, -1):
             if nums[j] > nums[first_num]:
-                nums[first_num], nums[j] = nums[j], nums[first_num]
+                nums[j], nums[first_num] = nums[first_num], nums[j]
                 break
-        # reverse all nums after first_num
+        # 4. reverse all nums after first_num
         start, end = first_num + 1, len(nums) - 1
         while start < end:
             nums[start], nums[end] = nums[end], nums[start]
             start += 1
             end -= 1
-
         return
-        

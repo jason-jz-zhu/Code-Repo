@@ -5,9 +5,10 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        res = [[1 for i in xrange(n)] for j in xrange(m)]
-        for i in xrange(1, m):
-            for j in xrange(1, n):
+        if m < 1 or n < 1:
+            return 0
+        res = [[1 for j in range(n)] for i in range(m)]
+        for i in range(1, m):
+            for j in range(1, n):
                 res[i][j] = res[i-1][j] + res[i][j-1]
-
         return res[-1][-1]

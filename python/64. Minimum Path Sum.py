@@ -6,20 +6,15 @@ class Solution(object):
         """
         if grid is None or len(grid) == 0 or len(grid[0]) == 0:
             return 0
-        row, column = len(grid), len(grid[0])
-        # init all to 0
-        dp = [[0 for i in xrange(column)] for j in xrange(row)]
-        # init left top point
-        dp[0][0] = grid[0][0]
-        # init first row
-        for r in xrange(1, row):
-            dp[r][0] = dp[r-1][0] + grid[r][0]
-        # init first column
-        for c in xrange(1, column):
-            dp[0][c] = dp[0][c-1] + grid[0][c]
-        # function & calcuation
-        for i in xrange(1, row):
-            for j in xrange(1, column):
-                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]
+        m, n = len(grid), len(grid[0])
+        res = [[0 for i in range(n)] for j in range(m)]
+        res[0][0] = grid[0][0]
+        for i in range(1, m):
+            res[i][0] = res[i-1][0] + grid[i][0]
+        for j in range(1, n):
+            res[0][j] = res[0][j-1] + grid[0][j]
+        for i in range(1, m):
+            for j in range(1, n):
+                res[i][j] = min(res[i-1][j], res[i][j-1]) + grid[i][j]
 
-        return dp[-1][-1]
+        return res[-1][-1]
