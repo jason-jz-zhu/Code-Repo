@@ -5,13 +5,16 @@ class Solution(object):
         :type k: int
         :rtype: str
         """
-        s = list(s)
-        for i in xrange(0, len(s), 2*k):
-            if i+k > len(s):
-                s[i:] = reversed(s[i:])
+        if s is None or len(s) == 0:
+            return ''
+
+        s_list = list(s)
+        for i in range(0, len(s), 2 * k):
+            if i + k > len(s_list):
+                s_list[i:] = s_list[i:][::-1]
             else:
-                s[i: i+k] = reversed(s[i : i+k])
-        return ''.join(s)
+                s_list[i: i + k] = s_list[i: i + k][::-1]
+        return ''.join(s_list)
 
 class Solution(object):
     def canConstruct(self, ransomNote, magazine):
