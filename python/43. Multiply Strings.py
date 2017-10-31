@@ -14,7 +14,7 @@ class Solution(object):
         for i in xrange(l1-1, -1, -1):
             carry = 0
             for j in xrange(l2-1, -1, -1):
-                product = carry + num3[i+j+1] + int(num1[i]) * int(num2[j])
+                product = carry + num3[i+j+1] + (ord(num1[i]) - ord('0')) * (ord(num2[j]) - ord('0'))
                 num3[i+j+1] = product % 10
                 carry = product / 10
             j = -1
@@ -25,4 +25,3 @@ class Solution(object):
         while i < l3 - 1 and num3[i] == 0:
             i += 1
         return ''.join(str(x) for x in num3[i:])
-            

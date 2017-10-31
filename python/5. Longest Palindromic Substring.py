@@ -4,16 +4,19 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        result = ""
-        for i in xrange(len(s)):
-            temp = self.helper(s, i, i)
-            if len(temp) > len(result):
-                result = temp
-            temp = self.helper(s, i, i + 1)
-            if len(temp) > len(result):
-                result = temp
-        return result
-            
+        if s is None or len(s) == 0:
+            return ''
+
+        res = ''
+        for i in range(len(s)):
+            tmp = self.helper(s, i, i)
+            if len(tmp) > len(res):
+                res = tmp
+            tmp = self.helper(s, i, i + 1)
+            if len(tmp) > len(res):
+                res = tmp
+        return res
+
     def helper(self, s, l, r):
         while l >= 0 and r < len(s) and s[l] == s[r]:
             l -= 1
