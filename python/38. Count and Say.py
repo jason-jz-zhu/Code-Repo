@@ -6,22 +6,19 @@ class Solution(object):
         """
         if n < 1:
             return ''
-
         if n == 1:
             return '1'
-
         pre = '1'
 
-        for i in xrange(2, n + 1):
+        for i in range(2, n + 1):
             tmp = pre
             pre = ''
-            count = 1
-            for j in xrange(1, len(tmp)):
+            cnt = 1
+            for j in range(1, len(tmp)):
                 if tmp[j] == tmp[j - 1]:
-                    count += 1
+                    cnt += 1
                 else:
-                    pre += str(count) + tmp[j - 1]
-                    count = 1
-
-            pre += str(count) + tmp[-1]
+                    pre += str(cnt) + tmp[j - 1]
+                    cnt = 1
+            pre += str(cnt) + tmp[-1]
         return pre
