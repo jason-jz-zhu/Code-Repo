@@ -9,10 +9,10 @@ class Solution(object):
         """
         if haystack is None or needle is None:
             return -1
-        lenH = len(haystack)
-        lenN = len(needle)
-        for i in xrange(lenH-lenN+1):
-            if haystack[i: lenN+i] == needle:
+        size_h = len(haystack)
+        size_n = len(needle)
+        for i in range(size_h - size_n + 1):
+            if haystack[i: size_n + i] == needle:
                 return i
         return -1
 

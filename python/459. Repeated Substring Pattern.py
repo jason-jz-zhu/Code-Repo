@@ -6,10 +6,10 @@ class Solution(object):
         """
         if s is None or len(s) == 0:
             return 0
-        l = len(s)
-        for i in xrange(1, l / 2 + 1):
-            if l % i:
+        size = len(s)
+        for i in range(1, size / 2 + 1):
+            if size % i != 0:
                 continue
-            if s[: i] * (l / i) == s:
+            if s[: i] * (size / i) == s:
                 return True
         return False
