@@ -24,7 +24,8 @@ class Solution(object):
         while head2:
             tmp = head2.next
             head2.next = pre
-            pre, head2 = head2, tmp
+            pre = head2
+            head2 = tmp
 
         p1, p2 = pre, head
         while p1 and p1.val == p2.val:
