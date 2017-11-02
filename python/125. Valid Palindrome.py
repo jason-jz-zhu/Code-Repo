@@ -10,14 +10,14 @@ class Solution(object):
         if len(s) == 0:
             return True
 
-        head, tail = 0, len(s) - 1
-        while head < tail:
-            while head < tail and not s[head].isalpha() and not s[head].isdigit():
-                head += 1
-            while head < tail and not s[tail].isalpha() and not s[tail].isdigit():
-                tail -= 1
-            if s[head].lower() != s[tail].lower():
+        start, end = 0, len(s) - 1
+        while start < end:
+            while start < end and not s[start].isalpha() and not s[start].isdigit():
+                start += 1
+            while start < end and not s[end].isalpha() and not s[end].isdigit():
+                end -= 1
+            if start < end and s[start].lower() != s[end].lower():
                 return False
-            head += 1
-            tail -= 1
+            start += 1
+            end-= 1
         return True
