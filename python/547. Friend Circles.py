@@ -25,7 +25,6 @@ class Solution(object):
                 self.dfs(M, j, visited)
 
 # bfs
-
 class Solution(object):
     def findCircleNum(self, M):
         """
