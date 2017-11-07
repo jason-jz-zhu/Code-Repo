@@ -7,16 +7,10 @@ class Solution(object):
         if strs is None or len(strs) == 0:
             return []
 
-        map = {}
-        res = []
-        for word in strs:
-            s_word = ''.join(sorted(word))
-            if map.get(s_word) is None:
-                map[s_word] = [word]
-            else:
-                map[s_word].append(word)
+        hashmap = collections.defaultdict(list)
 
-        for key, value in map.iteritems():
-            res.append(value)
+        for s in strs:
+            key = ''.join(sorted(s))
+            hashmap[key].append(s)
 
-        return res
+        return hashmap.values()

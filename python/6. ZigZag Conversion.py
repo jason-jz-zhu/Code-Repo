@@ -5,12 +5,18 @@ class Solution(object):
         :type numRows: int
         :rtype: str
         """
-        if numRows < 2:
+        if numRows == 1 or numRows >= len(s):
             return s
-        step, res = 2 * numRows - 2, ''
-        for i in xrange(numRows):
-            for j in xrange(i, len(s), step):
-                res += s[j]
-                if 0 < i < numRows - 1 and j + step - 2 * i < len(s):
-                    res += s[j + step - 2 * i]
-        return res
+
+        res = [''] * numRows
+        index, step = 0, 1
+
+        for c in s:
+            res[index] += c
+            if index == 0:
+                step = 1
+            elif index == numRows - 1:
+                step = -1
+            index += step
+
+        return ''.join(res)
