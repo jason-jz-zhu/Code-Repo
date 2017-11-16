@@ -7,17 +7,16 @@ class Solution(object):
         """
         import collections
         res = []
-        pCounter = collections.Counter(p)
-        sCounter = collections.Counter(s[: len(p) - 1])
-        for i in xrange(len(p) - 1, len(s)):
-            sCounter[s[i]] += 1
-            if sCounter == pCounter:
+        p_counter = collections.Counter(p)
+        s_counter = collections.Counter(s[: len(p) - 1])
+        for i in range(len(p) - 1, len(s)):
+            s_counter[s[i]] += 1
+            if s_counter == p_counter:
                 res.append(i - len(p) + 1)
-            sCounter[s[i - len(p) + 1]] -= 1
-            if sCounter[s[i - len(p) + 1]] == 0:
-                del sCounter[s[i - len(p) + 1]]
+            s_counter[s[i - len(p) + 1]] -= 1
+            if s_counter[s[i - len(p) + 1]] == 0:
+                del s_counter[s[i - len(p) + 1]]
         return res
-
 
 
 class Solution(object):

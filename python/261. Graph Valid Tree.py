@@ -1,28 +1,36 @@
-class Solution:
-    # @param {int} n an integer
-    # @param {int[][]} edges a list of undirected edges
-    # @return {boolean} true if it's a valid tree, or false
+class Solution(object):
     def validTree(self, n, edges):
-        # Write your code here
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :rtype: bool
+        """
         if n == 0:
             return False
         if len(edges) != n - 1:
             return False
-        visited = {i: False for i in xrange(n)}
+
         graph = {i: set([]) for i in xrange(n)}
         for item in edges:
             graph[item[0]].add(item[1])
             graph[item[1]].add(item[0])
-        q = collections.deque([0])
+
+        visited = [False for i in range(n)]
+        return self.bfs(0, graph, visited)
+
+    def bfs(self, i, graph, visited):
+        q = collections.deque([i])
         while q:
-            head = q.popleft()
-            if visited[head]:
+            t = q.popleft()
+            # check circle
+            if visited[t]:
                 return False
-            visited[head] = True
-            for item in graph[head]:
-                q.append(item)
-                graph[item].remove(head)
-        for i in visited:
+            visited[t] = True
+            for node in graph[t]:
+                q.append(node)
+                graph[node].remove(t)
+        # check weather not visited
+        for i in range(len(visited)):
             if not visited[i]:
                 return False
         return True

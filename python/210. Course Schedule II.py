@@ -1,24 +1,32 @@
-class Solution:
-    # @param {int} numCourses a total of n courses
-    # @param {int[][]} prerequisites a list of prerequisite pairs
-    # @return {int[]} the course order
+class Solution(object):
     def findOrder(self, numCourses, prerequisites):
-        # Write your code here
-        degree = {i: 0 for i in xrange(numCourses)}
-        edges = {i: [] for i in xrange(numCourses)}
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """
+        if prerequisites is None:
+            return []
+
+        degree = [0 for _ in range(numCourses)]
+        graph = {i: [] for i in xrange(numCourses)}
         for end, start in prerequisites:
             degree[end] += 1
-            edges[start].append(end)
+            graph[start].append(end)
 
-        q = collections.deque([i for i in degree if degree[i] == 0])
-        order = []
+        res = []
+        return self.bfs(degree, graph, numCourses, res)
+
+    def bfs(self, degree, graph, numCourses, res):
+        q = collections.deque([i for i in range(len(degree)) if degree[i] == 0])
         while q:
-            head = q.popleft()
-            order.append(head)
-            for node in edges[head]:
+            t = q.popleft()
+            res.append(t)
+            for node in graph[t]:
                 degree[node] -= 1
                 if degree[node] == 0:
                     q.append(node)
-        if len(order) == numCourses:
-            return order
+        if len(res) == numCourses:
+            return res
         return []
+        

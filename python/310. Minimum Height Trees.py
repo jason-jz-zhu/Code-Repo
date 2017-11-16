@@ -8,8 +8,8 @@ class Solution(object):
         if n == 1:
             return [0]
 
-        degree = {i: 0 for i in xrange(n)}
-        graph = {i: [] for i in xrange(n)}
+        degree = [0 for _ in range(n)]
+        graph = {i: [] for i in range(n)}
 
         for i, j in edges:
             degree[i] += 1
@@ -17,16 +17,16 @@ class Solution(object):
             graph[i].append(j)
             graph[j].append(i)
 
-        leaves = [i for i in xrange(n) if degree[i] == 1]
-        nodes = n
-        while nodes > 2:
+        leaves = [i for i in range(n) if degree[i] == 1]
+        nodes_number = n
+        while nodes_number > 2:
             tmp = []
-            for i in leaves:
-                degree[i] = 0
-                nodes -= 1
-                for j in graph[i]:
-                    degree[j] -= 1
-                    if degree[j] == 1:
-                        tmp.append(j)
+            for leave in leaves:
+                degree[leave] = 0
+                nodes_number -= 1
+                for i in graph[leave]:
+                    degree[i] -= 1
+                    if degree[i] == 1:
+                        tmp.append(i)
             leaves = tmp
         return leaves

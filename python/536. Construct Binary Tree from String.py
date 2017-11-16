@@ -11,20 +11,20 @@ class Solution(object):
         :type s: str
         :rtype: TreeNode
         """
-        ix = s.find('(')
-        if ix < 0:
+        i = s.find('(')
+        if i < 0:
             return TreeNode(int(s)) if s else None
 
-        bal = 0
-        for jx, u in enumerate(s):
-            if u == '(':
-                bal += 1
-            if u == ')':
-                bal -= 1
-            if jx > ix and bal == 0:
+        balance = 0
+        for j, c in enumerate(s):
+            if c == '(':
+                balance += 1
+            elif c == ')':
+                balance -= 1
+            if j > i and balance == 0:
                 break
 
-        root = TreeNode(int(s[: ix]))
-        root.left = self.str2tree(s[ix + 1: jx])
-        root.right = self.str2tree(s[jx + 2: -1])
+        root = TreeNode(int(s[: i]))
+        root.left = self.str2tree(s[i + 1: j])
+        root.right = self.str2tree(s[j + 2: -1])
         return root

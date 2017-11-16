@@ -6,5 +6,5 @@ class Solution(object):
         """
         if s is None or len(s) == 0:
             return 0
-
-        return len(s.strip().split(' ')[-1])
+        tmp = s.split()
+        return len(tmp[-1]) if len(tmp) != 0 else 0

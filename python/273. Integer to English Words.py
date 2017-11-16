@@ -4,7 +4,9 @@ class Solution(object):
         :type num: int
         :rtype: str
         """
-        LESS_THAN_20 = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen",                           "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+        LESS_THAN_20 = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", \
+        "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", \
+        "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
         TENS = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
         THOUSANDS = ["", "Thousand", "Million", "Billion"]
 
@@ -18,8 +20,6 @@ class Solution(object):
             else:
                 return LESS_THAN_20[num / 100] + ' Hundred ' + helper(num % 100)
 
-
-
         if num == 0:
             return 'Zero'
         level, res = 0, ''
@@ -31,6 +31,3 @@ class Solution(object):
             level += 1
 
         return res.strip()
-
-
-        

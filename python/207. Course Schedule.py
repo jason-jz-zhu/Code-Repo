@@ -5,16 +5,24 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: bool
         """
-        degree = {i: 0 for i in xrange(numCourses)}
-        edges = {i: [] for i in xrange(numCourses)}
+        if prerequisites is None:
+            return False
+        if len(prerequisites) == 0:
+            return True
+
+        degree = [0 for _ in range(numCourses)]
+        graph = {i: [] for i in range(numCourses)}
         for end, start in prerequisites:
             degree[end] += 1
-            edges[start].append(end)
+            graph[start].append(end)
 
-        q = collections.deque([i for i in degree if degree[i] == 0])
+        return self.bfs(degree, graph)
+
+    def bfs(self, degree, graph):
+        q = collections.deque([i for i in range(len(degree)) if degree[i] == 0])
         while q:
-            curr = q.popleft()
-            for node in edges[curr]:
+            t = q.popleft()
+            for node in graph[t]:
                 degree[node] -= 1
                 if degree[node] == 0:
                     q.append(node)
@@ -22,3 +30,4 @@ class Solution(object):
             if degree[i] != 0:
                 return False
         return True
+        
