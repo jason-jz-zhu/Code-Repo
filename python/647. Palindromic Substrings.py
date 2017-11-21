@@ -4,6 +4,29 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        if s is None or len(s) == 0:
+            return 0
+
+        Solution.res = 0
+        for i in range(len(s)):
+            self.helper(s, i, i)
+            self.helper(s, i, i + 1)
+
+        return Solution.res
+
+    def helper(self, s, i, j):
+        while i >= 0 and j < len(s) and s[i] == s[j]:
+            i -= 1
+            j += 1
+            Solution.res += 1
+
+
+class Solution(object):
+    def countSubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
         L = len(s)
         res = 0
         for center in xrange(2 * L - 1):
@@ -35,4 +58,3 @@ class Solution(object):
                     c, r = i, i + p[i]
             return p
         return sum((max_len + 1) / 2 for max_len in manacher(s))
-        

@@ -4,8 +4,8 @@ class Solution(object):
         :type path: str
         :rtype: str
         """
-        if path is None:
-            return None
+        if path is None or len(path) == 0:
+            return ''
 
         stack = []
         res = ''
@@ -22,9 +22,9 @@ class Solution(object):
                 elif sub != '.':
                     stack.append(sub)
             i = end
+
         if stack == []:
             return '/'
-        for i in stack:
-            res += '/' + i
+        for s in stack:
+            res += '/' + s
         return res
-                    
