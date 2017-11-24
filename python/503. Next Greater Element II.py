@@ -4,11 +4,18 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        res = [0] * len(nums)
+        if nums is None or len(nums) == 0:
+            return []
+
         stack = []
-        for i in reversed(xrange(2 * len(nums))):
-            while stack and stack[-1] <= nums[i % len(nums)]:
+        res = [0] * len(nums)
+        size = len(nums)
+        for i in reversed(range(2 * size)):
+            while stack and stack[-1] <= nums[i % size]:
                 stack.pop()
-            res[i % len(nums)] = stack[-1] if stack else -1
-            stack.append(nums[i % len(nums)])
+            res[i % size] = stack[-1] if stack else -1
+            stack.append(nums[i % size])
+
         return res
+
+        

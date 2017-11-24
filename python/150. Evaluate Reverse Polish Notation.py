@@ -7,19 +7,18 @@ class Solution(object):
         if tokens is None or len(tokens) == 0:
             return None
         op = ['+', '-', '*', '/']
-        s = []
+        stack = []
 
         for token in tokens:
             if token not in op:
-                s.append(int(token))
+                stack.append(int(token))
             else:
-                y = s.pop()
-                x = s.pop()
-                s.append(self.evaluate(x, y, token))
-        return s[0]
+                y = stack.pop()
+                x = stack.pop()
+                stack.append(self.calculate(x, y, token))
+        return stack[0]
 
-
-    def evaluate(self, x, y, op):
+    def calculate(self, x, y, op):
         if op == '+':
             return x + y
         elif op == '-':

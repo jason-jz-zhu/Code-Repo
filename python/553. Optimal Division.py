@@ -11,7 +11,7 @@ class Solution(object):
         if len(nums) == 2:
             return str(nums[0]) + '/' + str(nums[1])
         res = [str(nums[0]) + '/(' + str(nums[1])]
-        for i in xrange(2, len(nums)):
+        for i in range(2, len(nums)):
             res += '/' + str(nums[i])
         res += ')'
         return ''.join(res)
