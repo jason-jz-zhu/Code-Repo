@@ -2,8 +2,8 @@ class LogSystem(object):
 
     def __init__(self):
         self._logs = []
-        self._granularity = {'Year': 4, 'Month': 7, 'Day': 10, \
-                             'Hour': 13, 'Minute': 16, 'Second': 19}
+        self._hashmap = {'Year': 4, 'Month': 7, 'Day': 10, \
+                        'Hour': 13, 'Minute': 16, 'Second': 19}
 
     def put(self, id, timestamp):
         """
@@ -21,10 +21,10 @@ class LogSystem(object):
         :type gra: str
         :rtype: List[int]
         """
-        i = self._granularity[gra]
-        begin = s[: i]
+        i = self._hashmap[gra]
+        start = s[: i]
         end = e[: i]
-        return [id for id, timestamp in self._logs if begin <= timestamp[: i] <= end]
+        return [id for id, timestamp in self._logs if start <= timestamp[: i] <= end]
 
 
 # Your LogSystem object will be instantiated and called as such:

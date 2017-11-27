@@ -4,8 +4,7 @@ class Solution(object):
         :type n: int
         :rtype: str
         """
-        matches = map(str, xrange(1, n + 1))
-        while len(matches) / 2:
-            matches = ['({},{})'.format(matches[i], matches[-i - 1]) for i in xrange(len(matches) / 2)]
-
-        return matches[0]
+        res = map(str, range(1, n + 1))
+        while len(res) / 2:
+            res = ['({},{})'.format(res[i], res[-i - 1]) for i in range(len(res) / 2)]
+        return res[0]
