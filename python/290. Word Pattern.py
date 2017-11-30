@@ -9,16 +9,16 @@ class Solution(object):
             return False
         if str is None or len(str) == 0:
             return False
-        str_list = str.split(' ')
+        str_list = str.split()
         if len(pattern) != len(str_list):
             return False
-        p_map, s_map = dict(), dict()
+        p_hashmap, s_hashmap = {}, {}
         for p, s in zip(pattern, str_list):
-            if p not in p_map:
-                p_map[p] = s
-            if s not in s_map:
-                s_map[s] = p
-            if p_map[p] != s or s_map[s] != p:
+            if p not in p_hashmap:
+                p_hashmap[p] = s
+            if s not in s_hashmap:
+                s_hashmap[s] = p
+            if p_hashmap[p] != s or s_hashmap[s] != p:
                 return False
         return True
 

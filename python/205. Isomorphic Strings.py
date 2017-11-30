@@ -5,18 +5,21 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        if s is None or t is None:
+        if s is None:
             return False
-        if len(s) != len(t):
+        if t is None:
+            return False
+        if len(t) != len(s):
             return False
 
-        s_map, t_map = dict(), dict()
+        s_hashmap, t_hashmap = {}, {}
 
-        for x in xrange(len(s)):
-            if s[x] not in s_map:
-                s_map[s[x]] = t[x]
-            if t[x] not in t_map:
-                t_map[t[x]] = s[x]
-            if s_map[s[x]] != t[x] or t_map[t[x]] != s[x]:
+        for ss, tt in zip(s, t):
+            if ss not in s_hashmap:
+                s_hashmap[ss] = tt
+            if tt not in t_hashmap:
+                t_hashmap[tt] = ss
+            if s_hashmap[ss] != tt or t_hashmap[tt] != ss:
                 return False
+
         return True

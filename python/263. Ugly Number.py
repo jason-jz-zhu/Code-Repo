@@ -6,6 +6,9 @@ class Solution(object):
         """
         if num <= 0:
             return False
+        if num == 1:
+            return True
+
         while num >= 2:
             if num % 2 == 0:
                 num /= 2
@@ -15,4 +18,4 @@ class Solution(object):
                 num /= 5
             else:
                 return False
-        return num == 1
+        return True

@@ -14,6 +14,16 @@ class Solution(object):
         :rtype: int
         """
         while num >= 10:
+            num = sum([int(i) for i in str(num)])
+        return num
+
+class Solution(object):
+    def addDigits(self, num):
+        """
+        :type num: int
+        :rtype: int
+        """
+        while num >= 10:
             tmp = 0
             while num > 0:
                 tmp += num % 10
