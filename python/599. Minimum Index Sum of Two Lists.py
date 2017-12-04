@@ -9,19 +9,20 @@ class Solution(object):
             return []
         if list2 is None or len(list2) == 0:
             return []
+        res = []
+        idx_sum = float('inf')
+        hashmap = collections.defaultdict(int)
+        for i in range(len(list1)):
+            hashmap[list1[i]] = i
 
-        map = dict()
-        res, index_sum = [], sys.maxint
-        for i in xrange(len(list1)):
-            map[list1[i]] = i
-        for j in xrange(len(list2)):
-            l1_index = map.get(list2[j])
-            if l1_index is None:
+        for j in range(len(list2)):
+            tmp = list2[j]
+            if tmp not in hashmap:
                 continue
-            if l1_index + j < index_sum:
-                res = [list2[j]]
-                index_sum = l1_index + j
-            elif l1_index + j == index_sum:
-                res.append(list2[j])
+            if hashmap[tmp] + j < idx_sum:
+                res = [tmp]
+                idx_sum = hashmap[tmp] + j
+            elif hashmap[tmp] + j == idx_sum:
+                res.append(tmp)
+
         return res
-                

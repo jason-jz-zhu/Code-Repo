@@ -4,18 +4,20 @@ class Solution(object):
         :type points: List[List[int]]
         :rtype: bool
         """
-        if not points:
-            return True
-        import collections
-        groups_by_y = collections.defaultdict(set)
-        left, right = sys.maxint, -sys.maxint
+        if points is None:
+            return False
+
+        hashmap = collections.defaultdict(set)
+        min_x, max_x = float('inf'), float('-inf')
+
         for p in points:
-            groups_by_y[p[1]].add(p[0])
-            left, right = min(left, p[0]), max(right, p[0])
-        mid = left + right
-        for group in groups_by_y.values():
-            for x in group:
-                if mid - x not in group:
-                    return False
+            hashmap[p[0]].add(p[1])
+            min_x = min(min_x, p[0])
+            max_x = max(max_x, p[0])
+
+        mid_x = (min_x + max_x) / 2.0
+        for p in points:
+            ref_x = 2 * mid_x - p[0]
+            if ref_x not in hashmap or p[1] not in hashmap[ref_x]:
+                return False
         return True
-        

@@ -7,12 +7,13 @@ class Solution(object):
         if s is None or len(s) == 0:
             return ''
 
-        import collections
         counter = collections.Counter(s)
         res = ''
-        for key, value in sorted(counter.iteritems(), key = lambda (k, v): (v, k)):
-            res += key * value
+        counter_sort = sorted(counter.items(), key = lambda (k, v): (v, k))
+        for key, cnt in counter_sort:
+            res += key * cnt
         return res[::-1]
+            
 
 # using hash and heapq
 class Solution(object):
