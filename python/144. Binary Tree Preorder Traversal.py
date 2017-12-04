@@ -5,6 +5,13 @@
 #         self.left = None
 #         self.right = None
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution(object):
     def preorderTraversal(self, root):
         """
@@ -13,16 +20,19 @@ class Solution(object):
         """
         if root is None:
             return []
-        stack = [root]
-        preorder = []
+
+        res = []
+        stack = []
+        stack.append(root)
         while stack:
             node = stack.pop()
-            preorder.append(node.val)
+            res.append(node.val)
             if node.right:
                 stack.append(node.right)
             if node.left:
                 stack.append(node.left)
-        return preorder
+        return res
+                
 
 class Solution(object):
     def preorderTraversal(self, root):
@@ -32,13 +42,13 @@ class Solution(object):
         """
         if root is None:
             return []
-        def traverse(root, res):
-            if not root:
-                return
-            res.append(root.val)
-            traverse(root.left, res)
-            traverse(root.right, res)
 
         res = []
-        traverse(root, res)
+        self.helper(root, res)
         return res
+
+    def helper(self, root, res):
+        if root:
+            res.append(root.val)
+            self.helper(root.left, res)
+            self.helper(root.right, res)

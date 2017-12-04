@@ -11,23 +11,10 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        def helper(root, res):
-            if root:
-                helper(root.left, res)
-                res.append(root.val)
-                helper(root.right, res)
-        res = []
-        helper(root, res)
-        return res
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+        if root is None:
+            return []
 
-class Solution(object):
-    def iterative_inorder(self, root, list):
+        res = []
         stack = []
         while root or stack:
             if root:
@@ -35,11 +22,25 @@ class Solution(object):
                 root = root.left
             else:
                 root = stack.pop()
-                list.append(root.val)
+                res.append(root.val)
                 root = root.right
-        return list
+        return res
 
+
+class Solution(object):
     def inorderTraversal(self, root):
-        list = []
-        self.iterative_inorder(root, list)
-        return list
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root is None:
+            return []
+        res = []
+        self.helper(root, res)
+        return res
+
+    def helper(self, root, res):
+        if root:
+            self.helper(root.left, res)
+            res.append(root.val)
+            self.helper(root.right, res)

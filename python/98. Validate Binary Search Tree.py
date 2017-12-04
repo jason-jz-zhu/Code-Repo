@@ -1,3 +1,4 @@
+
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -11,21 +12,46 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
+        if root is None:
+            return True
         stack = []
-        pre = -sys.maxint
-        node = root
-        while stack or node:
-            if node:
-                stack.append(node)
-                node = node.left
+        prev = float('-inf')
+        while stack or root:
+            if root:
+                stack.append(root)
+                root = root.left
             else:
-                node = stack.pop()
-                if node.val <= pre:
+                root = stack.pop()
+                if root.val <= prev:
                     return False
-                pre = node.val
-                node = node.right
+                prev = root.val
+                root = root.right
         return True
 
+# traverse
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return True
+        Solution.res = True
+        Solution.prev = float('-inf')
+        self.helper(root)
+        return Solution.res
+
+    def helper(self, root):
+        if root:
+            self.helper(root.left)
+            if root.val <= Solution.prev:
+                Solution.res = False
+                return
+            Solution.prev = root.val
+            self.helper(root.right)
+
+# Divide and Conquer
 class Solution(object):
     def isValidBST(self, root):
         """
@@ -41,24 +67,3 @@ class Solution(object):
             return False
         return self.helper(root.left, minVal, min(maxVal, root.val)) and \
                 self.helper(root.right, max(minVal, root.val), maxVal)
-
-# traverse
-class Solution(object):
-    def isValidBST(self, root):
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """
-        def helper (root):
-            if root:
-                helper(root.left)
-                if root.val <= self.pre:
-                    self.res = False
-                    return
-                self.pre = root.val
-                helper(root.right)
-
-        self.pre = -sys.maxint
-        self.res = True
-        helper(root)
-        return self.res

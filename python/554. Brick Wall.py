@@ -6,15 +6,16 @@ class Solution(object):
         """
         if wall is None or len(wall) == 0 or len(wall[0]) == 0:
             return None
-        map = collections.defaultdict(int)
-        for i in xrange(len(wall)):
-            sum = 0
-            for j in xrange(len(wall[i]) - 1):
-                sum += wall[i][j]
-                map[sum] = map.get(sum, 0) + 1
-        max_f = 0
-        for key, val in map.items():
-            max_f = max(val, max_f)
 
-        return len(wall) - max_f
-                
+        hashmap = collections.defaultdict(int)
+        for i in range(len(wall)):
+            s = 0
+            for j in range(len(wall[i]) - 1):
+                s += wall[i][j]
+                hashmap[s] += 1
+
+        max_fit = 0
+        for val in hashmap.values():
+            max_fit = max(max_fit, val)
+
+        return len(wall) - max_fit
