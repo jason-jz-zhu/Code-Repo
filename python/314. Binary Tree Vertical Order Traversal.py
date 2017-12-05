@@ -11,23 +11,22 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        res = []
         if root is None:
-            return res
+            return []
+
+        res = []
         q = collections.deque([(root, 0)])
-        hashmap = {}
+        hashmap = collections.defaultdict(list)
+
         while q:
-            head, level = q.popleft()
-            if level in hashmap:
-                hashmap[level].append(head.val)
-            else:
-                hashmap[level] = [head.val]
-            if head.left:
-                q.append((head.left, level-1))
-            if head.right:
-                q.append((head.right, level+1))
-        for k, v in sorted(hashmap.iteritems(), key=lambda (k,v): (k,v)):
+            node, level = q.popleft()
+            hashmap[level].append(node.val)
+            if node.left:
+                q.append((node.left, level - 1))
+            if node.right:
+                q.append((node.right, level + 1))
+
+        for k, v in sorted(hashmap.items(), key = lambda (k, v): (k, v)):
             res.append(v)
 
         return res
-        

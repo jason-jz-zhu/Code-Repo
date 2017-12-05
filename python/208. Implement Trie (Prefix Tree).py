@@ -1,7 +1,7 @@
 class TrieNode(object):
     def __init__(self):
-        self.childs = dict()
-        self.isWord = False
+        self.childs = collections.defaultdict(str)
+        self.is_word = False
 
 class Trie(object):
 
@@ -9,7 +9,7 @@ class Trie(object):
         """
         Initialize your data structure here.
         """
-        self.root = TrieNode()
+        self._root = TrieNode()
 
     def insert(self, word):
         """
@@ -17,15 +17,14 @@ class Trie(object):
         :type word: str
         :rtype: void
         """
-        node = self.root
+        node = self._root
         for w in word:
-            child = node.childs.get(w)
+            child = node.childs[w]
             if not child:
                 child = TrieNode()
                 node.childs[w] = child
             node = child
-        node.isWord = True
-
+        node.is_word = True
 
     def search(self, word):
         """
@@ -33,14 +32,13 @@ class Trie(object):
         :type word: str
         :rtype: bool
         """
-        node = self.root
+        node = self._root
         for w in word:
-            child = node.childs.get(w)
+            child = node.childs[w]
             if not child:
                 return False
             node = child
-        return True if node.isWord else False
-
+        return True if node.is_word else False
 
     def startsWith(self, prefix):
         """
@@ -48,14 +46,13 @@ class Trie(object):
         :type prefix: str
         :rtype: bool
         """
-        node = self.root
+        node = self._root
         for w in prefix:
-            child = node.childs.get(w)
+            child = node.childs[w]
             if not child:
                 return False
             node = child
         return True
-
 
 
 # Your Trie object will be instantiated and called as such:
