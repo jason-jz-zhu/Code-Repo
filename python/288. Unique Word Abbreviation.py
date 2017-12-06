@@ -4,24 +4,24 @@ class ValidWordAbbr(object):
         """
         :type dictionary: List[str]
         """
-        self._lookup = collections.defaultdict(set)
+        self.hashmap = collections.defaultdict(set)
         for word in dictionary:
-            abbr = self.abbreviation(word)
-            self._lookup[abbr].add(word)
+            abbr = self.helper(word)
+            self.hashmap[abbr].add(word)
 
     def isUnique(self, word):
         """
         :type word: str
         :rtype: bool
         """
-        abbr = self.abbreviation(word)
-        words = self._lookup[abbr]
+        abbr = self.helper(word)
+        words = self.hashmap[abbr]
         return len(words) == 0 or (len(words) == 1 and word in words)
 
-    def abbreviation(self, word):
+    def helper(self, word):
         if len(word) <= 2:
             return word
-        return word[0] + str(len(word)-2) + word[-1]
+        return word[0] + str(len(word) - 2) + word[-1]
 
 
 # Your ValidWordAbbr object will be instantiated and called as such:

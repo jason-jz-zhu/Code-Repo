@@ -7,10 +7,9 @@ class Solution(object):
         if s is None or len(s) == 0:
             return -1
 
-        freq = {}
-        for e in s:
-            freq[e] = freq.get(e, 0) + 1
-        for i in xrange(len(s)):
-            if freq.get(s[i]) == 1:
+        counter = collections.Counter(s)
+
+        for i in range(len(s)):
+            if counter[s[i]] == 1:
                 return i
         return -1

@@ -4,16 +4,16 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
-        if s is None or len(s) < 10:
+        if s is None or len(s) == 0:
             return []
-        map = collections.defaultdict(int)
+
         res = []
-        for i in xrange(10, len(s) + 1):
-            substr = s[i-10 : i]
-            if substr in map:
-                if map[substr] == 1:
-                    res.append(substr)
-                map[substr] += 1
-            else:
-                map[substr] = 1
+        hashmap = collections.defaultdict(int)
+
+        for i in range(10, len(s) + 1):
+            sub_str = s[i-10: i]
+            if hashmap[sub_str] == 1:
+                res.append(sub_str)
+            hashmap[sub_str] += 1
+
         return res
