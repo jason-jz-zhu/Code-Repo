@@ -7,16 +7,15 @@ class Solution(object):
         """
         if citations is None or len(citations) == 0:
             return 0
-        n = len(citations)
-        cnt = [0] * (n + 1)
+        size = len(citations)
+        cnt = [0] * (size + 1)
         for c in citations:
-            if c < n:
+            if c < size:
                 cnt[c] += 1
             else:
-                cnt[n] += 1
-
+                cnt[size] += 1
         t = 0
-        for i in xrange(n, -1, -1):
+        for i in range(size, -1, -1):
             t += cnt[i]
             if t >= i:
                 return i

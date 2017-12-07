@@ -13,25 +13,24 @@ class Solution(object):
         """
         if head is None:
             return None
-        map = {}
-        dummay = RandomListNode(0)
-        pre = dummay
+
+        hashmap = {}
+        dummy = RandomListNode(0)
+        prev = dummy
         while head:
-            if head in map:
-                new_node = map[head]
+            if head in hashmap:
+                new_node = hashmap[head]
             else:
                 new_node = RandomListNode(head.label)
-                map[head] = new_node
-            pre.next = new_node
+                hashmap[head] = new_node
 
             if head.random is not None:
-                if head.random in map:
-                    new_node.random = map[head.random]
+                if head.random in hashmap:
+                    new_node.random = hashmap[head.random]
                 else:
                     new_node.random = RandomListNode(head.random.label)
-                    map[head.random] = new_node.random
-            pre = new_node
+                    hashmap[head.random] = new_node.random
+            prev.next = new_node
+            prev = new_node
             head = head.next
-        return dummay.next
-
-            
+        return dummy.next

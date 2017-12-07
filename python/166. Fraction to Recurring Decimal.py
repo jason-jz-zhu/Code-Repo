@@ -5,30 +5,34 @@ class Solution(object):
         :type denominator: int
         :rtype: str
         """
-        negativeFlag = (numerator * denominator < 0)
-        numerator, denominator = abs(numerator), abs(denominator)
-        numList = []
-        cnt = 0
-        loopMap = {}
-        loopStr = None
+        if denominator == 0:
+            return ''
+        flag = -1 if numerator * denominator < 0 else 1
+        numerator = abs(numerator)
+        denominator = abs(denominator)
+        loop_str = ''
+        idx = 0
+        hashmap = collections.defaultdict(int)
+        pool = []
         while True:
-            numList.append(str(numerator / denominator))
-            cnt += 1
+            pool.append(str(numerator / denominator))
+            idx += 1
             numerator = 10 * (numerator % denominator)
             if numerator == 0:
                 break
-            loopExist = loopMap.get(numerator)
-            if loopExist:
-                loopStr = ''.join(numList[loopExist: cnt])
+            loop_exit = hashmap[numerator]
+            if loop_exit:
+                loop_str = ''.join(pool[loop_exit: idx])
                 break
-            loopMap[numerator] = cnt
-        res = numList[0]
-        if len(numList) > 1:
+            hashmap[numerator] = idx
+        res = pool[0]
+        if len(pool) > 1:
             res += '.'
-        if loopStr:
-            res += ''.join(numList[1: len(numList) - len(loopStr)]) + '(' + loopStr + ')'
+        if loop_str:
+            res += ''.join(pool[1: len(pool) - len(loop_str)]) + '(' + loop_str + ')'
         else:
-            res += ''.join(numList[1:])
-        if negativeFlag:
+            res += ''.join(pool[1:])
+        if flag == -1:
             res = '-' + res
         return res
+        
