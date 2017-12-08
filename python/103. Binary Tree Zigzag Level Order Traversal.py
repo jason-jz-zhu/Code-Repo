@@ -14,13 +14,17 @@ class Solution(object):
         if not root:
             return []
 
-        res, stack, level = [], [root], 1
-        while stack:
-            tmp = [node.val for node in stack]
+        q = [root]
+        level = 0
+        res = []
+
+        while q:
+            level += 1
+            tmp = [node.val for node in q]
             if level % 2:
                 res.append(tmp)
             else:
                 res.append(tmp[::-1])
-            stack = [kid for node in stack for kid in (node.left, node.right) if kid]
-            level += 1
+            q = [kid for node in q for kid in (node.left, node.right) if kid]
+
         return res

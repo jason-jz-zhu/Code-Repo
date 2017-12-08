@@ -11,19 +11,10 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[float]
         """
-        if root is None:
+        if not root:
             return []
-        res = []
-        stack = [root]
-        while stack:
-            tmp = []
-            s = 0
-            for node in stack:
-                s += node.val
-                if node.left:
-                    tmp.append(node.left)
-                if node.right:
-                    tmp.append(node.right)
-            res.append(s / float(len(stack)))
-            stack = tmp
+        res, q = [], [root]
+        while q:
+            res.append(sum([node.val for node in q]) * 1.0 / len(q))
+            q = [ kid for node in q for kid in (node.left, node.right) if kid]
         return res

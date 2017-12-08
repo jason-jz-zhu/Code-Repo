@@ -4,7 +4,8 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-import collections
+
+# dfs
 class Solution(object):
     def minDepth(self, root):
         """
@@ -13,35 +14,38 @@ class Solution(object):
         """
         if not root:
             return 0
+
+        return self.helper(root)
+
+    def helper(self, root):
+        if not root:
+            return sys.maxint
+        if not root.left and not root.right:
+            return 1
+        min_left = self.helper(root.left)
+        min_right = self.helper(root.right)
+        return min(min_left, min_right) + 1
+
+# level traversal
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+            return 0
+
         q = collections.deque([root])
-        level = 0
+        res = 0
         while q:
-            level += 1
-            for i in xrange(len(q)):
+            res += 1
+            for _ in range(len(q)):
                 node = q.popleft()
                 if node.left:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
                 if not node.left and not node.right:
-                    return level
-        return -1
-
-
-
-class Solution(object):
-    def minDepth(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        if not root:
-            return 0
-        return self.getMin(root)
-
-    def getMin(self, root):
-        if not root:
-            return sys.maxint
-        if not root.left and not root.right:
-            return 1
-        return min(self.getMin(root.left), self.getMin(root.right)) + 1
+                    return res
+        return 0

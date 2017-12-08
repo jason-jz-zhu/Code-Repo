@@ -11,13 +11,17 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        isBBT, _ = self.helper(root)
-        return isBBT
+        if not root:
+            return True
+
+        is_bbt, height = self.helper(root)
+        return is_bbt
+
     def helper(self, root):
-        if root is None:
+        if not root:
             return True, 0
-        left_isBBT, left_height = self.helper(root.left)
-        right_isBBT, right_height = self.helper(root.right)
-        if not left_isBBT or not right_isBBT:
+        left_is_bbt, left_height = self.helper(root.left)
+        right_is_bbt, right_height = self.helper(root.right)
+        if not left_is_bbt or not right_is_bbt:
             return False, 0
         return abs(left_height - right_height) <= 1, max(left_height, right_height) + 1

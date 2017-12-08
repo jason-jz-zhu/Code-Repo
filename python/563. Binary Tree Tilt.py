@@ -11,12 +11,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        self.res = 0
-        def s(node):
-            if not node:
-                return 0
-            left, right = s(node.left), s(node.right)
-            self.res += abs(left - right)
-            return node.val + left + right
-        s(root)
-        return self.res
+        if not root:
+            return 0
+        Solution.res = 0
+        self.helper(root)
+        return Solution.res
+
+    def helper(self, root):
+        if not root:
+            return 0
+        left = self.helper(root.left)
+        right = self.helper(root.right)
+        Solution.res += abs(left - right)
+        return left + right + root.val
