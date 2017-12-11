@@ -11,13 +11,16 @@ class Solution(object):
         :type nums: List[int]
         :rtype: TreeNode
         """
-        def helper(nums, start, end):
-            if start == end:
-                return None
-            mid = start + (end - start) / 2
-            cur = TreeNode(nums[mid])
-            cur.left = helper(nums, start, mid)
-            cur.right = helper(nums, mid + 1, end)
-            return cur
+        if nums is None or len(nums) == 0:
+            return None
 
-        return helper(nums, 0, len(nums))
+        return self.helper(nums, 0, len(nums))
+
+    def helper(self, nums, start, end):
+        if start == end:
+            return None
+        mid = start + (end - start) / 2
+        curr = TreeNode(nums[mid])
+        curr.left = self.helper(nums, start, mid)
+        curr.right = self.helper(nums, mid + 1, end)
+        return curr

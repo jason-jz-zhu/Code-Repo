@@ -17,24 +17,22 @@ class Solution(object):
         :type head: ListNode
         :rtype: TreeNode
         """
-        def helper(head, tail):
-            slow, fast = head, head
-            if head == tail:
-                return None
-            while fast != tail and fast.next != tail:
-                fast = fast.next.next
-                slow = slow.next
-            cur = TreeNode(slow.val)
-            cur.left = helper(head, slow)
-            cur.right = helper(slow.next, tail)
-            return cur
-        
         if not head:
             return None
-        return helper(head, None)
 
+        return self.helper(head, None)
 
-
+    def helper(self, head, tail):
+        slow, fast = head, head
+        if head == tail:
+            return None
+        while fast != tail and fast.next != tail:
+            fast = fast.next.next
+            slow = slow.next
+        curr = TreeNode(slow.val)
+        curr.left = self.helper(head, slow)
+        curr.right = self.helper(slow.next, tail)
+        return curr
 
 
 

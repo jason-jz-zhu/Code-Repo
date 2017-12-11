@@ -28,18 +28,21 @@ class Solution(object):
         :type q: TreeNode
         :rtype: bool
         """
-        import collections
-        queue = collections.deque([])
-        queue.append((p, q))
+        if not p and not q:
+            return True
+        if not p or not q:
+            return False
+
+        queue = collections.deque([(p, q)])
         while queue:
-            cur1, cur2 = queue.popleft()
-            if not cur1 and not cur2:
+            node1, node2 = queue.popleft()
+            if not node1 and not node2:
                 continue
-            elif not cur1 or not cur2:
+            elif not node1 or not node2:
                 return False
             else:
-                if cur1.val != cur2.val:
+                if node1.val != node2.val:
                     return False
-                queue.append((cur1.left, cur2.left))
-                queue.append((cur1.right, cur2.right))
+                queue.append((node1.left, node2.left))
+                queue.append((node1.right, node2.right))
         return True

@@ -11,20 +11,23 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        leftH = rightH = 0
-        leftNode, rightNode = root, root
-        while leftNode:
-            leftH += 1
-            leftNode = leftNode.left
+        if not root:
+            return 0
 
-        while rightNode:
-            rightH += 1
-            rightNode = rightNode.right
+        left_height = right_height = 0
+        left_node, right_node = root, root
+        while left_node:
+            left_height += 1
+            left_node = left_node.left
 
-        if leftH == rightH:
-            return 2 ** leftH - 1
+        while right_node:
+            right_height += 1
+            right_node = right_node.right
+
+        if left_height == right_height:
+            return 2 ** left_height - 1
+
         return self.countNodes(root.left) + self.countNodes(root.right) + 1
-
 
 class Solution(object):
     def countNodes(self, root):
