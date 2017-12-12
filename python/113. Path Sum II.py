@@ -7,20 +7,27 @@
 
 class Solution(object):
     def pathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: List[List[int]]
+        """
         if not root:
             return []
+
         res = []
-        self.dfs(root, sum, [], res)
+        self.helper(root, sum, [], res)
         return res
 
-    def dfs(self, root, sum, ls, res):
-        if not root.left and not root.right and sum == root.val:
-            ls.append(root.val)
-            res.append(ls)
+    def helper(self, root, target, ls, res):
+        if not root.left and not root.right:
+            if root.val == target:
+                ls.append(root.val)
+                res.append(ls)
         if root.left:
-            self.dfs(root.left, sum-root.val, ls+[root.val], res)
+            self.helper(root.left, target - root.val, ls + [root.val], res)
         if root.right:
-            self.dfs(root.right, sum-root.val, ls+[root.val], res)
+            self.helper(root.right, target - root.val, ls + [root.val], res)oot.right, target - root.val, ls + [root.val], res)
 
 
 class Solution(object):

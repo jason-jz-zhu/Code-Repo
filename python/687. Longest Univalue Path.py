@@ -6,7 +6,7 @@
 #         self.right = None
 
 class Solution(object):
-    def countUnivalSubtrees(self, root):
+    def longestUnivaluePath(self, root):
         """
         :type root: TreeNode
         :rtype: int
@@ -20,11 +20,10 @@ class Solution(object):
 
     def helper(self, root):
         if not root:
-            return True
+            return 0
         left = self.helper(root.left)
         right = self.helper(root.right)
-        if left and right and (not root.left or root.left.val == root.val) and \
-        (not root.right or root.right.val == root.val):
-            self.res += 1
-            return True
-        return False
+        p_left = left + 1 if root.left and root.val == root.left.val else 0
+        p_right = right + 1 if root.right and root.val == root.right.val else 0
+        self.res = max(self.res, p_left + p_right)
+        return max(p_left, p_right)
