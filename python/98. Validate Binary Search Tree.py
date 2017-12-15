@@ -37,18 +37,18 @@ class Solution(object):
         """
         if root is None:
             return True
-        Solution.res = True
-        Solution.prev = float('-inf')
+        self.res = True
+        self.prev = float('-inf')
         self.helper(root)
-        return Solution.res
+        return self.res
 
     def helper(self, root):
         if root:
             self.helper(root.left)
-            if root.val <= Solution.prev:
-                Solution.res = False
+            if root.val <= self.prev:
+                self.res = False
                 return
-            Solution.prev = root.val
+            self.prev = root.val
             self.helper(root.right)
 
 # Divide and Conquer

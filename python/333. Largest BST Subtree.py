@@ -13,6 +13,38 @@ class Solution(object):
         """
         if not root:
             return 0
+
+        self.prev = float('-inf')
+        self.res = True
+        self.helper(root)
+        if self.res:
+            return self.cnt(root)
+        return max(self.largestBSTSubtree(root.left), self.largestBSTSubtree(root.right))
+
+    def helper(self, root):
+        if root:
+            self.helper(root.left)
+            if root.val <= self.prev:
+                self.res = False
+                return
+            self.prev = root.val
+            self.helper(root.right)
+
+    def cnt(self, root):
+        if not root:
+            return 0
+        return self.cnt(root.left) + self.cnt(root.right) + 1
+
+
+
+class Solution(object):
+    def largestBSTSubtree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+            return 0
         if self.isValid(root, float('-inf'), float('inf')):
             return self.count(root)
         return max(self.largestBSTSubtree(root.left), self.largestBSTSubtree(root.right))
@@ -63,4 +95,3 @@ class Solution(object):
 
         largest = max(left.largest, right.largest, n)
         return SubTree(largest, n, min(left.min, root.val), max(right.max, root.val))
-                

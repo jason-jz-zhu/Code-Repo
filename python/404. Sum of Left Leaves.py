@@ -11,16 +11,39 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if root is None:
+        if not root:
             return 0
+
         res = 0
-        q = collections.deque([root])
+        q = collections.deque([(root, False)])
         while q:
-            cur = q.popleft()
-            if cur.left and cur.left.left is None and cur.left.right is None:
-                res += cur.left.val
-            if cur.left:
-                q.append(cur.left)
-            if cur.right:
-                q.append(cur.right)
+            curr, is_left = q.popleft()
+            if is_left and not curr.left and not curr.right:
+                res += curr.val
+            if curr.left:
+                q.append((curr.left, True))
+            if curr.right:
+                q.append((curr.right, False))
         return res
+
+
+class Solution(object):
+    def sumOfLeftLeaves(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+            return 0
+
+        self.res = 0
+        self.helper(root, False)
+        return self.res
+
+    def helper(self, root, is_left):
+        if not root:
+            return
+        if is_left and not root.left and not root.right:
+            self.res += root.val
+        self.helper(root.left, True)
+        self.helper(root.right, False)

@@ -11,30 +11,33 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-
-        def inorder(root):
-            if not root:
-                return
-            inorder(root.left)
-
-            if root.val != self.pre:
-                self.cnt = 1
-                self.pre = root.val
-            else:
-                self.cnt += 1
-
-            if self.cnt > self.max_cnt:
-                self.max_cnt = self.cnt
-                del self.res[:]
-                self.res.append(root.val)
-            elif self.cnt == self.max_cnt:
-                self.res.append(root.val)
-
-            inorder(root.right)
+        if not root:
+            return []
 
         self.res = []
-        self.pre = sys.maxint
+        self.prev = float('-inf')
         self.cnt = 1
         self.max_cnt = 0
-        inorder(root)
+        self.helper(root)
         return self.res
+
+    def helper(self, root):
+        if not root:
+            return
+
+        self.helper(root.left)
+
+        if root.val != self.prev:
+            self.cnt = 1
+            self.prev = root.val
+        else:
+            self.cnt += 1
+
+        if self.cnt > self.max_cnt:
+            self.max_cnt = self.cnt
+            self.res = []
+            self.res.append(root.val)
+        elif self.cnt == self.max_cnt:
+            self.res.append(root.val)
+
+        self.helper(root.right)

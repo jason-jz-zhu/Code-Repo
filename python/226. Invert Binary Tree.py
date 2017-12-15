@@ -11,29 +11,60 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        if root:
-            root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
-            return root
-
-
-
-class Solution(object):
-    def invertTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: TreeNode
-        """
-        if root:
-            q = collections.deque([root])
-            while q:
-                cur = q.popleft()
-                cur.left, cur.right = cur.right, cur.left
-                if cur.left:
-                    q.append(cur.left)
-                if cur.right:
-                    q.append(cur.right)
+        if not root:
+            return None
+        self.helper(root)
         return root
 
+    def helper(self, root):
+        if not root:
+            return
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+
+
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return root
+        self.invertTree(root.left)
+        root.left, root.right = root.right, root.left
+        self.invertTree(root.left)
+        return root
+
+
+
+
+
+
+
+
+# BFS
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return None
+        q = collections.deque([root])
+        while q:
+            cur = q.popleft()
+            cur.left, cur.right = cur.right, cur.left
+            if cur.left:
+                q.append(cur.left)
+            if cur.right:
+                q.append(cur.right)
+        return root
+
+# DFS
 class Solution(object):
     def invertTree(self, root):
         """
@@ -41,12 +72,12 @@ class Solution(object):
         :rtype: TreeNode
         """
         if root:
-            q = [root]
+            stack = [root]
             while q:
-                cur = q.pop()
+                cur = stack.pop()
                 cur.left, cur.right = cur.right, cur.left
                 if cur.left:
-                    q.append(cur.left)
+                    stack.append(cur.left)
                 if cur.right:
-                    q.append(cur.right)
+                    stack.append(cur.right)
         return root

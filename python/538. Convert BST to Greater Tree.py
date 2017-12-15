@@ -11,17 +11,19 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        def helper(node, s):
-            if not node:
-                return
-            helper(node.right, s)
-            node.val += s
-            s = node.val
-            helper(node.left, s)
-
-        s = 0
-        helper(root, s)
+        if not root:
+            return None
+        self.s = 0
+        self.helper(root)
         return root
+
+    def helper(self, root):
+        if not root:
+            return
+        self.helper(root.right)
+        root.val += self.s
+        self.s = root.val
+        self.helper(root.left)
 
 class Solution(object):
     def convertBST(self, root):
