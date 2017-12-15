@@ -39,16 +39,17 @@ class Solution(object):
         if root is None:
             return float('-inf')
 
-        Solution.res = 0
-        Solution.cnt = 0
+        self.res = 0
+        self.cnt = 0
         self.helper(root, k)
-        return Solution.res
+        return self.res
 
     def helper(self, root, k):
-        if root:
-            self.helper(root.left, k)
-            Solution.cnt += 1
-            if Solution.cnt == k:
-                Solution.res = root.val
-                return
-            self.helper(root.right, k)
+        if not root:
+            return
+        self.helper(root.left, k)
+        self.cnt += 1
+        if self.cnt == k:
+            self.res = root.val
+            return
+        self.helper(root.right, k)

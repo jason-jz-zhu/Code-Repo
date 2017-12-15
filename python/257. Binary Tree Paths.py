@@ -52,16 +52,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[str]
         """
-        if root is None:
+        if not root:
             return []
         res = []
-        self.dfs(root, '', res)
+        self.helper(root, '', res)
         return res
 
-    def dfs(self, node, path, res):
-        if not node.right and not node.left:
-            res.append(path + str(node.val))
-        if node.right:
-            self.dfs(node.right, path + str(node.val) + '->', res)
-        if node.left:
-            self.dfs(node.left, path + str(node.val) + '->', res)
+    def helper(self, root, path, res):
+        if not root:
+            return
+        if not root.left and not root.right:
+            res.append(path + str(root.val))
+        self.helper(root.left, path + str(root.val) + '->', res)
+        self.helper(root.right, path + str(root.val) + '->', res)

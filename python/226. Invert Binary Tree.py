@@ -23,28 +23,6 @@ class Solution(object):
         self.invertTree(root.left)
         self.invertTree(root.right)
 
-
-
-class Solution(object):
-    def invertTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: TreeNode
-        """
-        if not root:
-            return root
-        self.invertTree(root.left)
-        root.left, root.right = root.right, root.left
-        self.invertTree(root.left)
-        return root
-
-
-
-
-
-
-
-
 # BFS
 class Solution(object):
     def invertTree(self, root):
