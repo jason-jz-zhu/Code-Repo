@@ -14,22 +14,23 @@ class Solution(object):
         if not root:
             return 0
         hashmap = {}
-        return self.dfs(root, hashmap)
+        return self.helper(root, hashmap)
 
-    def dfs(self, root, hashmap):
+    def helper(self, root, hashmap):
         if not root:
             return 0
         if root in hashmap:
             return hashmap[root]
-        val = 0
-        if root.left:
-            val += self.dfs(root.left.left, hashmap) + self.dfs(root.left.right, hashmap)
-        if root.right:
-            val += self.dfs(root.right.left, hashmap) + self.dfs(root.right.right, hashmap)
 
-        val = max(val + root.val, self.dfs(root.left, hashmap) + self.dfs(root.right, hashmap))
-        hashmap[root] = val
-        return val
+        max_val = 0
+        if root.left:
+            max_val += self.helper(root.left.left, hashmap) + self.helper(root.left.right, hashmap)
+        if root.right:
+            max_val += self.helper(root.right.left, hashmap) + self.helper(root.right.right, hashmap)
+
+        max_val = max(max_val + root.val, self.helper(root.left, hashmap) + self.helper(root.right, hashmap))
+        hashmap[root] = max_val
+        return max_val
 
 class Solution(object):
     def rob(self, root):
