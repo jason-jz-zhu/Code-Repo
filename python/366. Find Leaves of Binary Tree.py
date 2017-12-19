@@ -11,19 +11,21 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-
-        def dfs(node, res):
-            if not node:
-                return -1
-            level = 1 + max(dfs(node.left, res), dfs(node.right, res))
-            if len(res) < level + 1:
-                res.append([])
-            res[level].append(node.val)
-            return level
+        if not root:
+            return []
 
         res = []
-        dfs(root, res)
+        self.helper(root, res)
         return res
+
+    def helper(self, root, res):
+        if not root:
+            return -1
+        level = 1 + max(self.helper(root.left, res), self.helper(root.right, res))
+        if len(res) < level + 1:
+            res.append([])
+        res[level].append(root.val)
+        return level
 
 
 
@@ -33,22 +35,24 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        def dfs(node, cur):
-            if not node:
-                return None
-            if not node.left and not node.right:
-                cur.append(node.val)
-                return None
-            if node.left:
-                node.left = dfs(node.left, cur)
-            if node.right:
-                node.right = dfs(node.right, cur)
-            return node
-        res = []
         if not root:
-            return res
+            return []
+
+        res = []
         while root:
-            cur = []
-            root = dfs(root, cur)
-            res.append(cur)
+            curr = []
+            root = self.helper(root, curr)
+            res.append(curr)
         return res
+
+    def helper(self, root, curr):
+        if not root:
+            return None
+        if not root.left and not root.right:
+            curr.append(root.val)
+            return None
+        if root.left:
+            root.left = self.helper(root.left, curr)
+        if root.right:
+            root.right = self.helper(root.right, curr)
+        return root

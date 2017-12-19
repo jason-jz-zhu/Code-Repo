@@ -13,7 +13,8 @@ class Solution(object):
         """
         if not root:
             return []
-        res, q = [], [root]
+        res = []
+        q = [root]
         while q:
             res.append(q[-1].val)
             q = [ kid for node in q for kid in (node.left, node.right) if kid]

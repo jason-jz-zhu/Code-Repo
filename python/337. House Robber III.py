@@ -38,10 +38,14 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        def dfs(root):
-            if not root:
-                return (0, 0)
-            left, right = dfs(root.left), dfs(root.right)
-            return (root.val + left[1] + right[1], max(left) + max(right))
+        if not root:
+            return 0
 
-        return max(dfs(root))
+        return max(self.helper(root))
+
+    def helper(self, root):
+        if not root:
+            return (0, 0)
+        left = self.helper(root.left)
+        right = self.helper(root.right)
+        return (root.val + left[1] + right[1], max(left) + max(right))

@@ -6,7 +6,6 @@
 #         self.right = None
 #         self.next = None
 
-
 class Solution:
     # @param root, a tree link node
     # @return nothing
@@ -25,7 +24,22 @@ class Solution:
                 root = root.next
             root = tmp.next
 
-
+class Solution:
+    # @param root, a tree link node
+    # @return nothing
+    def connect(self, root):
+        if not root:
+            return
+        while root.left:
+            curr = root.left
+            prev = None
+            while root:
+                if prev:
+                    prev.next = root.left
+                root.left.next = root.right
+                prev = root.right
+                root = root.next
+            root = curr
 
 class Solution:
     # @param root, a tree link node
