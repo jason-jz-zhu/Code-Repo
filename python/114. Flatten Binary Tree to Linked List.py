@@ -5,32 +5,31 @@
 #         self.left = None
 #         self.right = None
 
-# dc
+
 class Solution(object):
     def flatten(self, root):
         """
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
         """
+        if not root:
+            return
         self.helper(root)
 
     def helper(self, root):
-        if root is None:
-            return None
-        left = self.helper(root.left)
-        right = self.helper(root.right)
-        if left:
-            left.right = root.right
-            root.right = root.left
-            root.left = None
-
-        if right:
-            return right
-
-        if left:
-            return left
-
-        return root
+        if not root:
+            return
+        self.helper(root.left)
+        self.helper(root.right)
+        curr = root
+        if not curr.left:
+            return
+        curr = curr.left
+        while curr.right:
+            curr = curr.right
+        curr.right = root.right
+        root.right = root.left
+        root.left = None
 
 class Solution(object):
     def flatten(self, root):
@@ -40,16 +39,15 @@ class Solution(object):
         """
         if root is None:
             return
-        s = []
-        s.append(root)
-        while s:
-            node = s.pop()
+        stack = [root]
+        while stack:
+            node = stack.pop()
             if node.right:
-                s.append(node.right)
+                stack.append(node.right)
             if node.left:
-                s.append(node.left)
+                stack.append(node.left)
             node.left = None
-            if s:
-                node.right = s[-1]
+            if stack:
+                node.right = stack[-1]
             else:
                 node.right = None

@@ -2,19 +2,24 @@
 # Time:  O(n)
 # Space: O(1)
 
-class Solution:
-    # @param {integer[]} preorder
-    # @return {boolean}
+class Solution(object):
     def verifyPreorder(self, preorder):
-        low, i = float("-inf"), -1
-        for p in preorder:
-            if p < low:
+        """
+        :type preorder: List[int]
+        :rtype: bool
+        """
+        if preorder is None or len(preorder) == 0:
+            return True
+        low = float('-inf')
+        i = -1
+        for node in preorder:
+            if node < low:
                 return False
-            while i >= 0 and p > preorder[i]:
+            while i >= 0 and node > preorder[i]:
                 low = preorder[i]
                 i -= 1
             i += 1
-            preorder[i] = p
+            preorder[i] = node
         return True
 
 # Time:  O(n)
@@ -25,12 +30,14 @@ class Solution(object):
         :type preorder: List[int]
         :rtype: bool
         """
-        low = -sys.maxint - 1
+        if preorder is None or len(preorder) == 0:
+            return True
+        low = float('-inf')
         stack = []
-        for p in preorder:
-            if p < low:
+        for node in preorder:
+            if node < low:
                 return False
-            while stack and p > stack[-1]:
+            while stack and node > stack[-1]:
                 low = stack.pop()
-            stack.append(p)
+            stack.append(node)
         return True
