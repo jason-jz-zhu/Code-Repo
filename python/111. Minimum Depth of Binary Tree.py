@@ -14,17 +14,9 @@ class Solution(object):
         """
         if not root:
             return 0
-
-        return self.helper(root)
-
-    def helper(self, root):
-        if not root:
-            return sys.maxint
-        if not root.left and not root.right:
-            return 1
-        min_left = self.helper(root.left)
-        min_right = self.helper(root.right)
-        return min(min_left, min_right) + 1
+        left = self.minDepth(root.left)
+        right = self.minDepth(root.right)
+        return left + right + 1 if left == 0 or right == 0 else min(left, right) + 1
 
 # level traversal
 class Solution(object):
@@ -35,17 +27,17 @@ class Solution(object):
         """
         if not root:
             return 0
-
-        q = collections.deque([root])
-        res = 0
+        level = 0
+        q = [root]
         while q:
-            res += 1
-            for _ in range(len(q)):
-                node = q.popleft()
+            level += 1
+            tmp = []
+            for node in q:
                 if node.left:
-                    q.append(node.left)
+                    tmp.append(node.left)
                 if node.right:
-                    q.append(node.right)
+                    tmp.append(node.right)
                 if not node.left and not node.right:
-                    return res
-        return 0
+                    return level
+            q = tmp
+        return level

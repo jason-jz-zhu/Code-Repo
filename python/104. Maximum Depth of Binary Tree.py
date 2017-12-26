@@ -5,7 +5,7 @@
 #         self.left = None
 #         self.right = None
 
-# dfs
+# dfs postorder
 class Solution(object):
     def maxDepth(self, root):
         """
@@ -14,15 +14,9 @@ class Solution(object):
         """
         if not root:
             return 0
-
-        return self.helper(root)
-
-    def helper(self, root):
-        if not root:
-            return 0
-        max_left = self.helper(root.left)
-        max_right = self.helper(root.right)
-        return max(max_left, max_right) + 1
+        left = self.maxDepth(root.left)
+        right = self.maxDepth(root.right)
+        return max(left, right) + 1
 
 # level traversal
 class Solution(object):
@@ -33,11 +27,9 @@ class Solution(object):
         """
         if not root:
             return 0
-        res = 0
-        q = collections.deque([root])
-
+        level = 0
+        q = [root]
         while q:
-            res += 1
+            level += 1
             q = [kid for node in q for kid in (node.left, node.right) if kid]
-
-        return res
+        return level
