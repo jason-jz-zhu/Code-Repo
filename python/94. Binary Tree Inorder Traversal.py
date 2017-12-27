@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+# dfs interative
 class Solution(object):
     def inorderTraversal(self, root):
         """
@@ -26,21 +27,22 @@ class Solution(object):
                 root = root.right
         return res
 
-
+# dfs recursive
 class Solution(object):
     def inorderTraversal(self, root):
         """
         :type root: TreeNode
         :rtype: List[int]
         """
-        if root is None:
+        if not root:
             return []
         res = []
         self.helper(root, res)
         return res
 
-    def helper(self, root, res):
-        if root:
-            self.helper(root.left, res)
-            res.append(root.val)
-            self.helper(root.right, res)
+    def helper(self, node, res):
+        if not node:
+            return
+        self.helper(node.left, res)
+        res.append(node.val)
+        self.helper(node.right, res)

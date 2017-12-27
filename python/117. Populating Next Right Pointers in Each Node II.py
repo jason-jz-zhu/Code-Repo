@@ -6,7 +6,27 @@
 #         self.right = None
 #         self.next = None
 
+# interative space: o(1) one loop
+class Solution:
+    # @param root, a tree link node
+    # @return nothing
+    def connect(self, root):
+        if not root:
+            return
+        curr = dummy = TreeLinkNode(0)
+        while root:
+            curr.next = root.left
+            if curr.next:
+                curr = curr.next
+            curr.next = root.right
+            if curr.next:
+                curr = curr.next
+            root = root.next
+            if not root:
+                curr = dummy
+                root = dummy.next
 
+# interative space: o(1) two loop
 class Solution:
     # @param root, a tree link node
     # @return nothing
@@ -27,22 +47,18 @@ class Solution:
 
 
 
+# level order space: o(n)
 class Solution:
     # @param root, a tree link node
     # @return nothing
     def connect(self, root):
         if not root:
             return
-        q = collections.deque([root, None])
+        q = [root, None]
         while q:
-            curr = q.popleft()
-            if curr:
-                curr.next = q[0]
-                if curr.left:
-                    q.append(curr.left)
-                if curr.right:
-                    q.append(curr.right)
-            else:
-                if len(q) == 0:
-                    return
-                q.append(None)
+            for i in range(len(q) - 1):
+                q[i].next = q[i + 1]
+            q = [kid for node in q[:-1] for kid in (node.left, node.right) if kid]
+            if not q:
+                break
+            q.append(None)

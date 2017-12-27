@@ -16,7 +16,6 @@ class Solution(object):
             return None
         if postorder is None or len(postorder) == 0:
             return None
-
         root = TreeNode(postorder[-1])
         root_pos = inorder.index(postorder[-1])
         root.left = self.buildTree(inorder[: root_pos], postorder[: root_pos])
