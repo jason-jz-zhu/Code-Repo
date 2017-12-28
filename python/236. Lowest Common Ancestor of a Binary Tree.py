@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+# bottom-up approach
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
         """
@@ -21,29 +22,7 @@ class Solution(object):
             return root
         return left if left else right
 
-# divide conquce
-class Solution(object):
-    def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
-        if root is None:
-            return None
-        if root is p or root is q:
-            return root
-        left = self.lowestCommonAncestor(root.left, p, q)
-        right = self.lowestCommonAncestor(root.right, p, q)
-        if left is not None and right is not None:
-            return root
-        if left is not None:
-            return left
-        if right is not None:
-            return right
-        return None
-
+# up-bottom approach
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
         """

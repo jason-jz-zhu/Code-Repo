@@ -19,7 +19,6 @@ class Solution(object):
         """
         if not head:
             return None
-
         return self.helper(head, None)
 
     def helper(self, head, tail):
@@ -33,25 +32,3 @@ class Solution(object):
         curr.left = self.helper(head, slow)
         curr.right = self.helper(slow.next, tail)
         return curr
-
-
-
-
-class Solution(object):
-    def sortedListToBST(self, head):
-        cur, l = head, 0
-        while cur:
-            cur, l = cur.next, l + 1
-        self.head = head
-        return self.helper(0, l)
-
-    def helper(self, start, end):
-        if start == end:
-            return None
-        mid = start + (end - start) / 2
-        left = self.helper(start, mid)
-        cur = TreeNode(self.head.val)
-        cur.left = left
-        self.head = self.head.next
-        cur.right = self.helper(mid + 1, end)
-        return cur

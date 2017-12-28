@@ -5,6 +5,21 @@
 #         self.left = None
 #         self.right = None
 
+class Solution(object):
+    def inorderSuccessor(self, root, p):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :rtype: TreeNode
+        """
+        if not root or not p:
+            return None
+        res = None
+        while root:
+            res = root if p.val < root.val else res
+            root = root.left if p.val < root.val else root.right
+        return res
+
 # binary serach o(h) o (1)
 class Solution(object):
     def inorderSuccessor(self, root, p):
