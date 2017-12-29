@@ -9,15 +9,15 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        if n < 1:
+            return None
         start, end = 1, n
         while start + 1 < end:
             mid = start + (end - start) / 2
             if guess(mid) == 0:
                 return mid
-            elif guess(mid) < 0:
+            elif guess(mid) == -1:
                 end = mid
             else:
                 start = mid
-        if guess(start) == 0:
-            return start
-        return end
+        return start if guess(start) == 0 else end

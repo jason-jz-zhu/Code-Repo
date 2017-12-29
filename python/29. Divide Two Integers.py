@@ -8,16 +8,16 @@ class Solution(object):
         INT_MAX = 2147483647
         if divisor == 0:
             return INT_MAX
-        neg = (dividend > 0 and divisor < 0) or (dividend < 0 and divisor > 0)
+        neg = (dividend * divisor) < 0
         a, b = abs(dividend), abs(divisor)
-        res, shift = 0, 31
-        while shift >= 0:
-            if a >= b << shift:
-                a -= b << shift
-                res += 1 << shift
-            shift -= 1
+        res = 0
+        while a >= b:
+            tmp, cnt = b, 1
+            while a >= tmp:
+                a -= tmp
+                res += cnt
+                cnt <<= 1
+                tmp <<= 1
         if neg:
             res = - res
-        if res > INT_MAX:
-            return INT_MAX
-        return res
+        return INT_MAX if res > INT_MAX else res

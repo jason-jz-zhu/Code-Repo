@@ -4,18 +4,19 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        if n == 0:
+            return 0
         start, end = 1, n
         while start + 1 < end:
             mid = start + (end - start) / 2
-            if mid * (mid + 1) / 2 == n:
+            tmp = mid * (mid + 1) / 2
+            if tmp == n:
                 return mid
-            elif mid * (mid + 1) / 2 < n:
+            elif tmp < n:
                 start = mid
             else:
                 end = mid
-        if start * (start + 1) / 2 < n:
-            return start
-        return end
+        return start if start * (start + 1) / 2 < n else end
 
 
 class Solution(object):
@@ -24,9 +25,11 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        if n == 0:
+            return 0
         curr = 1
-        rem = n - 1
-        while rem >= curr + 1:
+        rest = n - 1
+        while rest >= curr + 1:
             curr += 1
-            rem -= curr
-        return 0 if n == 0 else curr
+            rest -= curr
+        return curr
