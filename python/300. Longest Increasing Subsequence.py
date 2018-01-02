@@ -13,6 +13,7 @@ class Solution(object):
                 if nums[j] < nums[i]:
                     dp[i] = max(dp[i], dp[j] + 1)
         return max(dp)
+
 # binary search
 # 特别注意的是list数组的值可能不是一个真实的LIS
 class Solution(object):
@@ -23,27 +24,25 @@ class Solution(object):
         """
         if nums is None or len(nums) == 0:
             return 0
-        list = [sys.maxint] * (len(nums) + 1)
-        list[0] = -sys.maxint - 1
+        dp = [float('inf')] * len(nums)
+        dp[0] = nums[0]
+        size = 0
+        for i in range(1, len(nums)):
+            index = self.binary_search(dp, nums[i])
+            dp[index] = nums[i]
+            if index > size:
+                size = index
+        return size + 1
 
-        for i in xrange(len(nums)):
-            index = self.binary_search(list, nums[i])
-            list[index] = nums[i]
 
-        for i in xrange(len(nums), 0, -1):
-            if list[i] != sys.maxint:
-                return i
-
-        return 0
-
-    def binary_search(self, list, num):
-        start, end = 0, len(list) - 1
+    def binary_search(self, dp, num):
+        start, end = 0, len(dp) - 1
         while start + 1 < end:
             mid = (end - start) / 2 + start
-            if list[mid] < num:
+            if dp[mid] < num:
                 start = mid
             else:
                 end = mid
-        if list[start] > num:
+        if dp[start] >= num:
             return start
         return end
