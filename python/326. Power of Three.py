@@ -6,12 +6,17 @@ class Solution(object):
         """
         if n <= 0:
             return False
-        while n != 1:
-            if n % 3 != 0:
-                return False
+        while n % 3 == 0:
             n /= 3
-        return True
+        return n == 1
 
+class Solution(object):
+    def isPowerOfThree(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        return n > 0 and 3 ** 19 % n == 0
 
 class Solution(object):
     def isPowerOfThree(self, n):

@@ -11,10 +11,10 @@ class Solution(object):
         start, end = 0, n - 1
         while start + 1 < end:
             mid = start + (end - start) / 2
-            if citations[mid] >= n - mid:
-                end = mid
-            else:
+            if citations[mid] < n - mid:
                 start = mid
+            else:
+                end = mid
         if citations[start] >= n - start:
             return n - start
         if citations[end] >= n - end:

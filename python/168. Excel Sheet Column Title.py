@@ -6,10 +6,8 @@ class Solution(object):
         """
         if n <= 0:
             return None
-
         res = ''
         while n:
             res = chr(ord('A') + (n - 1) % 26) + res
             n = (n - 1) / 26
         return res
-            
