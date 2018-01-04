@@ -4,6 +4,8 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        if n <= 1:
+            return 0
         if n == 2 or n == 3:
             return n - 1
         if n == 4:
@@ -13,6 +15,7 @@ class Solution(object):
             res *= 3
             n -= 3
         return res * n
+        
 
 
 class Solution(object):
@@ -25,4 +28,3 @@ class Solution(object):
         for i in xrange(7, n + 1):
             dp.append(3 * dp[i - 3])
         return dp[n]
-        

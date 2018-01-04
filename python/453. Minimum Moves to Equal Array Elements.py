@@ -4,10 +4,10 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        minVal, res = min(nums), 0
-        for num in nums:
-            res += num - minVal
-        return res
+        if nums is None or len(nums) == 0:
+            return 0
+        minVal = min(nums)
+        return sum(num - minVal for num in nums)
 
 class Solution(object):
     def minMoves(self, nums):
