@@ -1,3 +1,23 @@
+class Solution(object):
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n <= 2:
+            return n
+        while n % 4 == 0:
+            n /= 4
+        if n % 8 == 7:
+            return 4
+        for a in range(int(n ** 0.5) + 1):
+            b = int((n - a ** 2) ** 0.5)
+            if a ** 2 + b ** 2 == n:
+                return (not not a) + (not not b)
+        return 3
+
+            
+
 # accept and bfs
 class Solution(object):
     def numSquares(self, n):
@@ -7,43 +27,22 @@ class Solution(object):
         """
         if n < 2:
             return n
-
         psList = []
         i = 1
         while i * i <= n:
             psList.append(i * i)
             i += 1
         res = 0
-        toCheck = [n]
-        while toCheck:
+        stack = [n]
+        while stack:
             res += 1
             tmp = set()
-            for x in toCheck:
+            for x in stack:
                 for y in psList:
                     if x == y:
                         return res
                     if x < y:
                         break
                     tmp.add(x - y)
-            toCheck = tmp
+            stack = tmp
         return res
-        
-# not accept and dp
-class Solution(object):
-    def numSquares(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
-        dp = [sys.maxint] * (n + 1)
-
-        for i in xrange(n+1):
-            if i * i <= n:
-                dp[i * i] = 1
-
-        for i in xrange(n+1):
-            for j in xrange(n+1):
-                if i + j * j <= n:
-                    dp[i + j * j] = min(dp[i] + 1, dp[i + j * j])
-
-        return dp[n]
