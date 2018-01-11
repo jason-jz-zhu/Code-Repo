@@ -1,10 +1,10 @@
 # Definition for singly-linked list.
-# class ListNode(object):
+# class ListNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
 
-class Solution(object):
+class Solution:
     def swapPairs(self, head):
         """
         :type head: ListNode
@@ -16,9 +16,9 @@ class Solution(object):
         dummy.next = head
         curr = dummy
         while curr.next and curr.next.next:
-            n1, n2 = curr.next, curr.next.next
-            curr.next = n2
-            n1.next = n2.next
-            n2.next = n1
-            curr = n1
+            p1, p2 = curr.next, curr.next.next
+            curr.next = p2
+            p1.next = p2.next
+            p2.next = p1
+            curr = p1
         return dummy.next
