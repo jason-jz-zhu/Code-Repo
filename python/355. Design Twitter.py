@@ -1,11 +1,10 @@
-class Twitter(object):
-    import collections
-    import heapq
+class Twitter:
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self._numer_of_most_recent_tweets = 10
+        self._number_of_recent_tweets = 10
         self._followings = collections.defaultdict(set)
         self._messages = collections.defaultdict(list)
         self._time = 0
@@ -34,12 +33,12 @@ class Twitter(object):
                 heapq.heappush(max_heap, (-self._messages[uid][-1][0], uid, 0))
 
         res = []
-        while max_heap and len(res) < self._numer_of_most_recent_tweets:
-            t, uid, cur = heapq.heappop(max_heap)
-            nxt = cur + 1
+        while max_heap and len(res) < self._number_of_recent_tweets:
+            t, uid, curr = heapq.heappop(max_heap)
+            nxt = curr + 1
             if nxt != len(self._messages[uid]):
-                heapq.heappush(max_heap, (-self._messages[uid][-(nxt+1)][0], uid, nxt))
-            res.append(self._messages[uid][-(cur + 1)][1]);
+                heapq.heappush(max_heap, (-self._messages[uid][-(nxt + 1)][0], uid, nxt))
+            res.append(self._messages[uid][-(curr + 1)][1])
         return res
 
     def follow(self, followerId, followeeId):
