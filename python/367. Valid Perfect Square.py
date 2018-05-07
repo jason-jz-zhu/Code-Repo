@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def isPerfectSquare(self, num):
         """
         :type num: int
@@ -6,13 +6,13 @@ class Solution(object):
         """
         start, end = 1, num
         while start + 1 < end:
-            mid = start + (end - start) / 2
+            mid = int(start + (end - start) / 2)
             if mid * mid == num:
                 return True
             elif mid * mid < num:
-                start = mid
+                start = mid + 1
             else:
-                end = mid
+                end = mid - 1
         if start * start == num:
             return True
         if end * end == num:

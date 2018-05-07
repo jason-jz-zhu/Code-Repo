@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def shortestDistance(self, words, word1, word2):
         """
         :type words: List[str]
@@ -6,18 +6,18 @@ class Solution(object):
         :type word2: str
         :rtype: int
         """
-        if words is None or len(words) == 0:
+        if words is None or len(words) < 2:
             return -1
         size = len(words)
-        i1, i2 = size, -size
-        res = sys.maxint
+        l1, l2 = size, -size
+        res = float("inf")
 
         for i in range(size):
             if words[i] == word1:
-                i1 = i
+                l1 = i
             elif words[i] == word2:
-                i2 = i
-            res = min(res, abs(i1 - i2))
+                l2 = i
+            res = min(res, abs(l1 - l2))
         return res
 
 class Solution(object):

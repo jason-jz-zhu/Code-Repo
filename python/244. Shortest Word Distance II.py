@@ -18,7 +18,7 @@ class WordDistance(object):
         indexes1 = self.hashmap[word1]
         indexes2 = self.hashmap[word2]
 
-        i, j, res = 0, 0, sys.maxint
+        i, j, res = 0, 0, float('inf')
         while i < len(indexes1) and j < len(indexes2):
             res = min(res, abs(indexes1[i] - indexes2[j]))
             if indexes1[i] < indexes2[j]:
