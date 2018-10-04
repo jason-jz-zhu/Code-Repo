@@ -4,7 +4,7 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        if prices is None or len(prices) == 0:
+        if prices is None or len(prices) < 2:
             return 0
         size = len(prices)
         f1 = [0] * size

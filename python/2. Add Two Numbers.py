@@ -4,7 +4,7 @@
 #         self.val = x
 #         self.next = None
 
-class Solution(object):
+class Solution:
     def addTwoNumbers(self, l1, l2):
         """
         :type l1: ListNode
@@ -26,8 +26,7 @@ class Solution(object):
                 carry += l2.val
                 l2 = l2.next
             reminder = carry % 10
-            carry = carry / 10
+            carry = carry // 10
             curr.next = ListNode(reminder)
             curr = curr.next
         return res.next
-            
