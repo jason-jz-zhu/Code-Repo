@@ -37,15 +37,14 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: int
         """
-        start, end = [], []
-        for interval in intervals:
-            start.append(interval.start)
-            end.append(interval.end)
-            start.sort()
-            end.sort()
+        if intervals is None or len(intervals) == 0:
+            return 0
+
+        start = sorted([s.start for s in intervals])
+        end = sorted([s.end for s in intervals])
 
         res = endpos = 0
-        for i in xrange(len(intervals)):
+        for i in range(len(intervals)):
             if start[i] < end[endpos]:
                 res += 1
             else:

@@ -1,3 +1,12 @@
+# 1）What if the given array is already sorted? How would you optimize your algorithm?
+# 用two pointers 比较
+#
+# 2）What if nums1's size is small compared to num2's size? Which algorithm is better?
+# 将nums1 的数据存进hash map，然后遍历nums2 查找是否在nums1中
+#
+# 3）What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+# 因为nums1是可以放到内存的，所以就把nums1放到hashmap里，然后从disk分多次取出nums2，判断一下就好了
+
 class Solution(object):
     def intersect(self, nums1, nums2):
         """
@@ -16,15 +25,6 @@ class Solution(object):
                 res.append(i)
                 lookup[i] -= 1
         return res
-
-
-# If only nums2 cannot fit in memory, put all elements of nums1 into a HashMap,
-# read chunks of array that fit into the memory, and record the intersections.
-
-# If both nums1 and nums2 are so huge that neither fit into the memory,
-# sort them individually (external sort),
-# then read 2 elements from each array at a time in memory, record intersections.
-
 
 # If the given array is not sorted, and the memory is limited.
 # Time:  O(max(m, n) * log(max(m, n)))

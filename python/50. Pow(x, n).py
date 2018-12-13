@@ -15,7 +15,7 @@ class Solution(object):
             return self.myPow(x*x, n/2)
 
 
-class Solution(object):
+class Solution:
     def myPow(self, x, n):
         """
         :type x: float
@@ -32,5 +32,6 @@ class Solution(object):
             if n % 2 != 0:
                 res *= x
             x *= x
-            n = n / 2
+            n = int(n / 2)
         return res
+                

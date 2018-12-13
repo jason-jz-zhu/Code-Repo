@@ -1,4 +1,5 @@
-class Solution(object):
+# stack
+class Solution:
     def longestValidParentheses(self, s):
         """
         :type s: str
@@ -6,19 +7,49 @@ class Solution(object):
         """
         if s is None or len(s) == 0:
             return 0
-        res, last = 0, -1
-        stack = []
+        stack = [-1]
+        res = 0
         for i in range(len(s)):
             if s[i] == '(':
                 stack.append(i)
             else:
+                stack.pop()
                 if stack == []:
-                    last = i
+                    stack.append(i)
                 else:
-                    stack.pop()
-                    if stack == []:
-                        res = max(res, i - last)
-                    else:
-                        res = max(res, i - stack[-1])
+                    res = max(res, i - stack[-1])
         return res
-                    
+
+class Solution:
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if s is None or len(s) == 0:
+            return 0
+
+        left = right = 0
+        res = 0
+        for c in s:
+            if c == '(':
+                left += 1
+            else:
+                right += 1
+            if left == right:
+                res = max(res, 2 * right)
+            elif right > left:
+                left = right = 0
+
+        left = right = 0
+        for c in s[::-1]:
+            if c == '(':
+                left += 1
+            else:
+                right += 1
+            if left == right:
+                res = max(res, 2 * left)
+            elif left > right:
+                left = right = 0
+
+        return res

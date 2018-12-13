@@ -27,4 +27,35 @@ class Solution(object):
             if node.right:
                 q.append(node.right)
         return False
-        
+
+
+class Solution:
+    def findTarget(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: bool
+        """
+        if not root:
+            return False
+        tmp = []
+        self.inorder(root, tmp)
+
+        start, end = 0, len(tmp) - 1
+        while start < end:
+            s = tmp[start] + tmp[end]
+            if s == k:
+                return True
+            elif s < k:
+                start += 1
+            else:
+                end -= 1
+        return False
+
+
+    def inorder(self, root, res):
+        if not root:
+            return
+        self.inorder(root.left, res)
+        res.append(root.val)
+        self.inorder(root.right, res)
