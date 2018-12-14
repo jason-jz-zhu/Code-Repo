@@ -11,7 +11,8 @@ class Solution(object):
         # main loop
         for i in xrange(len(grid)):
             for j in xrange(len(grid[0])):
-                if grid[i][j] == 0: continue
+                if grid[i][j] == 0:
+                    continue
                 # left side
                 if j == 0 or grid[i][j - 1] == 0:
                     res += 1
