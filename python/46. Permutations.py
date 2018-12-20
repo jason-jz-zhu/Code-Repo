@@ -13,7 +13,7 @@ class Solution(object):
     def dfs(self, nums, path, res):
         if len(path) == len(nums):
             res.append(path)
-            return
+            
         for i in range(len(nums)):
             if nums[i] in path:
                 continue
