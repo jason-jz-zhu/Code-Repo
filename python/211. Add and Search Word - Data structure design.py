@@ -1,9 +1,9 @@
-class TrieNode(object):
+class TrieNode:
     def __init__(self):
         self.childs = {}
         self.isWord = False
 
-class WordDictionary(object):
+class WordDictionary:
 
     def __init__(self):
         """
@@ -17,15 +17,12 @@ class WordDictionary(object):
         :type word: str
         :rtype: void
         """
-        cur = self.root
+        curr = self.root
         for w in word:
-            child = cur.childs.get(w)
-            if not child:
-                child = TrieNode()
-                cur.childs[w] = child
-            cur = child
-        cur.isWord = True
-
+            if w not in curr.childs:
+                curr.childs[w] = TrieNode()
+            curr = curr.childs[w]
+        curr.isWord = True
 
     def search(self, word):
         """
@@ -33,19 +30,20 @@ class WordDictionary(object):
         :type word: str
         :rtype: bool
         """
-        return self.searchHelper(word, 0 ,self.root)
-
-    def searchHelper(self, w, start, cur):
-        if start == len(w):
-            return cur.isWord
-
-        if w[start] in cur.childs:
-            return self.searchHelper(w, start + 1, cur.childs.get(w[start]))
-        elif w[start] == '.':
-            for c in cur.childs:
-                if self.searchHelper(w, start + 1, cur.childs.get(c)):
+        def dfs(w, curr, i):
+            if i == len(w):
+                return curr.isWord
+            if w[i] == '.':
+                for child in curr.childs.values():
+                    if dfs(w, child, i + 1):
+                        return True
+            elif w[i] in curr.childs:
+                if dfs(w, curr.childs[w[i]], i + 1):
                     return True
-        return False
+            return False
+
+        curr = self.root
+        return dfs(word, curr, 0)
 
 
 # Your WordDictionary object will be instantiated and called as such:

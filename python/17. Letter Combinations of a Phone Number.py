@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def letterCombinations(self, digits):
         """
         :type digits: str
@@ -6,19 +6,17 @@ class Solution(object):
         """
         if digits is None or len(digits) == 0:
             return []
-
         hashmap = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
         res = []
         self.dfs(digits, hashmap, 0, '', res)
         return res
 
-    def dfs(self, digits, hashmap, num, path, res):
-        if num == len(digits):
+    def dfs(self, digits, hashmap, index, path, res):
+        if len(path) == len(digits):
             res.append(path)
             return
-        for letter in hashmap[int(digits[num])]:
-            self.dfs(digits, hashmap, num + 1, path + letter, res)
-
+        for i in hashmap[int(digits[index])]:
+            self.dfs(digits, hashmap, index + 1, path + i, res)
 
 
 class Solution(object):
