@@ -31,9 +31,9 @@ class Solution(object):
             if c == '(':
                 cnt += 1
             elif c == ')':
-                if cnt == 0:
-                    return False
                 cnt -= 1
+            if cnt < 0:
+                return False
         return cnt == 0
 
 class Solution(object):

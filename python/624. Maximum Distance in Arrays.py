@@ -37,3 +37,21 @@ class Solution(object):
         min2 = min(array[0] for i, array in enumerate(arrays) if i != imin1)
         max2 = max(array[-1] for i, array in enumerate(arrays) if i != imax1)
         return max(max2 - min1, max1 - min2)
+
+class Solution(object):
+    def maxDistance(self, arrays):
+        """
+        :type arrays: List[List[int]]
+        :rtype: int
+        """
+        heapMax = []
+        heapMin = []
+        for i in range(len(arrays)):
+            heapq.heappush(heapMin, (arrays[i][0], i))
+            heapq.heappush(heapMax, (-arrays[i][-1], i))
+        a = heapq.heappop(heapMin)
+        b = heapq.heappop(heapMax)
+        if a[1] != b[1]:
+            return abs(a[0] + b[0])
+        return max(abs(a[0] + heapMax[0][0]), abs(heapMin[0][0] + b[0]))
+        

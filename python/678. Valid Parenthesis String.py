@@ -8,10 +8,11 @@ class Solution(object):
             return False
         if len(s) == 0:
             return True
-        cnt_min = cnt_max = 0
-        for i in s:
-            cnt_max = cnt_max - 1 if i == ')' else cnt_max + 1
-            cnt_min = cnt_min + 1 if i == '(' else max(cnt_min - 1, 0)
-            if cnt_max < 0:
+        low = high = 0
+        for c in s:
+            low += 1 if c == '(' else -1
+            high += 1 if c != ')' else -1
+            if high < 0:
                 return False
-        return cnt_min == 0
+            low = max(low, 0)
+        return low == 0

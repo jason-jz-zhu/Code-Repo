@@ -44,6 +44,7 @@ if statement
 # 维的位置的互换
 
 # SQL
+# Pivoting rows to columns
 SELECT conference,
        SUM(players) AS total_players,
        SUM(CASE WHEN year = 'FR' THEN players ELSE NULL END) AS fr,
@@ -54,6 +55,7 @@ SELECT conference,
  GROUP BY conference
  ORDER BY total_players DESC
 
+# Pivoting columns to rows
 SELECT a.m,
 	   b.year,
 	   case
