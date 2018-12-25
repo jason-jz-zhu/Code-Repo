@@ -33,16 +33,15 @@ class Solution(object):
         if not p or not q:
             return False
 
-        queue = collections.deque([(p, q)])
-        while queue:
-            node1, node2 = queue.popleft()
+        q = collections.deque([(p, q)])
+        while q:
+            node1, node2 = q.popleft()
             if not node1 and not node2:
                 continue
-            elif not node1 or not node2:
+            if not node1 or not node2:
                 return False
-            else:
-                if node1.val != node2.val:
-                    return False
-                queue.append((node1.left, node2.left))
-                queue.append((node1.right, node2.right))
+            if node1.val != node2.val:
+                return False
+            q.append((node1.left, node2.left))
+            q.append((node1.right, node2.right))
         return True
