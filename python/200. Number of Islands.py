@@ -19,18 +19,18 @@ class Solution(object):
         return res
 
     def bfs(self, grid, i, j):
-        dir_x, dir_y = [-1, 0, 0, 1], [0, 1, -1, 0]
+        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
         q = collections.deque([(i, j)])
         grid[i][j] = '2'
         while q:
-            x, y = q.popleft()
+            grid_x, grid_y = q.popleft()
             for k in range(4):
-                grid_x, grid_y = x + dir_x[k], y + dir_y[k]
-                if grid_x < 0 or grid_x >= len(grid) or grid_y < 0 or grid_y >= len(grid[0]):
+                x, y = grid_x + dx[k], grid_y + dy[k]
+                if x < 0 or x >= len(grid) or y < 0 or y >= len(grid[0]):
                     continue
-                if grid[grid_x][grid_y] == '1':
-                    grid[grid_x][grid_y] = '2'
-                    q.append((grid_x, grid_y))
+                if grid[x][y] == '1':
+                    grid[x][y] = '2'
+                    q.append((x, y))
 
 
 # dfs

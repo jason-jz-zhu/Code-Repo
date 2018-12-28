@@ -1,39 +1,39 @@
 class Node:
-    def __init__(self, key=None, value=None, pre=None, next=None):
+    def __init__(self, key=None, value=None, prev=None, next=None):
         self.key = key
         self.value = value
-        self.pre = pre
+        self.prev = prev
         self.next = next
 
-
-class LRUCache(object):
+class LRUCache:
 
     def __init__(self, capacity):
         """
         :type capacity: int
         """
-        self.cap = capacity
-        self.hash = {}
+        self.capacity = capacity
+        self.hashmap = {}
         self.head = Node()
         self.tail = Node()
         self.head.next = self.tail
-        self.tail.pre = self.head
+        self.tail.prev = self.head
 
     def get(self, key):
         """
         :type key: int
         :rtype: int
         """
-        if self.hash.get(key) is None:
+        if key not in self.hashmap:
             return -1
-        current = self.hash.get(key)
+
+        curr = self.hashmap[key]
         # delete current node
-        current.pre.next = current.next
-        current.next.pre = current.pre
+        curr.prev.next = curr.next
+        curr.next.prev = curr.prev
         # update current to tail
-        self.move_to_tail(current)
+        self.move_to_tail(curr)
         # return current
-        return self.hash.get(key).value
+        return curr.value
 
     def put(self, key, value):
         """
@@ -41,25 +41,25 @@ class LRUCache(object):
         :type value: int
         :rtype: void
         """
-        # if key not in hash table
+        # if key in hash table
         if self.get(key) != -1:
-            self.hash.get(key).value = value
+            self.hashmap[key].value = value
             return
         # if reach the size of cap
-        if len(self.hash) == self.cap:
-            del self.hash[self.head.next.key]
+        if len(self.hashmap) == self.capacity:
+            del self.hashmap[self.head.next.key]
             self.head.next = self.head.next.next
-            self.head.next.pre = self.head
+            self.head.next.prev = self.head
         # update current to tail
         insert = Node(key, value)
-        self.hash[key] = insert
+        self.hashmap[key] = insert
         self.move_to_tail(insert)
 
-    def move_to_tail(self, current):
-        current.pre = self.tail.pre
-        current.next = self.tail
-        self.tail.pre = current
-        current.pre.next = current
+    def move_to_tail(self, curr):
+        curr.prev = self.tail.prev
+        curr.next = self.tail
+        self.tail.prev = curr
+        curr.prev.next = curr
 
 
 # Your LRUCache object will be instantiated and called as such:

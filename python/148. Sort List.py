@@ -10,32 +10,31 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if head is None or head.next is None:
+        if not head or not head.next:
             return head
-        mid = self.find_mid(head)
+        mid = self.findMid(head)
         right = self.sortList(mid.next)
         mid.next = None
         left = self.sortList(head)
-        return self.merge_two_list(left, right)
+        return self.merge(left, right)
 
-    def find_mid(self, head):
-        slow = head
-        fast = head.next
+    def findMid(self, head):
+        slow, fast = head, head
         while fast.next and fast.next.next:
             slow = slow.next
             fast = fast.next.next
         return slow
 
-    def merge_two_list(self, head1, head2):
-        dummay = ListNode(0)
-        pre = dummay
+    def merge(self, head1, head2):
+        dummy = ListNode(0)
+        prev = dummy
         while head1 and head2:
             if head1.val < head2.val:
-                pre.next = head1
+                prev.next = head1
                 head1 = head1.next
             else:
-                pre.next = head2
+                prev.next = head2
                 head2 = head2.next
-            pre = pre.next
-        pre.next = head1 or head2
-        return dummay.next
+            prev = prev.next
+        prev.next = head1 or head2
+        return dummy.next

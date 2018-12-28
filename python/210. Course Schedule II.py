@@ -9,24 +9,23 @@ class Solution(object):
             return []
 
         degree = [0 for _ in range(numCourses)]
-        graph = {i: [] for i in xrange(numCourses)}
+        graph = {i: [] for i in range(numCourses)}
         for end, start in prerequisites:
             degree[end] += 1
             graph[start].append(end)
 
-        res = []
-        return self.bfs(degree, graph, numCourses, res)
+        return self.bfs(degree, graph)
 
-    def bfs(self, degree, graph, numCourses, res):
+    def bfs(self, degree, graph):
+        res = []
         q = collections.deque([i for i in range(len(degree)) if degree[i] == 0])
         while q:
-            t = q.popleft()
-            res.append(t)
-            for node in graph[t]:
+            c = q.popleft()
+            res.append(c)
+            for node in graph[c]:
                 degree[node] -= 1
                 if degree[node] == 0:
                     q.append(node)
-        if len(res) == numCourses:
+        if len(res) == len(degree):
             return res
         return []
-        

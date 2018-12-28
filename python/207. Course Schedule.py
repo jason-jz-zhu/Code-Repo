@@ -21,13 +21,12 @@ class Solution(object):
     def bfs(self, degree, graph):
         q = collections.deque([i for i in range(len(degree)) if degree[i] == 0])
         while q:
-            t = q.popleft()
-            for node in graph[t]:
+            c = q.popleft()
+            for node in graph[c]:
                 degree[node] -= 1
                 if degree[node] == 0:
                     q.append(node)
-        for i in degree:
-            if degree[i] != 0:
+        for d in degree:
+            if d != 0:
                 return False
         return True
-        
