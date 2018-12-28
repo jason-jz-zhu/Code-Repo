@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+from operator import itemgetter
 class Solution(object):
     def verticalOrder(self, root):
         """
@@ -26,7 +27,7 @@ class Solution(object):
             if node.right:
                 q.append((node.right, level + 1))
 
-        for k, v in sorted(hashmap.items(), key = lambda (k, v): (k, v)):
+        for k, v in sorted(hashmap.items(), key = itemgetter(0)):
             res.append(v)
 
         return res
