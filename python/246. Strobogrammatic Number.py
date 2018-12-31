@@ -5,9 +5,8 @@ class Solution(object):
         :rtype: bool
         """
         hashmap = {'0': '0', '1': '1', '6': '9', '8': '8', '9': '6'}
-        l = len(num)
-        for i in xrange((l + 1) / 2):
-            if num[l-1-i] not in hashmap or \
-                num[i] != hashmap[num[l-1-i]]:
-                    return False
+        size = len(num)
+        for i in range((size + 1) // 2):
+            if num[size - 1 - i] not in hashmap or num[i] != hashmap[num[size- 1- i]]:
+                return False
         return True
