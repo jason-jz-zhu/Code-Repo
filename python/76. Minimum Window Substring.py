@@ -5,21 +5,25 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        import collections
-        hashmap = collections.Counter(t)
-        start = end = 0
-        cnt = len(t)
-        res = '#'
-        while end < len(s):
-            if hashmap[s[end]] > 0:
-                cnt -= 1
-            hashmap[s[end]] -= 1
-            end += 1
-            while start < end and cnt == 0:
-                if res == '#' or len(res) > end - start:
-                    res = s[start: end]
-                hashmap[s[start]] += 1
-                if hashmap[s[start]] > 0:
-                    cnt += 1
-                start += 1
-        return '' if res == '#' else res 
+        res = ''
+        tCounter = collections.Counter(t)
+        cnt = 0
+        sCounter = collections.defaultdict(int)
+        left = right = 0
+        minLen = float('inf')
+        while right < len(s):
+
+            if s[right] in tCounter and sCounter[s[right]] < tCounter[s[right]]:
+                cnt += 1
+            sCounter[s[right]] += 1
+            while left <= right and cnt == len(t):
+                if minLen > right - left + 1:
+                    minLen = right - left + 1
+                    res = s[left: right + 1]
+                sCounter[s[left]] -= 1
+                if s[left] in tCounter and sCounter[s[left]] < tCounter[s[left]]:
+                    cnt -= 1
+
+                left += 1
+            right += 1
+        return res
