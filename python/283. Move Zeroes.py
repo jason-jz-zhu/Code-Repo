@@ -16,7 +16,7 @@ class Solution(object):
         while end < len(nums):
             nums[end] = 0
             end += 1
-        
+
 
 class Solution(object):
     def moveZeroes(self, nums):
@@ -27,10 +27,8 @@ class Solution(object):
         if nums is None or len(nums) == 0:
             return
 
-        start = end = 0
-
-        while end < len(nums):
-            if nums[end] != 0:
-                nums[start], nums[end] = nums[end], nums[start]
-                start += 1
-            end += 1
+        last = 0
+        for curr in range(len(nums)):
+            if nums[curr] != 0:
+                nums[curr], nums[last] = nums[last], nums[curr]
+                last += 1
