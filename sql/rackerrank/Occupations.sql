@@ -15,5 +15,6 @@ FROM (
         CASE WHEN Occupation = 'Professor' THEN Name END AS 'Professor',
         CASE WHEN Occupation = 'Singer' THEN Name END AS 'Singer',
         CASE WHEN Occupation = 'Actor' THEN Name END AS 'Actor'
-    FROM OCCUPATIONS) AS tmp
+    FROM OCCUPATIONS
+    order by Name) AS tmp
 GROUP BY tmp.id
