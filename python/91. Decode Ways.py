@@ -9,13 +9,14 @@ class Solution(object):
 
         dp = [1, 1]
         for i in range(2, len(s) + 1):
-            if 10 < int(s[i - 2: i]) <= 26 and int(s[i - 1]) != 0:
+            tmp = int(s[i - 2: i])
+            if 10 < tmp <= 26 and int(s[i - 1]) != 0:
                 dp.append(dp[i - 1] + dp[i - 2])
-            elif int(s[i - 2: i]) == 10 or int(s[i - 2: i]) == 20:
+            elif tmp == 10 or tmp == 20:
                 dp.append(dp[i - 2])
             elif int(s[i - 1]) != 0:
                 dp.append(dp[i - 1])
             else:
                 return 0
-
-        return dp[len(s)]
+        return dp[-1]
+        
