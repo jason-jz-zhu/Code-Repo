@@ -8,17 +8,17 @@ class Solution(object):
             return ''
         if n == 1:
             return '1'
-        pre = '1'
-
+        prev = '1'
         for i in range(2, n + 1):
-            tmp = pre
-            pre = ''
+            tmp = prev
+            prev = ''
             cnt = 1
             for j in range(1, len(tmp)):
                 if tmp[j] == tmp[j - 1]:
                     cnt += 1
                 else:
-                    pre += str(cnt) + tmp[j - 1]
+                    prev += str(cnt) + tmp[j - 1]
                     cnt = 1
-            pre += str(cnt) + tmp[-1]
-        return pre
+            prev += str(cnt) + tmp[-1]
+        return prev
+        

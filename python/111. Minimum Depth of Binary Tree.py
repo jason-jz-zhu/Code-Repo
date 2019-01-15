@@ -14,9 +14,13 @@ class Solution(object):
         """
         if not root:
             return 0
-        left = self.minDepth(root.left)
-        right = self.minDepth(root.right)
-        return left + right + 1 if left == 0 or right == 0 else min(left, right) + 1
+        if not root.left and not root.right:
+            return 1
+        if not root.left:
+            return self.minDepth(root.right) + 1
+        if not root.right:
+            return self.minDepth(root.left) + 1
+        return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
 
 # level traversal
 class Solution(object):

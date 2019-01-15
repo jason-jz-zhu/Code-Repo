@@ -16,6 +16,32 @@ class Solution(object):
         if newInterval is None or len(intervals) == 0:
             return intervals
 
+        res = []
+        point = 0
+        for pair in intervals:
+            if newInterval.start > pair.end:
+                res.append(pair)
+                point += 1
+            elif newInterval.end < pair.start:
+                res.append(pair)
+            else:
+                newInterval.start = min(newInterval.start, pair.start)
+                newInterval.end = max(newInterval.end, pair.end)
+        res.insert(point, newInterval)
+        return res
+        
+class Solution(object):
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[Interval]
+        :type newInterval: Interval
+        :rtype: List[Interval]
+        """
+        if intervals is None or len(intervals) == 0:
+            return [newInterval]
+        if newInterval is None or len(intervals) == 0:
+            return intervals
+
         intervals.append(newInterval)
         intervals.sort(key = lambda x: x.start)
         res = [intervals[0]]
@@ -26,4 +52,3 @@ class Solution(object):
             else:
                 res[-1].end = res[-1].end if intervals[i].end < res[-1].end else intervals[i].end
         return res
-        
