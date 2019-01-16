@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def uniquePaths(self, m, n):
         """
         :type m: int
@@ -7,8 +7,17 @@ class Solution(object):
         """
         if m < 1 or n < 1:
             return 0
-        res = [[1 for j in range(n)] for i in range(m)]
+        f = [[0 for _ in range(n)] for _ in range(m)]
+        # init
+        f[0][0] = 1
+        for i in range(1, m):
+            f[i][0] = 1
+        for j in range(1, n):
+            f[0][j] = 1
+
+        # tf
         for i in range(1, m):
             for j in range(1, n):
-                res[i][j] = res[i-1][j] + res[i][j-1]
-        return res[-1][-1]
+                f[i][j] = f[i - 1][j] + f[i][j - 1]
+
+        return f[-1][-1]

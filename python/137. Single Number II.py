@@ -37,7 +37,7 @@ class Solution(object):
         return x
 
 
-class Solution(object):
+class Solution:
     def singleNumber(self, nums):
         """
         :type nums: List[int]
@@ -45,7 +45,6 @@ class Solution(object):
         """
         if nums is None or len(nums) == 0:
             return None
-
         nums_set = set(nums)
         diff = sum(nums_set) * 3 - sum(nums)
-        return diff / 2
+        return diff // 2

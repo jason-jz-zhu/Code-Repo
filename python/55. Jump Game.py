@@ -1,5 +1,5 @@
 # not accept and dp
-class Solution(object):
+class Solution:
     def canJump(self, nums):
         """
         :type nums: List[int]
@@ -7,15 +7,14 @@ class Solution(object):
         """
         if nums is None or len(nums) == 0:
             return False
-
-        dp = [False] * len(nums)
-        dp[0] = True
-        for i in xrange(1, len(nums)):
-            for j in xrange(i):
-                if dp[j] and nums[j] + j >= i:
-                    dp[i] = True
+        f = [False for _ in range(len(nums))]
+        f[0] = True
+        for i in range(1, len(nums)):
+            for j in range(i):
+                if f[j] and nums[j] + j >= i:
+                    f[i] = True
                     break
-        return dp[len(nums) - 1]
+        return f[-1]
 
 # accept
 class Solution(object):
