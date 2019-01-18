@@ -11,7 +11,7 @@ class Solution(object):
             res ^= (i + 1) ^ nums[i]
         return res
 
-class Solution(object):
+class Solution:
     def missingNumber(self, nums):
         """
         :type nums: List[int]
@@ -19,7 +19,5 @@ class Solution(object):
         """
         if nums is None or len(nums) == 0:
             return -1
-        l = len(nums)
-        sum1 = l * (l + 1) / 2
-        sum2 = reduce(lambda x, y: x + y, nums)
-        return sum1 - sum2
+        n = len(nums)
+        return (n) * (n + 1) // 2 - sum(nums)

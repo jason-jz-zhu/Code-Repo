@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def mySqrt(self, x):
         """
         :type x: int
@@ -8,7 +8,7 @@ class Solution(object):
             return 0
         start, end = 1, x
         while start + 1 < end:
-            mid = start + (end - start) / 2
+            mid = start + (end - start) // 2
             if mid * mid == x:
                 return mid
             elif mid * mid < x:

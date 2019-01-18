@@ -16,7 +16,24 @@ class Solution(object):
                 return (not not a) + (not not b)
         return 3
 
-            
+class Solution:
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n <= 0:
+            return 0
+        f = [float('inf') for i in range(n + 1)]
+        f[0] = 0
+        square = [i ** 2 for i in range(int(n ** 0.5) + 1)]
+        for i in range(1, n + 1):
+            for j in square:
+                if i -j < 0:
+                    break
+                else:
+                    f[i] = min(f[i], f[i - j] + 1)
+        return f[-1]
 
 # accept and bfs
 class Solution(object):
