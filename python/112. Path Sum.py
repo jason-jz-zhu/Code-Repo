@@ -44,7 +44,7 @@ class Solution(object):
         return self.hasPathSum(root.left, sum - root.val) or self.hasPathSum(root.right, sum - root.val)
 
 
-class Solution(object):
+class Solution:
     def hasPathSum(self, root, sum):
         """
         :type root: TreeNode
@@ -53,16 +53,13 @@ class Solution(object):
         """
         if not root:
             return False
+        return self.dfs(root, sum)
 
-        res = []
-        self.helper(root, sum, res)
-        return any(res)
-
-    def helper(self, root, target, res):
-        if not root.left and not root.right:
-            if root.val == target:
-                res.append(True)
-        if root.left:
-            self.helper(root.left, target - root.val, res)
-        if root.right:
-            self.helper(root.right, target - root.val, res)
+    def dfs(self, root, sum):
+        if not root:
+            return False
+        if not root.right and not root.left:
+            return sum == root.val
+        left = self.dfs(root.left, sum - root.val)
+        right = self.dfs(root.right, sum - root.val)
+        return left or right

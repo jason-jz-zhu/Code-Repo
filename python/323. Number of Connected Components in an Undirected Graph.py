@@ -1,20 +1,20 @@
 # bfs
-class Solution(object):
+class Solution:
     def countComponents(self, n, edges):
         """
         :type n: int
         :type edges: List[List[int]]
         :rtype: int
         """
-        if edges is None:
+        if edges is None and len(edges) == 0:
             return 0
-        if n == 1 and len(edges) == 0:
+        if n == 1:
             return 1
 
         graph = {i: set([]) for i in range(n)}
-        for pair in edges:
-            graph[pair[0]].add(pair[1])
-            graph[pair[1]].add(pair[0])
+        for edge in edges:
+            graph[edge[0]].add(edge[1])
+            graph[edge[1]].add(edge[0])
 
         res = 0
         visited = [False for _ in range(n)]
@@ -27,9 +27,9 @@ class Solution(object):
     def bfs(self, i, graph, visited):
         q = collections.deque([i])
         while q:
-            t = q.popleft()
-            visited[t] = True
-            for node in graph[t]:
+            tmp = q.popleft()
+            visited[tmp] = True
+            for node in graph[tmp]:
                 if not visited[node]:
                     q.append(node)
 

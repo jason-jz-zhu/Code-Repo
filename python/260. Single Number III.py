@@ -6,19 +6,18 @@ class Solution(object):
         """
         if nums is None or len(nums) == 0:
             return []
-
         tmp = 0
         for num in nums:
             tmp ^= num
-
-        flag = tmp & (~(tmp - 1))
+        mask = 1
+        while mask & tmp == 0:
+            mask <<= 1
         a = b = 0
         for num in nums:
-            if num & flag == 0:
+            if mask & num == 0:
                 a ^= num
             else:
                 b ^= num
-
         return [a, b]
 
 # flag = tmp & (~(tmp - 1))

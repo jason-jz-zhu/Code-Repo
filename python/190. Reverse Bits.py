@@ -6,9 +6,10 @@ class Solution:
             return 0
         res = 0
         for _ in range(32):
-            res <<= 1
-            if (n & 1) == 1:
-                res += 1
+            if n & 1 == 1:
+                res = (res << 1) + 1
+            else:
+                res = res << 1
             n >>= 1
         return res
 

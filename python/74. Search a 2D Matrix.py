@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def searchMatrix(self, matrix, target):
         """
         :type matrix: List[List[int]]
@@ -11,18 +11,18 @@ class Solution(object):
             return False
 
         row, col = len(matrix), len(matrix[0])
-        start, end = 0, (row * col) - 1
+        start, end = 0, row * col - 1
         while start + 1 < end:
-            mid = (end - start) / 2 + start
-            num = matrix[mid / col][mid % col]
-            if num == target:
+            mid = start + (end - start) // 2
+            tmp = matrix[mid // col][mid % col]
+            if tmp == target:
                 return True
-            elif num < target:
+            elif tmp < target:
                 start = mid
             else:
                 end = mid
-        if matrix[start / col][start % col] == target:
+        if matrix[start // col][start % col] == target:
             return True
-        elif matrix[end / col][end % col] == target:
+        elif matrix[end // col][end % col] == target:
             return True
         return False

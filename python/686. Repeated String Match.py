@@ -1,14 +1,18 @@
-class Solution(object):
+class Solution:
     def repeatedStringMatch(self, A, B):
         """
         :type A: str
         :type B: str
         :rtype: int
         """
-        times = -(-len(B) / len(A))
-        # times = int(math.ceil(float(len(B)) / len(A)))
-        for i in range(2):
-            tmp = A * (times + i)
-            if B in tmp:
-                return times + i
+        res = ''
+        cnt = 0
+        while len(res) < len(B):
+            res += A
+            cnt += 1
+        if B in res:
+            return cnt
+        res += A
+        if B in res:
+            return cnt + 1
         return -1

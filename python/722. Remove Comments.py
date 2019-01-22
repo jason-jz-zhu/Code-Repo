@@ -13,14 +13,11 @@ class Solution(object):
             i = 0
             while i < len(line):
                 s = line[i]
-                # //
                 if (i + 1) < len(line) and line[i: i + 2] == '//' and not comment_open:
                     i = len(line)
-                # /*
                 elif (i + 1) < len(line) and line[i: i + 2] == '/*' and not comment_open:
                     i += 1
                     comment_open = True
-                # */
                 elif (i + 1) < len(line) and line[i: i + 2] == '*/' and comment_open:
                     i += 1
                     comment_open = False

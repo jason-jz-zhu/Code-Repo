@@ -1,8 +1,8 @@
 class Larger(str):
-    def __lt__(x, y):
-        return x + y > y + x
+    def __lt__(self, other):
+        return self + other > other + self
 
-class Solution:
+class Solution(object):
     def largestNumber(self, nums):
         """
         :type nums: List[int]
@@ -11,7 +11,7 @@ class Solution:
         if nums is None or len(nums) == 0:
             return ''
 
-        nums = [str(num) for num in nums]
-        nums.sort(key=Larger)
-        largest = ''.join(nums)
+        tmp = [str(num) for num in nums]
+        tmp.sort(key=Larger)
+        largest = ''.join(tmp)
         return '0' if largest[0] == '0' else largest
