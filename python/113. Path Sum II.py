@@ -27,7 +27,7 @@ class Solution(object):
         if root.left:
             self.helper(root.left, target - root.val, ls + [root.val], res)
         if root.right:
-            self.helper(root.right, target - root.val, ls + [root.val], res)oot.right, target - root.val, ls + [root.val], res)
+            self.helper(root.right, target - root.val, ls + [root.val], res)
 
 
 class Solution(object):

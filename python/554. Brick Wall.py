@@ -1,11 +1,11 @@
-class Solution(object):
+class Solution:
     def leastBricks(self, wall):
         """
         :type wall: List[List[int]]
         :rtype: int
         """
         if wall is None or len(wall) == 0 or len(wall[0]) == 0:
-            return None
+            return -1
 
         hashmap = collections.defaultdict(int)
         for i in range(len(wall)):
@@ -13,9 +13,6 @@ class Solution(object):
             for j in range(len(wall[i]) - 1):
                 s += wall[i][j]
                 hashmap[s] += 1
-
-        max_fit = 0
-        for val in hashmap.values():
-            max_fit = max(max_fit, val)
-
-        return len(wall) - max_fit
+        vals = hashmap.values()
+        maxVal = max(vals) if vals else 0
+        return len(wall) - maxVal

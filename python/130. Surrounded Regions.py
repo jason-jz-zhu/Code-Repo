@@ -11,11 +11,15 @@ class Solution:
 
         q = collections.deque([])
         for i in range(len(board)):
-            q.append((i, 0))
-            q.append((i, len(board[0]) - 1))
+            if board[i][0] == 'O':
+                q.append((i, 0))
+            if board[i][-1] == 'O':
+                q.append((i, len(board[0]) - 1))
         for j in range(len(board[0])):
-            q.append((0, j))
-            q.append((len(board) - 1, j))
+            if board[0][j]:
+                q.append((0, j))
+            if board[-1][j]:
+                q.append((len(board) - 1, j))
 
         dir_x, dir_y = [-1, 0, 0, 1], [0, 1, -1, 0]
         while q:
