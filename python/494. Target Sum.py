@@ -39,7 +39,7 @@ class Solution(object):
         return findTarget(0, S)
 
 
-# dfs  Time Limit Exceeded
+# dfs
 class Solution(object):
     def findTargetSumWays(self, nums, S):
         """
@@ -50,13 +50,13 @@ class Solution(object):
         if nums is None or len(nums) == 0:
             return 0
         self.res = 0
-        self.dfsHelper(nums, S, 0, 0)
+        self.dfs(nums, S, 0)
         return self.res
 
-    def dfsHelper(self, nums, S, i, currSum):
-        if i == len(nums):
-            if currSum == S:
+    def dfs(self, nums, S, i):
+        if i >= len(nums):
+            if S == 0:
                 self.res += 1
-        else:
-            self.dfsHelper(nums, S, i + 1, currSum + nums[i])
-            self.dfsHelper(nums, S, i + 1, currSum - nums[i])
+            return
+        self.dfs(nums, S - nums[i], i + 1)
+        self.dfs(nums, S + nums[i], i + 1)

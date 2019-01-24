@@ -1,4 +1,4 @@
-class Solution(object):
+class Solution:
     def decodeString(self, s):
         """
         :type s: str
@@ -6,21 +6,21 @@ class Solution(object):
         """
         if s is None or len(s) == 0:
             return ''
-        n = 0
-        curr, nums, strs = [], [], []
-
+        stack = []
+        curr_num = 0
+        curr_str = ''
         for c in s:
             if c.isdigit():
-                n = n * 10 + ord(c) - ord('0')
+                curr_num = curr_num * 10 + int(c)
             elif c == '[':
-                nums.append(n)
-                n = 0
-                strs.append(curr)
-                curr = []
+                stack.append(curr_str)
+                stack.append(curr_num)
+                curr_str = ''
+                curr_num = 0
             elif c == ']':
-                strs[-1].extend(curr * nums.pop())
-                curr = strs.pop()
+                prev_num = stack.pop()
+                prev_str = stack.pop()
+                curr_str = prev_str + prev_num * curr_str
             else:
-                curr.append(c)
-
-        return "".join(curr)
+                curr_str += c
+        return curr_str
