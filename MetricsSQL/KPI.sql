@@ -117,6 +117,41 @@ group by 1
 order by 1
 limit 100;
 
+-- Day 7 retention
+WITH new_user_activity AS (
+	SELECT a.*
+    FROM activity AS a
+    INNER JOIN users AS u
+    ON date(a.ts) = date(u.date) AND a.user_id = u.id
+), new_user_cnt_by_date AS (
+	SELECT ts, COUNT(DISTINCT user_id) AS cnt
+    FROM new_user_activity
+    GROUP BY ts
+)
+SELECT
+	tmp.date,
+    CONCAT('DAY ', period) AS period,
+    new_users,
+    retained_users,
+    retention
+FROM (
+	SELECT
+		DATE(first_activity.ts) AS date,
+		DATEDIFF(future_activity.ts, first_activity.ts) AS period,
+		MAX(cnt) AS new_users,
+		COUNT(DISTINCT future_activity.user_id) AS retained_users,
+		COUNT(DISTINCT future_activity.user_id) / MAX(cnt) AS retention
+	FROM new_user_activity AS first_activity
+	LEFT JOIN activity AS future_activity
+	ON first_activity.user_id = future_activity.user_id
+	AND DATE(first_activity.ts) < DATE(future_activity.ts)
+	AND SUBDATE(DATE(first_activity.ts), -7) >= DATE(future_activity.ts)
+	LEFT JOIN new_user_cnt_by_date AS cnt
+	ON DATE(first_activity.ts) = DATE(cnt.ts)
+	GROUP BY date, period) AS tmp
+WHERE period IS NOT null
+ORDER BY date, period
+
 -- churn users
 SELECT
   SUBDATE(DATE(yesterday.last_login_time), -1) AS day,
