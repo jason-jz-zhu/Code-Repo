@@ -45,21 +45,27 @@ WHERE DATE(last_login_time) >= SUBDATE(current_date, 28)
       AND DATE(last_login_time) <= SUBDATE(current_date, 1);
 
 -- every day total Yesterday's DAU
-SELECT
-  dau1.d AS day,
-  CASE WHEN dau2.dau IS NULL THEN 0 ELSE dau2.dau END AS yesterday_dau
-FROM
-  (SELECT
-      DATE(last_login_time) AS d,
-      COUNT(DISTINCT user_id) AS dau
-    FROM f.login
-    GROUP BY DATE(last_login_time)) as dau1
-LEFT JOIN (SELECT
+WITH dau AS (
+  SELECT
     DATE(last_login_time) AS d,
-    COUNT(DISTINCT user_id) AS dau
-  FROM f.login
-  GROUP BY DATE(last_login_time)) AS dau2
-ON SUBDATE(dau1.d, 1) = dau2.d
+    COUNT(DISTINCT user_id) AS cnt
+  FROM login
+  GROUP BY DATE(last_login_time)
+)
+SELECT
+  today_dau.d,
+  CASE WHEN yesterday_dau.d is null THEN 0 ELSE yesterday_dau.cnt END AS yesterday_dau
+FROM dau AS today_dau
+LEFT JOIN dau AS yesterday_dau
+ON SUBDATE(today_dau.d, 1) = yesterday_dau.d;
+
+SELECT
+  DATE(today.last_login_time) AS d,
+  COUNT(DISTINCT yesterday.user_id) AS yesterday_dau
+FROM login AS today
+LEFT JOIN login AS yesterday
+ON subdate(DATE(today.last_login_time), 1) = DATE(yesterday.last_login_time)
+GROUP BY DATE(today.last_login_time)
 
 -- every day total last 7 days DAU
 SELECT dau1.d AS last_7_days, CASE WHEN SUM(dau2.dau) IS NULL THEN 0 ELSE SUM(dau2.dau) END AS last_7_days_au
