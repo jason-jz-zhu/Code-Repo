@@ -14,12 +14,11 @@ FROM f.login
 GROUP BY YEAR(last_login_time), WEEK(last_login_time);
 
 -- MAU
-SELECT
-  YEAR(last_login_time) AS year,
-  MONTH(last_login_time) AS month,
-  COUNT(DISTINCT user_id) AS mau
-FROM f.login
-GROUP BY YEAR(last_login_time), MONTH(last_login_time);
+select
+  extract(year_month from last_login_time) as y_m,
+  count(distinct user_id)
+FROM login
+GROUP BY y_m
 
 -- Just Yesterday's DAU
 SELECT
@@ -34,7 +33,7 @@ SELECT
   COUNT(DISTINCT user_id) AS last_7_days_au
 FROM f.login
 WHERE DATE(last_login_time) >= SUBDATE(current_date, 7)
-      AND DATE(last_login_time) <= SUBDATE(current_date, 1);
+      AND DATE(last_login_time) < current_date;
 
 -- Just last 28 days
 SELECT
@@ -42,9 +41,17 @@ SELECT
   COUNT(DISTINCT user_id) AS last_28_days_au
 FROM f.login
 WHERE DATE(last_login_time) >= SUBDATE(current_date, 28)
-      AND DATE(last_login_time) <= SUBDATE(current_date, 1);
+      AND DATE(last_login_time) < current_date;
 
 -- every day total Yesterday's DAU
+SELECT
+  DATE(today.last_login_time) AS d,
+  COUNT(DISTINCT yesterday.user_id) AS yesterday_dau
+FROM login AS today
+LEFT JOIN login AS yesterday
+ON subdate(DATE(today.last_login_time), 1) = DATE(yesterday.last_login_time)
+GROUP BY DATE(today.last_login_time)
+
 WITH dau AS (
   SELECT
     DATE(last_login_time) AS d,
@@ -59,29 +66,15 @@ FROM dau AS today_dau
 LEFT JOIN dau AS yesterday_dau
 ON SUBDATE(today_dau.d, 1) = yesterday_dau.d;
 
-SELECT
-  DATE(today.last_login_time) AS d,
-  COUNT(DISTINCT yesterday.user_id) AS yesterday_dau
-FROM login AS today
-LEFT JOIN login AS yesterday
-ON subdate(DATE(today.last_login_time), 1) = DATE(yesterday.last_login_time)
-GROUP BY DATE(today.last_login_time)
-
 -- every day total last 7 days DAU
-SELECT dau1.d AS last_7_days, CASE WHEN SUM(dau2.dau) IS NULL THEN 0 ELSE SUM(dau2.dau) END AS last_7_days_au
-FROM
-(SELECT
-  DATE(last_login_time) AS d,
-  COUNT(DISTINCT user_id) AS dau
-FROM f.login
-GROUP BY DATE(last_login_time)) as dau1
-LEFT JOIN (SELECT
-  DATE(last_login_time) AS d,
-  COUNT(DISTINCT user_id) AS dau
-FROM f.login
-GROUP BY DATE(last_login_time)) AS dau2
-ON subdate(dau1.d, 1) >= dau2.d AND subdate(dau1.d, 7) <= dau2.d
-GROUP BY dau1.d
+SELECT
+  date(today.last_login_time) as d,
+    count(distinct past.user_id, date(past.last_login_time)) as past_7_cnt
+FROM login AS today
+LEFT JOIN login AS past
+ON subdate(date(today.last_login_time), 7) <= date(past.last_login_time)
+and date(today.last_login_time) > date(past.last_login_time)
+GROUP by date(today.last_login_time)
 
 -- new users
 SELECT tmp.first_login_time, COUNT(tmp.user_id) AS new_users
@@ -92,36 +85,33 @@ FROM (
 GROUP BY tmp.first_login_time;
 
 -- retention/retained users (daily, weekly, monthly)
--- daily
+-- daily (1 day retention)
 SELECT
-  DATE(l1.last_login_time),
-  COUNT(DISTINCT l2.user_id)
-FROM login AS l1
-LEFT JOIN login AS l2
-ON SUBDATE(DATE(l1.last_login_time), 1) = DATE(l2.last_login_time) AND l1.user_id = l2.user_id
-GROUP BY DATE(l1.last_login_time);
+  date(today.last_login_time) as today,
+  COUNT(distinct future.user_id) as day1_retained_num,
+  COUNT(distinct today.user_id) AS today_num
+FROM login AS today
+LEFT JOIN login AS future
+ON future.user_id = today.user_id
+AND subdate(date(today.last_login_time), -1) = date(future.last_login_time)
+GROUP BY date(today.last_login_time)
 
 -- monthly
-SELECT
-  this_month.ym AS 'year_month',
-  COUNT(last_month.user_id) AS retention_number
-FROM (SELECT DISTINCT CONCAT(YEAR(last_login_time), MONTH(last_login_time)) AS ym, user_id FROM login) AS this_month
-LEFT JOIN (SELECT DISTINCT CONCAT(YEAR(last_login_time), MONTH(last_login_time)) AS ym, user_id FROM login) AS last_month
-ON this_month.ym = last_month.ym + 1 AND this_month.user_id = last_month.user_id
-GROUP BY this_month.ym
-
--- 1 Day Retention
+with mau_detail as (
+  select
+    distinct extract(year_month from last_login_time) as y_m,
+    user_id
+  from login
+)
 select
-  date(g1.created_at) as dt,
-  round(100 * count(distinct g2.user_id) /
-    count(distinct g1.user_id)) as retention
-from gameplays as g1
-  left join gameplays as g2 on
-    g1.user_id = g2.user_id
-    and date(g1.created_at) = date(datetime(g2.created_at, '-1 day'))
-group by 1
-order by 1
-limit 100;
+  this_month.y_m,
+  COUNT(distinct future_month.user_id) as month1_retained_num,
+  COUNT(distinct this_month.user_id) as this_month_num
+FROM mau_detail as this_month
+LEFT JOIN mau_detail as future_month
+ON this_month.user_id = future_month.user_id
+and period_add(this_month.y_m, 1) = future_month.y_m
+GROUP BY this_month.y_m
 
 -- Day 7 retention
 WITH new_user_activity AS (
@@ -159,71 +149,30 @@ WHERE period IS NOT null
 ORDER BY date, period
 
 -- churn users
-SELECT
-  SUBDATE(DATE(yesterday.last_login_time), -1) AS day,
-  COUNT(DISTINCT yesterday.user_id) AS churn_number
-FROM login AS yesterday
-LEFT JOIN login AS today
-ON SUBDATE(DATE(today.last_login_time), 1) = DATE(yesterday.last_login_time) AND today.user_id = yesterday.user_id
-WHERE today.user_id IS NULL
-GROUP BY DATE(yesterday.last_login_time);
+select
+  date(today.last_login_time) as d,
+  count(distinct today.user_id) as churn_num
+FROM login AS today
+LEFT JOIN login AS future
+ON today.user_id = future.user_id
+AND subdate(date(today.last_login_time), -1) = date(future.last_login_time)
+WHERE future.user_id is null
+GROUP BY date(today.last_login_time)
+
 
 -- resurrected / reactive users
-with
-monthly_activity as (
-  select distinct
-    date_trunc('month', created_at) as month,
-    user_id
-  from events
-),
-first_activity as (
-  select user_id, date(min(created_at)) as month
-  from events
-  group by 1
+with first_activity as (
+  select user_id, date(min(last_login_time)) as ts
+  from login
+  group by user_id
 )
-select
-  this_month.month,
-  count(distinct user_id)
-from monthly_activity this_month
-left join monthly_activity last_month
-  on this_month.user_id = last_month.user_id
-  and this_month.month = add_months(last_month.month,1)
-join first_activity
-  on this_month.user_id = first_activity.user_id
-  and first_activity.month != this_month.month
-where last_month.user_id is null
-group by 1
-
--- Percent Change
-with monthly_active_users as (
- select
-   date_trunc('month', created_at) as month,
-   count (distinct user_id) as mau
- from events
- group by 1
-)
-select
- this_month.month,
- [(this_month.mau - last_month.mau)*1.0/last_month.mau:%] as pct_change
-from monthly_active_users this_month
-join monthly_active_users last_month
- on this_month.month = add_months(last_month.month,1)
-
-
--- Daily Revenue
-select
-  date(created_at) as d,
-  round(sum(price), 2)
-from purchases
-group by d
-order by d;
-
-
--- Daily Average Revenue Per Purchasing User
-select
-  date(created_at) as d,
-  round(SUM(price) / count(distinct user_id), 2) as arppu
-from purchases
-where refunded_at is null
-group by d
-order by d;
+select date(today.last_login_time), count(distinct f.user_id)
+from login as today
+left join login as yesterday
+on today.user_id = yesterday.user_id
+and subdate(date(today.last_login_time), 1) = date(yesterday.last_login_time)
+left join first_activity as f
+on today.user_id = f.user_id
+and f.ts != date(today.last_login_time)
+where yesterday.user_id is null
+group by date(today.last_login_time)
