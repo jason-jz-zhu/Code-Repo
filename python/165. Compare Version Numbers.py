@@ -5,21 +5,16 @@ class Solution(object):
         :type version2: str
         :rtype: int
         """
-        v1_array = version1.split('.')
-        v2_array = version2.split('.')
-        l1, l2 = len(v1_array), len(v2_array)
-        l_max = max(l1, l2)
-        for i in range(l_max):
-            tmp1 = 0
-            if i < l1:
-                tmp1 = int(v1_array[i])
-            tmp2 = 0
-            if i < l2:
-                tmp2 = int(v2_array[i])
-            if tmp1 < tmp2:
-                return - 1
-            if tmp1 > tmp2:
+        v1 = [int(v) for v in version1.split('.')]
+        v2 = [int(v) for v in version2.split('.')]
+
+        for i in range(max(len(v1), len(v2))):
+            num1 = v1[i] if i < len(v1) else 0
+            num2 = v2[i] if i < len(v2) else 0
+            if num1 > num2:
                 return 1
+            elif num1 < num2:
+                return -1
         return 0
 
 

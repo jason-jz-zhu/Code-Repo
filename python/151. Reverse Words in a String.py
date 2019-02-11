@@ -5,6 +5,11 @@ class Solution(object):
         :rtype: str
         """
         if s is None:
-            return s
+            return None
 
-        return ' '.join(s.split()[::-1])
+        res = s.strip()
+        if len(res) == 0:
+            return ''
+
+        res = [c for c in res.split(' ') if c != '']
+        return ' '.join(res[::-1])

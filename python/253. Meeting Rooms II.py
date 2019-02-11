@@ -10,19 +10,17 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: int
         """
-        import heapq
         if intervals is None or len(intervals) == 0:
             return 0
-        sorted_intervals = sorted(intervals, key=lambda x: x.start)
-
+        sorted_intervals = sorted(intervals, key = lambda x: x.start)
         heap = []
         heapq.heappush(heap, sorted_intervals[0].end)
-        for i in xrange(1, len(sorted_intervals)):
+        for i in range(1, len(sorted_intervals)):
             if heap[0] <= sorted_intervals[i].start:
                 heapq.heappop(heap)
             heapq.heappush(heap, sorted_intervals[i].end)
-
         return len(heap)
+                
 
 
 # Definition for an interval.

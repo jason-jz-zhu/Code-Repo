@@ -18,28 +18,6 @@ class Solution(object):
 
         return []
 
-
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        if nums is None or len(nums) == 0:
-            return []
-
-        hashmap = {}
-
-        for idx, val in enumerate(nums):
-            tmp = target - val
-            if tmp not in hashmap:
-                hashmap[val] = idx
-            else:
-                return [hashmap[target - val], idx]
-
-        return []
-
 class Solution(object):
     def twoSum(self, nums, target):
         """
