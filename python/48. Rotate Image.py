@@ -7,20 +7,17 @@ class Solution(object):
         if matrix is None or len(matrix) == 0 or len(matrix[0]) == 0:
             return
 
-        start, end = 0, len(matrix) - 1
-        while start < end:
-            for i in xrange(start, end):
-                offset = i - start
-                tmp = matrix[start][i]
-                matrix[start][i] = matrix[end - offset][start]
-                matrix[end - offset][start] = matrix[end][end - offset]
-                matrix[end][end - offset] = matrix[start + offset][end]
-                matrix[start+ offset][end] = tmp
-            start += 1
-            end -= 1
+        n = len(matrix[0])
+        for i in range(n // 2 + n % 2):
+            for j in range(n // 2):
+                tmp = matrix[n - 1 - j][i]
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j]
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i]
+                matrix[j][n - 1 - i] = matrix[i][j]
+                matrix[i][j] = tmp
 
 
-class Solution(object):
+class Solution:
     def rotate(self, matrix):
         """
         :type matrix: List[List[int]]
@@ -30,6 +27,6 @@ class Solution(object):
             return
 
         matrix.reverse()
-        for i in xrange(len(matrix)):
-            for j in xrange(i):
+        for i in range(len(matrix)):
+            for j in range(i):
                 matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]

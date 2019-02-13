@@ -1,17 +1,12 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def deleteNode(self, root, key):
-        """
-        :type root: TreeNode
-        :type key: int
-        :rtype: TreeNode
-        """
+class Solution:
+    def deleteNode(self, root: 'TreeNode', key: 'int') -> 'TreeNode':
         if not root:
             return root
 
@@ -21,18 +16,13 @@ class Solution(object):
             root.right = self.deleteNode(root.right, key)
         else:
             if not root.left:
-                right = root.right
-                del root
-                return right
+                return root.right
             elif not root.right:
-                left = root.left
-                del root
-                return left
+                return root.left
             else:
                 successor = root.right
                 while successor.left:
                     successor = successor.left
-
                 root.val = successor.val
                 root.right = self.deleteNode(root.right, successor.val)
         return root

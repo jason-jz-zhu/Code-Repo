@@ -26,25 +26,6 @@ class Solution:
                 curr = dummy
                 root = dummy.next
 
-# interative space: o(1) two loop
-class Solution:
-    # @param root, a tree link node
-    # @return nothing
-    def connect(self, root):
-        if not root:
-            return
-        while root:
-            curr = tmp = TreeLinkNode(0)
-            while root:
-                if root.left:
-                    curr.next = root.left
-                    curr = root.left
-                if root.right:
-                    curr.next = root.right
-                    curr = root.right
-                root = root.next
-            root = tmp.next
-
 # level order space: o(n)
 class Solution:
     # @param root, a tree link node
@@ -52,14 +33,11 @@ class Solution:
     def connect(self, root):
         if not root:
             return
-        q = [root, None]
+        q = [root]
         while q:
             for i in range(len(q) - 1):
                 q[i].next = q[i + 1]
-            q = [kid for node in q[:-1] for kid in (node.left, node.right) if kid]
-            if not q:
-                break
-            q.append(None)
+            q = [kid for node in q for kid in (node.left, node.right) if kid]
 
 # recursive space: o(n)
 class Solution:

@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+# binary serach o(h) o (1)
 class Solution(object):
     def inorderSuccessor(self, root, p):
         """
@@ -18,25 +19,6 @@ class Solution(object):
         while root:
             res = root if p.val < root.val else res
             root = root.left if p.val < root.val else root.right
-        return res
-
-# binary serach o(h) o (1)
-class Solution(object):
-    def inorderSuccessor(self, root, p):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :rtype: TreeNode
-        """
-        if not root:
-            return None
-        res = None
-        while root:
-            if p.val < root.val:
-                res = root
-                root = root.left
-            else:
-                root = root.right
         return res
 
 # dfs interative inorder o(n) o (n)
@@ -63,3 +45,28 @@ class Solution(object):
                     flag = True
                 root = root.right
         return None
+
+
+class Solution(object):
+    def inorderSuccessor(self, root, p):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return None
+        res = []
+        self.inorder(root, p, [False], res)
+        return res[0] if len(res) != 0 else None
+
+    def inorder(self, root, p, flag, res):
+        if not root:
+            return
+
+        self.inorder(root.left, p, flag, res)
+        if flag[0]:
+            res.append(root)
+        if p.val == root.val:
+            flag[0] = True
+        self.inorder(root.right, p, flag, res)

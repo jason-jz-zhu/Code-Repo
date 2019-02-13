@@ -12,19 +12,19 @@ class Solution(object):
         res = []
         while True:
             if direct == 0:
-                for i in xrange(left, right + 1):
+                for i in range(left, right + 1):
                     res.append(matrix[up][i])
                 up += 1
             if direct == 1:
-                for i in xrange(up, down + 1):
+                for i in range(up, down + 1):
                     res.append(matrix[i][right])
                 right -= 1
             if direct == 2:
-                for i in xrange(right, left - 1, -1):
+                for i in range(right, left - 1, -1):
                     res.append(matrix[down][i])
                 down -= 1
             if direct == 3:
-                for i in xrange(down, up - 1, -1):
+                for i in range(down, up - 1, -1):
                     res.append(matrix[i][left])
                 left += 1
             if up > down or left > right:

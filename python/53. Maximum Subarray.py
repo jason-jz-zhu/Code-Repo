@@ -1,7 +1,5 @@
-# This is Kadan's Algorithm
-# can find the explaination here: https://www.youtube.com/watch?v=86CQq3pKSUw
-# O(n)
-class Solution(object):
+# DP
+class Solution:
     def maxSubArray(self, nums):
         """
         :type nums: List[int]
@@ -9,15 +7,23 @@ class Solution(object):
         """
         if nums is None or len(nums) == 0:
             return 0
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        res = nums[0]
+        for i in range(1, len(nums)):
+            dp[i] = nums[i] + (dp[i - 1] if dp[i - 1] > 0 else 0)
+            res = max(res, dp[i])
+        return res
 
-        max_so_far = max_ending_here = nums[0]
-
-        for num in nums[1:]:
-            max_ending_here = max(num, max_ending_here + num)
-            max_so_far = max(max_ending_here, max_so_far)
-
-        return max_so_far
-
+class Solution:
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        for i in range(1,len(nums)):
+            nums[i] = max(nums[i], nums[i-1] + nums[i])
+        return max(nums)
 
 # DC
 # O(nlg(n))
@@ -56,21 +62,3 @@ class Solution:
                       maxCrossingSum(arr, l, m, h))
 
         return maxSubArraySum(nums, 0, len(nums) - 1)
-
-# DP
-class Solution:
-    def maxSubArray(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        if nums is None or len(nums) == 0:
-            return 0
-        n = len(nums)
-        dp = [0] * n
-        dp[0] = nums[0]
-        res = dp[0]
-        for i in range(1, n):
-            dp[i] = nums[i] + (dp[i - 1] if dp[i - 1] > 0 else 0)
-            res = max(res, dp[i])
-        return res
