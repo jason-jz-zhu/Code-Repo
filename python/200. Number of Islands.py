@@ -54,11 +54,12 @@ class Solution(object):
         return res
 
     def dfs(self, grid, i, j):
-        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]):
-            return
-        if grid[i][j] == '1':
-            grid[i][j] = '2'
-            self.dfs(grid, i - 1, j)
-            self.dfs(grid, i + 1, j)
-            self.dfs(grid, i, j - 1)
-            self.dfs(grid, i, j + 1)
+        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
+        grid[i][j] = '2'
+        for k in range(4):
+            x, y = i + dx[k], j + dy[k]
+            if x < 0 or x >= len(grid) or y < 0 or y >= len(grid[0]):
+                continue
+            if grid[x][y] == '1':
+                self.dfs(grid, x, y)
+                

@@ -1,44 +1,50 @@
-class MyQueue(object):
+class MyQueue:
 
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.inStack, self.outStack = [], []
+        self.in_stack = []
+        self.out_stack = []
 
-    def push(self, x):
+
+    def push(self, x: 'int') -> 'None':
         """
         Push element x to the back of queue.
-        :type x: int
-        :rtype: void
         """
-        self.inStack.append(x)
+        self.in_stack.append(x)
 
-    def pop(self):
+
+    def pop(self) -> 'int':
         """
         Removes the element from in front of queue and returns that element.
-        :rtype: int
         """
         self.move()
-        return self.outStack.pop()
+        return self.out_stack.pop() if self.out_stack else float('-inf')
 
-
-    def peek(self):
+    def peek(self) -> 'int':
         """
         Get the front element.
-        :rtype: int
         """
         self.move()
-        return self.outStack[-1]
+        return self.out_stack[-1] if self.out_stack else float('-inf')
 
-    def empty(self):
+
+    def empty(self) -> 'bool':
         """
         Returns whether the queue is empty.
-        :rtype: bool
         """
-        return (not self.inStack) and (not self.outStack)
+        return not self.in_stack and not self.out_stack
 
     def move(self):
-        if not self.outStack:
-            while self.inStack:
-                self.outStack.append(self.inStack.pop())
+        if not self.out_stack:
+            while self.in_stack:
+                self.out_stack.append(self.in_stack.pop())
+
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()

@@ -1,45 +1,43 @@
-class Solution(object):
-    def pacificAtlantic(self, matrix):
-        """
-        :type matrix: List[List[int]]
-        :rtype: List[List[int]]
-        """
+class Solution:
+    def pacificAtlantic(self, matrix: 'List[List[int]]') -> 'List[List[int]]':
         if matrix is None or len(matrix) == 0 or len(matrix[0]) == 0:
             return []
+
         m, n = len(matrix), len(matrix[0])
         qp = collections.deque([])
         qa = collections.deque([])
-        mp = [[False for _ in xrange(n)] for _ in xrange(m)]
-        ma = [[False for _ in xrange(n)] for _ in xrange(m)]
-        res = []
-        for i in xrange(m):
+        mp = [[False for _ in range(n)] for _ in range(m)]
+        ma = [[False for _ in range(n)] for _ in range(m)]
+
+        for i in range(m):
             qp.append((i, 0))
             qa.append((i, n - 1))
             mp[i][0] = True
             ma[i][n - 1] = True
-        for j in xrange(n):
+
+        for j in range(n):
             qp.append((0, j))
             qa.append((m - 1, j))
             mp[0][j] = True
             ma[m - 1][j] = True
 
-        self.bfs(matrix, mp, qp)
-        self.bfs(matrix, ma, qa)
+        self.bfs(matrix, qp, mp)
+        self.bfs(matrix, qa, ma)
 
-        for i in xrange(m):
-            for j in xrange(n):
+        res = []
+        for i in range(m):
+            for j in range(n):
                 if mp[i][j] and ma[i][j]:
                     res.append([i, j])
         return res
 
-    def bfs(self, matrix, visited, q):
-        m, n = len(matrix), len(matrix[0])
-        dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    def bfs(self, matrix, q, visited):
+        dx, dy = [1, 0, 0, -1], [0, 1, -1, 0]
         while q:
-            curr_x, curr_y = q.popleft()
-            for d in dirs:
-                x, y = curr_x + d[0], curr_y + d[1]
-                if x < 0 or x >= m or y < 0 or y >= n or visited[x][y] or matrix[x][y] < matrix[curr_x][curr_y]:
+            grid_x, grid_y = q.popleft()
+            for k in range(4):
+                x, y = grid_x + dx[k], grid_y + dy[k]
+                if x < 0 or x >= len(matrix) or y < 0 or y >= len(matrix[0]) or visited[x][y] or matrix[grid_x][grid_y] > matrix[x][y]:
                     continue
                 visited[x][y] = True
                 q.append((x, y))

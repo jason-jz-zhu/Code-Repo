@@ -29,12 +29,8 @@ class Solution(object):
                     shape.append((x - i, y - j))
         return shape
 
-class Solution(object):
-    def numDistinctIslands(self, grid):
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
+class Solution:
+    def numDistinctIslands(self, grid: 'List[List[int]]') -> 'int':
         if grid is None or len(grid) == 0:
             return 0
         if grid[0] is None or len(grid[0]) == 0:
@@ -50,12 +46,12 @@ class Solution(object):
         return len(res)
 
     def dfs(self, grid, i, j, i0, j0, shape):
-        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]):
-            return
-        if grid[i][j] == 1:
-            grid[i][j] = 2
-            shape.append((i - i0, j - j0))
-            self.dfs(grid, i - 1, j, i0, j0, shape)
-            self.dfs(grid, i + 1, j, i0, j0, shape)
-            self.dfs(grid, i, j - 1, i0, j0, shape)
-            self.dfs(grid, i, j + 1, i0, j0, shape)
+        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
+        grid[i][j] = 2
+        for k in range(4):
+            x, y = i + dx[k], j + dy[k]
+            if x < 0 or x >= len(grid) or y < 0 or y >= len(grid[0]):
+                continue
+            if grid[x][y] == 1:
+                shape.append((x - i0, y - j0))
+                self.dfs(grid, x, y, i0, j0, shape)
