@@ -1,3 +1,28 @@
+
+# montone decreate stack
+class Solution:
+    def trap(self, height: 'List[int]') -> 'int':
+        if height is None or len(height) < 3:
+            return 0
+
+        stack = []
+        i = 0
+        res = 0
+        while i < len(height):
+            if not stack or height[stack[-1]] > height[i]:
+                stack.append(i)
+                i += 1
+            else:
+                lowest = stack.pop()
+                if not stack:
+                    continue
+                h = min(height[i], height[stack[-1]]) - height[lowest]
+                w = i - stack[-1] - 1
+                res += h * w
+        return res
+
+
+
 class Solution(object):
     def trap(self, height):
         """

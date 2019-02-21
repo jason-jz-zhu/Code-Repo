@@ -1,36 +1,36 @@
-class Solution(object):
-    def gameOfLife(self, board):
+class Solution:
+    def gameOfLife(self, board: 'List[List[int]]') -> 'None':
         """
-        :type board: List[List[int]]
-        :rtype: void Do not return anything, modify board in-place instead.
+        Do not return anything, modify board in-place instead.
         """
-        if board is None or len(board) == 0 or len(board[0]) == 0:
+        if not board or len(board) == 0:
+            return
+        if not board[0] or len(board[0]) == 0:
             return
 
         m, n = len(board), len(board[0])
-        for i in xrange(m):
-            for j in xrange(n):
-                cnt = self.countLiveNeighbors(i, j, m, n, board)
+        for i in range(m):
+            for j in range(n):
+                cnt = self.count_around_live(board, i, j)
                 if board[i][j]:
-                    if not (cnt == 2 or cnt == 3):
+                    if cnt not in (2, 3):
                         board[i][j] = 2
                 else:
                     if cnt == 3:
                         board[i][j] = 3
 
-        for i in xrange(m):
-            for j in xrange(n):
-                board[i][j] = board[i][j] & 1 # % 2 == & 1
+        for i in range(m):
+            for j in range(n):
+                board[i][j] %= 2
 
-    def countLiveNeighbors(self, i, j, m, n, board):
+    def count_around_live(self, board, i, j):
         dx = [1, 1, 1, 0, 0, -1, -1, -1]
         dy = [1, 0, -1, 1, -1, 1, 0, -1]
         cnt = 0
-        for k in xrange(8):
-            nx, ny = i + dx[k], j + dy[k]
-            if nx < 0 or ny < 0 or nx >= m or ny >= n:
+        for k in range(8):
+            x, y = i + dx[k], j + dy[k]
+            if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]):
                 continue
-            if board[nx][ny] == 1 or board[nx][ny] == 2:
+            if board[x][y] == 1 or board[x][y] == 2:
                 cnt += 1
-
         return cnt

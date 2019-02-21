@@ -1,10 +1,3 @@
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
 class Codec:
 
     def serialize(self, root):
@@ -13,17 +6,18 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        def dfs(node, vals):
+        def preorder(node, res):
             if node:
-                vals.append(str(node.val))
-                dfs(node.left, vals)
-                dfs(node.right, vals)
+                res.append(node.val)
+                preorder(node.left, res)
+                preorder(node.right, res)
             else:
-                vals.append('#')
+                res.append('#')
 
-        vals = []
-        dfs(root, vals)
-        return ' '.join(vals)
+        res = []
+        preorder(root, res)
+        return ' '.join(map(str, res))
+
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -31,21 +25,16 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        def dfs(vals):
-            if vals[0] == '#':
-                vals.pop(0)
+        def dfs(q):
+            if not q:
                 return None
-            node = TreeNode(int(vals[0]))
-            vals.pop(0)
-            node.left = dfs(vals)
-            node.right = dfs(vals)
+            val = q.popleft()
+            if val == '#':
+                return None
+            node = TreeNode(int(val))
+            node.left = dfs(q)
+            node.right = dfs(q)
             return node
 
-
-        vals = data.split()
-        root = dfs(vals)
-        return root
-
-# Your Codec object will be instantiated and called as such:
-# codec = Codec()
-# codec.deserialize(codec.serialize(root))
+        q = collections.deque(data.split())
+        return dfs(q)

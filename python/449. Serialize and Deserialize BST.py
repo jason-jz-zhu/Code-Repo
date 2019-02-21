@@ -60,15 +60,15 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        def preorder(node, vals):
+        def preorder(node, res):
             if node:
-                vals.append(node.val)
-                preorder(node.left, vals)
-                preorder(node.right, vals)
+                res.append(node.val)
+                preorder(node.left, res)
+                preorder(node.right, res)
 
-        vals = []
-        preorder(root, vals)
-        return ' '.join(map(str, vals))
+        res = []
+        preorder(root, res)
+        return ' '.join(map(str, res))
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -76,20 +76,18 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        def helper(minVal, maxVal, vals):
-            if not vals:
+        def dfs(min_val, max_val, q):
+            if not q:
                 return None
-            if minVal < vals[0] < maxVal:
-                val = vals.popleft()
+            if min_val < q[0] < max_val:
+                val = q.popleft()
                 node = TreeNode(val)
-                node.left = helper(minVal, val, vals)
-                node.right = helper(val, maxVal, vals)
+                node.left = dfs(min_val, val, q)
+                node.right = dfs(val, max_val, q)
                 return node
-            else:
-                return None
 
-        vals = collections.deque([int(val) for val in data.split()])
-        return helper(float('-inf'), float('inf'), vals)
+        q = collections.deque([int(val) for val in data.split()])
+        return dfs(float('-inf'), float('inf'), q)
 
 
 class Codec:
