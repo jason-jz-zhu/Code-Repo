@@ -7,11 +7,12 @@ class Solution:
             return True
 
         indegree = [0 for _ in range(numCourses)]
-        graph = {i: [] for i in range(numCourses)}
+        graph = {i: set() for i in range(numCourses)}
 
         for end, start in prerequisites:
-            indegree[end] += 1
-            graph[start].append(end)
+            if end not in graph[start]:
+                indegree[end] += 1
+            graph[start].add(end)
 
         return self.bfs(indegree, graph)
 

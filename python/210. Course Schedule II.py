@@ -9,10 +9,11 @@ class Solution(object):
             return []
 
         degree = [0 for _ in range(numCourses)]
-        graph = {i: [] for i in range(numCourses)}
+        graph = {i: set() for i in range(numCourses)}
         for end, start in prerequisites:
-            degree[end] += 1
-            graph[start].append(end)
+            if end not in graph[start]:
+                degree[end] += 1
+            graph[start].add(end)
 
         return self.bfs(degree, graph)
 
