@@ -22,6 +22,34 @@ class Solution(object):
             return self.minDepth(root.left) + 1
         return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
 
+
+# dfs recursion
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        left_height = self.minDepth(root.left)
+        right_height = self.minDepth(root.right)
+        height = min(left_height, right_height) + 1 if left_height > 0 and right_height > 0 else max(left_height, right_height) + 1
+        return height
+
+# dfs iterative
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        stack = [(root, 1)]
+        res = float('inf')
+        while stack:
+            curr, height = stack.pop()
+            if curr.left:
+                stack.append((curr.left, height + 1))
+            if curr.right:
+                stack.append((curr.right, height + 1))
+            if not curr.left and not curr.right:
+                res = min(res, height)
+        return res
+
 # level traversal
 class Solution(object):
     def minDepth(self, root):

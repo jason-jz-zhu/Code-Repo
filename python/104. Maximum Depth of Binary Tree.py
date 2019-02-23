@@ -24,6 +24,7 @@ class Solution(object):
         return max(self.maxDepth(root.right), self.maxDepth(root.left)) + 1
 
 
+# dfs recursion
 class Solution(object):
     def maxDepth(self, root):
         """
@@ -35,6 +36,23 @@ class Solution(object):
         left = self.maxDepth(root.left)
         right = self.maxDepth(root.right)
         return max(left, right) + 1
+
+# dfs iterative
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        stack = [(root, 1)]
+        res = 0
+        while stack:
+            curr, level = stack.pop()
+            res = max(res, level)
+            if curr.left:
+                stack.append((curr.left, level + 1))
+            if curr.right:
+                stack.append((curr.right, level + 1))
+        return res
+
 
 # level traversal
 class Solution(object):
