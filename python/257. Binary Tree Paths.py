@@ -5,6 +5,27 @@
 #         self.left = None
 #         self.right = None
 
+
+# dfs and recursively
+class Solution:
+    def binaryTreePaths(self, root: TreeNode) -> List[str]:
+        if not root:
+            return []
+
+        res = []
+        self.dfs(root, '', res)
+        return res
+
+    def dfs(self, node, path, res):
+        if not node:
+            return
+        if not node.left and not node.right:
+            res.append(path + str(node.val))
+            return
+
+        self.dfs(node.left, path + str(node.val) + '->', res)
+        self.dfs(node.right, path + str(node.val) + '->', res)
+
 # dfs and stack
 class Solution(object):
     def binaryTreePaths(self, root):
@@ -44,24 +65,3 @@ class Solution(object):
             if node.right:
                 queue.append((node.right, path + str(node.val) + '->'))
         return res
-
-# dfs and recursively
-class Solution(object):
-    def binaryTreePaths(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[str]
-        """
-        if not root:
-            return []
-        res = []
-        self.helper(root, '', res)
-        return res
-
-    def helper(self, root, path, res):
-        if not root:
-            return
-        if not root.left and not root.right:
-            res.append(path + str(root.val))
-        self.helper(root.left, path + str(root.val) + '->', res)
-        self.helper(root.right, path + str(root.val) + '->', res)

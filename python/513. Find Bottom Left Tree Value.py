@@ -1,45 +1,39 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-# level order
-class Solution(object):
-    def findBottomLeftValue(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
+class Solution:
+    def findBottomLeftValue(self, root: TreeNode) -> int:
         if not root:
-            return None
+            return 0
 
-        res, q = 0, [root]
+        q = [root]
+        res = 0
         while q:
-            res= q[0].val
-            q = [ kid for node in q for kid in (node.left, node.right) if kid]
+            res = q[0].val
+            q = [child for node in q for child in (node.left, node.right) if child]
         return res
 
 # dfs preorder
-class Solution(object):
-    def findBottomLeftValue(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
+class Solution:
+    def findBottomLeftValue(self, root: TreeNode) -> int:
         if not root:
             return 0
-        level = 0
-        res = [0, 0]
-        self.helper(root, level, res)
-        return res[0]
+        res = {
+            'left_node_val': 0,
+            'curr_level': 0
+        }
+        self.dfs(root, 0, res)
+        return res['left_node_val']
 
-    def helper(self, node, level, res):
+    def dfs(self, node, level, res):
         if not node:
             return
-        if level == res[1]:
-            res[0] = node.val
-            res[1] += 1
-        self.helper(node.left, level + 1, res)
-        self.helper(node.right, level + 1, res)
+        if level == res['curr_level']:
+            res['curr_level'] += 1
+            res['left_node_val'] = node.val
+        self.dfs(node.left, level + 1, res)
+        self.dfs(node.right, level + 1, res)
