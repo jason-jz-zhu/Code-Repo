@@ -6,26 +6,21 @@
 #         self.right = None
 
 class Solution:
-    def sumNumbers(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
+    def sumNumbers(self, root: TreeNode) -> int:
         if not root:
             return 0
-        self.res = 0
-        self.dfs(root, root.val)
-        return self.res
 
-    def dfs(self, root, s):
-        if not root:
-            return
-        if not root.left and not root.right:
-            self.res += s
-        if root.left:
-            self.dfs(root.left, s * 10 + root.left.val)
-        if root.right:
-            self.dfs(root.right, s * 10 + root.right.val)
+        return self.dfs(root, 0)
+
+    def dfs(self, node, s):
+        if not node:
+            return 0
+        if not node.left and not node.right:
+            return s * 10 + node.val
+        s = s * 10 + node.val
+        left = self.dfs(node.left, s)
+        right = self.dfs(node.right, s)
+        return left + right
 
 
 class Solution(object):
@@ -47,22 +42,3 @@ class Solution(object):
             if node.right:
                 q.append((node.right, num * 10 + node.right.val))
         return res
-
-
-
-class Solution(object):
-    def sumNumbers(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        return self.dfs(root, 0)
-
-    def dfs(self, root, sum):
-        if not root:
-            return 0
-
-        if not root.left and not root.right:
-            return sum * 10 + root.val
-
-        return self.dfs(root.left, sum * 10 + root.val) + self.dfs(root.right, sum * 10 + root.val)

@@ -5,29 +5,25 @@
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def pathSum(self, root, sum):
-        """
-        :type root: TreeNode
-        :type sum: int
-        :rtype: List[List[int]]
-        """
+class Solution:
+    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
         if not root:
             return []
 
         res = []
-        self.helper(root, sum, [], res)
+        self.dfs(root, sum, [], res)
         return res
 
-    def helper(self, root, target, ls, res):
-        if not root.left and not root.right:
-            if root.val == target:
-                ls.append(root.val)
-                res.append(ls)
-        if root.left:
-            self.helper(root.left, target - root.val, ls + [root.val], res)
-        if root.right:
-            self.helper(root.right, target - root.val, ls + [root.val], res)
+    def dfs(self, node, sum, path, res):
+        if not node:
+            return
+        if not node.left and not node.right:
+            if node.val == sum:
+                path.append(node.val)
+                res.append(path)
+                return
+        self.dfs(node.left, sum - node.val, path + [node.val], res)
+        self.dfs(node.right, sum - node.val, path + [node.val], res)
 
 
 class Solution(object):

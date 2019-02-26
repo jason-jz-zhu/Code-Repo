@@ -30,3 +30,21 @@ class Solution(object):
                 stack.append(hashmap[i])
 
         return res
+
+class Solution:
+    def getImportance(self, employees, id):
+        """
+        :type employees: Employee
+        :type id: int
+        :rtype: int
+        """
+        if not employees:
+            return 0
+        graph = {e.id: e for e in employees}
+        return self.dfs(graph, id)
+
+    def dfs(self, graph, id):
+        if not id:
+            return 0
+        sub_importance = sum([self.dfs(graph, sub_id) for sub_id in graph[id].subordinates])
+        return sub_importance + graph[id].importance

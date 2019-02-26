@@ -1,9 +1,20 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
+
+class Solution:
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if not root:
+            return False
+        if not root.left and not root.right:
+            return root.val == sum
+        new_sum = sum - root.val
+        left = self.hasPathSum(root.left, new_sum)
+        right = self.hasPathSum(root.right, new_sum)
+        return left or right
 
 class Solution(object):
     def hasPathSum(self, root, sum):
@@ -26,40 +37,3 @@ class Solution(object):
             if cur.right:
                 q.append((cur.right, s + cur.right.val))
         return False
-
-
-class Solution(object):
-    def hasPathSum(self, root, sum):
-        """
-        :type root: TreeNode
-        :type sum: int
-        :rtype: bool
-        """
-        if not root:
-            return False
-
-        if not root.left and not root.right and root.val == sum:
-            return True
-
-        return self.hasPathSum(root.left, sum - root.val) or self.hasPathSum(root.right, sum - root.val)
-
-
-class Solution:
-    def hasPathSum(self, root, sum):
-        """
-        :type root: TreeNode
-        :type sum: int
-        :rtype: bool
-        """
-        if not root:
-            return False
-        return self.dfs(root, sum)
-
-    def dfs(self, root, sum):
-        if not root:
-            return False
-        if not root.right and not root.left:
-            return sum == root.val
-        left = self.dfs(root.left, sum - root.val)
-        right = self.dfs(root.right, sum - root.val)
-        return left or right
