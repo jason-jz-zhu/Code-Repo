@@ -1,38 +1,34 @@
-class Solution(object):
-    def generateMatrix(self, n):
-        """
-        :type n: int
-        :rtype: List[List[int]]
-        """
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
         if n <= 0:
             return []
 
-        matrix = [[0 for i in xrange(n)] for j in xrange(n)]
-
-        up, left, down, right = 0, 0, n -1, n - 1
-        direct = 0
-        count = 0
+        res =[[0 for _ in range(n)] for _ in range(n)]
+        up, left, down, right = 0, 0, n - 1, n - 1
+        direction = 0
+        cnt = 0
         while True:
-            if direct == 0:
-                for i in xrange(left, right + 1):
-                    count += 1
-                    matrix[up][i] = count
+            if direction == 0:
+                for j in range(left, right + 1):
+                    cnt += 1
+                    res[up][j] = cnt
                 up += 1
-            if direct == 1:
-                for i in xrange(up, down + 1):
-                    count += 1
-                    matrix[i][right] = count
+            if direction == 1:
+                for i in range(up, down + 1):
+                    cnt += 1
+                    res[i][right] = cnt
                 right -= 1
-            if direct == 2:
-                for i in xrange(right, left - 1, -1):
-                    count += 1
-                    matrix[down][i] = count
+            if direction == 2:
+                for j in range(right, left - 1, -1):
+                    cnt += 1
+                    res[down][j] = cnt
                 down -= 1
-            if direct == 3:
-                for i in xrange(down, up - 1, -1):
-                    count += 1
-                    matrix[i][left] = count
+            if direction == 3:
+                for i in range(down, up - 1, -1):
+                    cnt += 1
+                    res[i][left] = cnt
                 left += 1
-            if count == n * n:
-                return matrix
-            direct = (direct + 1) % 4
+            if cnt == n * n:
+                return res
+            direction = (direction + 1) % 4
+        return res

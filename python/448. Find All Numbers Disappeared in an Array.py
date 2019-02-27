@@ -1,29 +1,19 @@
-class Solution(object):
-    def findDisappearedNumbers(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[int]
-        """
-        for i in xrange(len(nums)):
-            index = abs(nums[i]) - 1
-            nums[index] = -abs(nums[index])
-
-        return [i + 1 for i in xrange(len(nums)) if nums[i] > 0]
-
-class Solution(object):
-    def findDisappearedNumbers(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[int]
-        """
-        i = 0
-        while i <= len(nums) - 1:
-            if nums[nums[i] - 1] != nums[i]:
-                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
-            else:
-                i += 1
+class Solution:
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        if not nums or len(nums) == 0:
+            return []
         res = []
-        for i in xrange(len(nums)):
-            if nums[i] != i + 1:
-                res.append(i + 1)
+        m = len(nums)
+        for num in nums:
+            a = abs(num)
+            if a == m:
+                nums[0] = -abs(nums[0])
+            else:
+                nums[a] = -abs(nums[a])
+
+        for i in range(1, m):
+            if nums[i] > 0:
+                res.append(i)
+        if nums[0] > 0:
+            res.append(m)
         return res
