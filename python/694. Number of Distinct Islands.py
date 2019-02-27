@@ -1,19 +1,18 @@
-class Solution(object):
-    def numDistinctIslands(self, grid):
-        """
-        :type grid: List[List[int]]
-        :rtype: int
-        """
-        res = set()
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
+class Solution:
+    def numDistinctIslands(self, grid: List[List[int]]) -> int:
+        if not grid or len(grid) == 0 or len(grid[0]) == 0:
+            return 0
+        shapes = set([])
+        m, n = len(grid), len(grid[0])
+        for i in range(m):
+            for j in range(n):
                 if grid[i][j] == 1:
                     shape = self.bfs(grid, i, j)
-                    res.add(tuple(shape))
-        return len(res)
+                    shapes.add(tuple(shape))
+        return len(shapes)
 
     def bfs(self, grid, i, j):
-        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
+        dx, dy = [1, 0, 0, -1], [0, 1, -1, 0]
         q = collections.deque([(i, j)])
         grid[i][j] = 2
         shape = []

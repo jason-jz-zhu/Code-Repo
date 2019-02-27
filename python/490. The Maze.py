@@ -1,32 +1,25 @@
 class Solution:
-    def hasPath(self, maze, start, destination):
-        """
-        :type maze: List[List[int]]
-        :type start: List[int]
-        :type destination: List[int]
-        :rtype: bool
-        """
-        start, destination = tuple(start), tuple(destination)
-        q = collections.deque([start])
-        visited = set([])
-        while q:
-            curr = q.popleft()
-            if curr in visited:
-                continue
-            if curr == destination:
-                return True
-            visited.add(curr)
-            for neighbor in self.helper(maze, curr):
-                q.append(neighbor)
-        return False
+    def hasPath(self, maze: List[List[int]], start: List[int], destination: List[int]) -> bool:
+        if not maze or len(maze) == 0 or len(maze[0]) == 0:
+            return False
+        visited = set()
+        return self.bfs(maze, start, destination, visited)
 
-    def helper(self, maze, node):
-        res = []
-        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
-        for k in range(4):
-            curr_node = list(node)
-            while curr_node[0] + dx[k] >= 0 and curr_node[0] + dx[k] < len(maze) and curr_node[1] + dy[k] >= 0 and curr_node[1] + dy[k] < len(maze[0]) and not maze[curr_node[0] + dx[k]][curr_node[1] + dy[k]]:
-                curr_node[0] += dx[k]
-                curr_node[1] += dy[k]
-            res.append(tuple(curr_node))
-        return res
+    def bfs(self, maze, start, destination, visited):
+        dx, dy = [0, 1, -1, 0], [1, 0, 0, -1]
+        q = collections.deque([(start[0], start[1])])
+        visited.add(tuple((start[0], start[1])))
+        while q:
+            maze_x, maze_y = q.popleft()
+            if [maze_x, maze_y] == destination:
+                return True
+            for k in range(4):
+                x, y = maze_x + dx[k], maze_y + dy[k]
+                while 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] == 0:
+                    x += dx[k]
+                    y += dy[k]
+
+                if (x - dx[k], y - dy[k]) not in visited:
+                    q.append((x - dx[k], y - dy[k]))
+                    visited.add(tuple((x - dx[k], y - dy[k])))
+        return False

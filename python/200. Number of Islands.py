@@ -1,25 +1,19 @@
-# bfs
-class Solution(object):
-    def numIslands(self, grid):
-        """
-        :type grid: List[List[str]]
-        :rtype: int
-        """
-        if grid is None or len(grid) == 0:
-            return 0
-        if grid[0] is None or len(grid[0]) == 0:
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or len(grid) == 0 or len(grid[0]) == 0:
             return 0
 
         res = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
+        m, n = len(grid), len(grid[0])
+        for i in range(m):
+            for j in range(n):
                 if grid[i][j] == '1':
                     self.bfs(grid, i, j)
                     res += 1
         return res
 
     def bfs(self, grid, i, j):
-        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
+        dx, dy = [1, 0, 0, -1], [0, 1, -1, 0]
         q = collections.deque([(i, j)])
         grid[i][j] = '2'
         while q:
@@ -29,8 +23,8 @@ class Solution(object):
                 if x < 0 or x >= len(grid) or y < 0 or y >= len(grid[0]):
                     continue
                 if grid[x][y] == '1':
-                    grid[x][y] = '2'
                     q.append((x, y))
+                    grid[x][y] = '2'
 
 
 # dfs
@@ -62,4 +56,3 @@ class Solution(object):
                 continue
             if grid[x][y] == '1':
                 self.dfs(grid, x, y)
-                
