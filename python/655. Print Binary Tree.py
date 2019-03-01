@@ -1,38 +1,30 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def printTree(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[List[str]]
-        """
+class Solution:
+    def printTree(self, root: TreeNode) -> List[List[str]]:
         if not root:
-            return []
+            return None
 
-        self.rows = self.get_height(root)
-        self.cols = 2 ** self.rows - 1
-        self.res = [['' for _ in range(self.cols)] for _ in range(self.rows)]
-
-        self.helper(root, 0, 0)
-        return self.res
-
-    def helper(self, node, level, pos):
-        if not node:
-            return
-        left_padding = 2 ** (self.rows - level - 1) - 1
-        spacing = 2 ** (self.rows - level) - 1
-        index = left_padding + pos * (spacing + 1)
-        self.res[level][index] = str(node.val)
-        self.helper(node.left, level + 1, pos << 1)
-        self.helper(node.right, level + 1, (pos << 1) + 1)
+        h = self.get_height(root)
+        w = 2 ** h - 1
+        res = [['' for _ in range(w)] for _ in range(h)]
+        self.dfs(root, 0, 0, w - 1, res)
+        return res
 
     def get_height(self, node):
         if not node:
             return 0
         return 1 + max(self.get_height(node.left), self.get_height(node.right))
-            
+
+    def dfs(self, node, level, left, right, res):
+        if not node:
+            return
+        mid = (left + right) // 2
+        res[level][mid] = str(node.val)
+        self.dfs(node.left, level + 1, left, mid - 1, res)
+        self.dfs(node.right, level + 1, mid + 1, right, res)

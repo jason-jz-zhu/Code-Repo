@@ -6,15 +6,16 @@
 #         self.right = None
 
 # level order
-class Solution(object):
-    def levelOrder(self, root):
-        # write your code here
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
         if not root:
             return []
-        res, q = [], [root]
+
+        res = []
+        q = [root]
         while q:
             res.append([node.val for node in q])
-            q = [ kid for node in q for kid in (node.left, node.right) if kid]
+            q = [child for node in q for child in (node.left, node.right) if child]
         return res
 
 # dfs preorder

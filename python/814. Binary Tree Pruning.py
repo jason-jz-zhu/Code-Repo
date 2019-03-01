@@ -6,18 +6,21 @@
 #         self.right = None
 
 class Solution:
-    def findTilt(self, root: TreeNode) -> int:
+    def pruneTree(self, root: TreeNode) -> TreeNode:
         if not root:
-            return 0
-
-        self.res = 0
+            return None
         self.dfs(root)
-        return self.res
+        return root
 
     def dfs(self, node):
         if not node:
-            return 0
+            return False
         left = self.dfs(node.left)
         right = self.dfs(node.right)
-        self.res += abs(left - right)
-        return node.val + left + right
+        if not left:
+            node.left = None
+        if not right:
+            node.right = None
+        return node.val == 1 or left or right
+
+    

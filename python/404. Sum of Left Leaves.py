@@ -5,6 +5,22 @@
 #         self.left = None
 #         self.right = None
 
+class Solution:
+    def sumOfLeftLeaves(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+
+        return self.dfs(root, False)
+
+    def dfs(self, node, is_left):
+        if not node:
+            return 0
+        if is_left and not node.left and not node.right:
+            return node.val
+        left = self.dfs(node.left, True)
+        right = self.dfs(node.right, False)
+        return left + right
+
 class Solution(object):
     def sumOfLeftLeaves(self, root):
         """

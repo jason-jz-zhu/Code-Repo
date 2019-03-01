@@ -6,7 +6,7 @@
 #         self.right = None
 
 class Solution:
-    def findTilt(self, root: TreeNode) -> int:
+    def distributeCoins(self, root: TreeNode) -> int:
         if not root:
             return 0
 
@@ -19,5 +19,5 @@ class Solution:
             return 0
         left = self.dfs(node.left)
         right = self.dfs(node.right)
-        self.res += abs(left - right)
-        return node.val + left + right
+        self.res += abs(left) + abs(right)
+        return node.val + left + right - 1

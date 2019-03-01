@@ -1,43 +1,38 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def findMode(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
+class Solution:
+    def findMode(self, root: TreeNode) -> List[int]:
         if not root:
             return []
-
         self.res = []
-        self.prev = float('-inf')
         self.cnt = 1
         self.max_cnt = 0
-        self.helper(root)
+        self.prev = float('-inf')
+        self.dfs(root)
         return self.res
 
-    def helper(self, root):
-        if not root:
+    def dfs(self, node):
+        if not node:
             return
 
-        self.helper(root.left)
+        self.dfs(node.left)
 
-        if root.val != self.prev:
-            self.cnt = 1
-            self.prev = root.val
-        else:
+        if node.val == self.prev:
             self.cnt += 1
+        else:
+            self.cnt = 1
+            self.prev = node.val
 
         if self.cnt > self.max_cnt:
             self.max_cnt = self.cnt
             self.res = []
-            self.res.append(root.val)
+            self.res.append(node.val)
         elif self.cnt == self.max_cnt:
-            self.res.append(root.val)
+            self.res.append(node.val)
 
-        self.helper(root.right)
+        self.dfs(node.right)

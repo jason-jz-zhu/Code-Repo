@@ -5,25 +5,21 @@
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def convertBST(self, root):
-        """
-        :type root: TreeNode
-        :rtype: TreeNode
-        """
+class Solution:
+    def convertBST(self, root: TreeNode) -> TreeNode:
         if not root:
             return None
         self.s = 0
-        self.helper(root)
+        self.dfs(root)
         return root
 
-    def helper(self, root):
-        if not root:
+    def dfs(self, node):
+        if not node:
             return
-        self.helper(root.right)
-        root.val += self.s
-        self.s = root.val
-        self.helper(root.left)
+        self.dfs(node.right)
+        node.val += self.s
+        self.s = node.val
+        self.dfs(node.left)
 
 class Solution(object):
     def convertBST(self, root):

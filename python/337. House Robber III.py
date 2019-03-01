@@ -1,51 +1,42 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def rob(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
+class Solution:
+    def rob(self, root: TreeNode) -> int:
         if not root:
             return 0
-        hashmap = {}
-        return self.helper(root, hashmap)
+        cache = collections.defaultdict(int)
+        return self.dfs(root, cache)
 
-    def helper(self, root, hashmap):
+    def dfs(self, node, cache):
+        if not node:
+            return 0
+        if node in cache:
+            return cache[node]
+        s = 0
+        if node.left:
+            s += self.dfs(node.left.left, cache) + self.dfs(node.left.right, cache)
+        if node.right:
+            s += self.dfs(node.right.left, cache) + self.dfs(node.right.right, cache)
+        s = max(node.val + s, self.dfs(node.left, cache) + self.dfs(node.right, cache))
+        cache[node] = s
+        return s
+
+class Solution:
+    def rob(self, root: TreeNode) -> int:
         if not root:
             return 0
-        if root in hashmap:
-            return hashmap[root]
+        return max(self.dfs(root))
 
-        max_val = 0
-        if root.left:
-            max_val += self.helper(root.left.left, hashmap) + self.helper(root.left.right, hashmap)
-        if root.right:
-            max_val += self.helper(root.right.left, hashmap) + self.helper(root.right.right, hashmap)
-
-        max_val = max(max_val + root.val, self.helper(root.left, hashmap) + self.helper(root.right, hashmap))
-        hashmap[root] = max_val
-        return max_val
-
-class Solution(object):
-    def rob(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        if not root:
-            return 0
-
-        return max(self.helper(root))
-
-    def helper(self, root):
-        if not root:
-            return (0, 0)
-        left = self.helper(root.left)
-        right = self.helper(root.right)
-        return (root.val + left[1] + right[1], max(left) + max(right))
+    def dfs(self, node):
+        if not node:
+            return [0, 0]
+        left = self.dfs(node.left)
+        right = self.dfs(node.right)
+        not_include_node_max = max(left) + max(right)
+        include_node_max = node.val + left[0] + right[0]
+        return [not_include_node_max, include_node_max]
