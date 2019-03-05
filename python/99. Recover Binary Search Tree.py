@@ -7,25 +7,27 @@
 
 
 # O(n) space
-class Solution(object):
-    def recoverTree(self, root):
+class Solution:
+    def recoverTree(self, root: TreeNode) -> None:
         """
-        :type root: TreeNode
-        :rtype: void Do not return anything, modify root in-place instead.
+        Do not return anything, modify root in-place instead.
         """
-        def helper(root):
-            if root:
-                helper(root.left)
-                self.nodes.append(root)
-                self.vals.append(root.val)
-                helper(root.right)
+        if not root:
+            return
+        vals = []
+        nodes = []
+        self.dfs(root, vals, nodes)
+        vals.sort()
+        for i, node in enumerate(nodes):
+            node.val = vals[i]
 
-        self.nodes = []
-        self.vals = []
-        helper(root)
-        self.vals.sort()
-        for i in xrange(len(self.nodes)):
-            self.nodes[i].val = self.vals[i]
+    def dfs(self, node, vals, nodes):
+        if not node:
+            return
+        self.dfs(node.left, vals, nodes)
+        vals.append(node.val)
+        nodes.append(node)
+        self.dfs(node.right, vals, nodes)
 
 
 # O(1) space

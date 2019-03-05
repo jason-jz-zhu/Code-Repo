@@ -1,54 +1,46 @@
+class UnionFind:
+    def __init__(self):
+        self.father = {}
+        self.count = 0
+
+    def find(self, node):
+        if node == self.father[node]:
+            return node
+        self.father[node] = self.find(self.father[node])
+        return self.father[node]
+
+    def union(self, a, b):
+        root_a = self.find(a)
+        root_b = self.find(b)
+        if root_a != root_b:
+            self.father[root_a] = root_b
+            self.count -= 1
+
+    def query(self):
+        return self.count
+
+    def set_father(self, x):
+        self.father[x] = x
+        self.count += 1
+
 class Solution:
-    def numDistinctIslands2(self, grid: List[List[int]]) -> int:
-        if not grid or len(grid) == 0 or len(grid[0]) == 0:
-            return 0
+    def numIslands2(self, m: int, n: int, positions: List[List[int]]) -> List[int]:
+        if not positions or len(positions) == 0 or len(positions[0]) == 0:
+            return []
 
-        shapes = set([])
-        m, n = len(grid), len(grid[0])
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == 1:
-                    shape = []
-                    self.dfs(grid, i, j, shape)
-                    normalized_shape = self.normalize_shape(shape)
-                    shapes.add(tuple(normalized_shape))
-        return len(shapes)
-
-    def dfs(self, grid, i, j, shape):
-        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
-        shape.append((i, j))
-        grid[i][j] = 2
-        for k in range(4):
-            x, y = i + dx[k], j + dy[k]
-            if x < 0 or x >= len(grid) or y < 0 or y >= len(grid[0]):
-                continue
-            if grid[x][y] == 1:
-                self.dfs(grid, x, y, shape)
-
-    def normalize_shape(self, shape):
-        rotated_shapes = [[] for _ in range(8)]
-        norm_res = []
-
-        for p in shape:
-            x, y = p
-            rotated_shapes[0].append((x, y))
-            rotated_shapes[1].append((-x, y))
-            rotated_shapes[2].append((x, -y))
-            rotated_shapes[3].append((-x, -y))
-            rotated_shapes[4].append((y, x))
-            rotated_shapes[5].append((-y, x))
-            rotated_shapes[6].append((y, -x))
-            rotated_shapes[7].append((-y, -x))
-
-        for rs in rotated_shapes:
-            rs.sort()
-
-        for rs in rotated_shapes:
-            tmp = [(0, 0)]
-            for i in range(1, len(rs)):
-                tmp.append((rs[i][0]-rs[0][0], rs[i][1]-rs[0][1]))
-            norm_res.append(tmp[:])
-
-        norm_res.sort()
-
-        return norm_res[0]
+        res = []
+        uf = UnionFind()
+        dx, dy = [1, 0, 0, -1], [0, 1, -1, 0]
+        for p in positions:
+            p_x, p_y = p
+            p_index = p_x * n + p_y
+            uf.set_father(p_index)
+            for k in range(4):
+                x, y = p_x + dx[k], p_y + dy[k]
+                index = x * n + y
+                if x < 0 or x >= m or y < 0 or y >= n:
+                    continue
+                if index in uf.father:
+                    uf.union(p_index, index)
+            res.append(uf.query())
+        return res

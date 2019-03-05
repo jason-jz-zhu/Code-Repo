@@ -46,3 +46,32 @@ class Solution(object):
         self.helper(node.left, res)
         res.append(node.val)
         self.helper(node.right, res)
+
+# Morris Traversal
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        if not root:
+            return []
+
+        res = []
+        curr = root
+        prev = None
+        while curr:
+            if not curr.left:
+                res.append(curr.val)
+                prev = curr
+                curr = curr.right
+            else:
+                node = curr.left
+                while node.right and node.right != curr:
+                    node = node.right
+
+                if not node.right:
+                    node.right = curr
+                    curr = curr.left
+                else:
+                    node.right = None
+                    res.append(curr.val)
+                    prev = curr
+                    curr = curr.right
+        return res
