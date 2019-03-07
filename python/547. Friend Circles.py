@@ -46,9 +46,35 @@ class Solution(object):
 
     def bfs(self, M, i, visited):
         q = collections.deque([i])
+        visited[i] = True
         while q:
             t = q.popleft()
-            visited[t] = True
             for j in range(len(M)):
                 if M[t][j] == 1 and not visited[j]:
                     q.append(j)
+                    visited[j] = True
+
+# union find
+class Solution:
+    def findCircleNum(self, M: List[List[int]]) -> int:
+        self.father = [i for i in range(len(M))]
+        self.count = len(M)
+        for i in range(len(M)):
+            for j in range(len(M[0])):
+                if M[i][j] == 1 and i != j:
+                    self.union(i, j)
+
+        return self.count
+
+    def find(self, node):
+        if node == self.father[node]:
+            return node
+        self.father[node] = self.find(self.father[node])
+        return self.father[node]
+
+    def union(self, x, y):
+        root_x = self.find(x)
+        root_y = self.find(y)
+        if root_x != root_y:
+            self.father[root_x] = root_y
+            self.count -= 1
