@@ -20,6 +20,7 @@ class Solution(object):
                 continue
             visited[i] = True
             self.dfs(nums, visited, path + [nums[i]], res)
+
             visited[i] = False
 
 # using iteratively and reduce function

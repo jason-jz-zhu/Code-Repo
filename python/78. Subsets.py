@@ -1,29 +1,25 @@
-# using recursively and dfs to search
-class Solution(object):
-    def subsets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        res = []
-        if nums is None or len(nums) == 0:
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        if not nums or len(nums) == 0:
             return []
+
+        res = []
         self.dfs(nums, 0, [], res)
         return res
 
     def dfs(self, nums, index, path, res):
         res.append(path)
-        for i in xrange(index, len(nums)):
-            self.dfs(nums, i+1, path+[nums[i]], res)
+        for i in range(index, len(nums)):
+            self.dfs(nums, i + 1, path + [nums[i]], res)
 
 # using iteratively
-class Solution(object):
-    def subsets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+
         res = [[]]
-        for num in nums:
-            res += [ [num]+item for item in res]
+        for curr in nums:
+            tmp = [prev + [curr] for prev in res]
+            res += tmp
         return res
+
+            

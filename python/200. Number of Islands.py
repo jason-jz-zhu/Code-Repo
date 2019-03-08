@@ -56,3 +56,34 @@ class Solution(object):
                 continue
             if grid[x][y] == '1':
                 self.dfs(grid, x, y)
+
+
+
+class Solution(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        if grid is None or len(grid) == 0:
+            return 0
+        if grid[0] is None or len(grid[0]) == 0:
+            return 0
+
+        res = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == '1':
+                    self.dfs(grid, i, j)
+                    res += 1
+        print(grid)
+        return res
+
+    def dfs(self, grid, i, j):
+        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] != '1':
+            return
+        dx, dy = [1, 0, 0, -1], [0, -1, 1, 0]
+        grid[i][j] = '#'
+        for k in range(4):
+            x, y = i + dx[k], j + dy[k]
+            self.dfs(grid, x, y)

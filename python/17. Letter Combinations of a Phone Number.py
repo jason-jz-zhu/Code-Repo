@@ -1,13 +1,11 @@
+# dfs
 class Solution:
-    def letterCombinations(self, digits):
-        """
-        :type digits: str
-        :rtype: List[str]
-        """
-        if digits is None or len(digits) == 0:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits or len(digits) == 0:
             return []
-        hashmap = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
+
         res = []
+        hashmap = {0: '', 1: '', 2: 'abc', 3: 'def', 4: 'ghi', 5: 'jkl', 6: 'mno', 7: 'pqrs', 8: 'tuv', 9: 'wxyz'}
         self.dfs(digits, hashmap, 0, '', res)
         return res
 
@@ -19,26 +17,19 @@ class Solution:
             self.dfs(digits, hashmap, index + 1, path + i, res)
 
 
-class Solution(object):
-    def letterCombinations(self, digits):
-        """
-        :type digits: str
-        :rtype: List[str]
-        """
-        if digits is None or len(digits) == 0:
+# bfs
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits or len(digits) == 0:
             return []
 
-        chr = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
-        res = []
-        for i in xrange(0, len(digits)):
-            num = int(digits[i])
-            tmp = []
-            for j in xrange(0, len(chr[num])):
-                if len(res):
-                    for k in xrange(0, len(res)):
-                        tmp.append(res[k] + chr[num][j])
-                else:
-                    tmp.append(chr[num][j])
-            res = copy.copy(tmp)
+        res = ['']
+        hashmap = {0: '', 1: '', 2: 'abc', 3: 'def', 4: 'ghi', 5: 'jkl', 6: 'mno', 7: 'pqrs', 8: 'tuv', 9: 'wxyz'}
 
+        for d in digits:
+            tmp = []
+            for prev in res:
+                for curr in hashmap[int(d)]:
+                    tmp.append(prev + curr)
+            res = tmp
         return res

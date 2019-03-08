@@ -1,34 +1,22 @@
-class Solution(object):
-    def partition(self, s):
-        """
-        :type s: str
-        :rtype: List[List[str]]
-        """
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        if not s or len(s) == 0:
+            return []
+
         res = []
-        if s is None or len(s) == 0:
-            return res
-        partition = []
-        self.dfs(s, 0, partition, res)
+        self.dfs(s, 0, [], res)
         return res
 
-    def dfs(self, s, start_index, partition, res):
-        if start_index == len(s):
-            res.append(partition)
+    def dfs(self, s, start, path, res):
+        if start == len(s):
+            res.append(path)
             return
 
-        for i in xrange(start_index, len(s)):
-            sub_string = s[start_index: i + 1]
-            if not self.is_palindrome(sub_string):
+        for i in range(start, len(s)):
+            substring = s[start: i + 1]
+            if not self.is_pal(substring):
                 continue
-            self.dfs(s, i + 1, partition + [sub_string], res)
+            self.dfs(s, i + 1, path + [substring], res)
 
-    def is_palindrome(self, sub_string):
-        i, j = 0, len(sub_string) - 1
-        while i < j:
-            if (sub_string[i] != sub_string[j]):
-                return False
-            i += 1
-            j -= 1
-        return True
-
-            
+    def is_pal(self, s):
+        return s == s[::-1]
