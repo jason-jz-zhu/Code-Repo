@@ -31,3 +31,17 @@ class Solution:
             a = b
             b = tmp
         return b
+
+class Solution:
+    def fib(self, N: int) -> int:
+        cache = {}
+
+        if N in cache:
+            return cache[N]
+        if N < 2:
+            res = N
+        else:
+            res = self.fib(N - 1) + self.fib(N - 2)
+
+        cache[N] = res
+        return res

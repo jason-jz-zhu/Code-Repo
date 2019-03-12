@@ -1,26 +1,24 @@
 class Solution:
-    # @param s, a string
-    # @return a list of strings
-    def restoreIpAddresses(self, s):
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        if not s or len(s) == 0:
+            return []
         res = []
         self.dfs(s, 0, [], res)
         return res
 
-    def dfs(self, s, index, cur, res):
-        if len(cur) == 4:
-            if index == len(s):
-                res.append('.'.join(cur))
+    def dfs(self, s, start, path, res):
+        if len(path) == 4:
+            if start == len(s):
+                res.append('.'.join(path))
             return
 
-        for i in xrange(index, index + 3):
-            if len(s) > i and self.isValidNum(s[index: i + 1]):
-                self.dfs(s, i + 1, cur + [s[index: i + 1]], res)
+        for i in range(start, start + 3):
+            substring = s[start: i + 1]
+            if not self.is_valid(substring) and len(s) > i:
+                continue
+            self.dfs(s, i + 1, path + [substring], res)
 
-    def isValidNum(self, s):
+    def is_valid(self, s):
         if len(s) == 0 or len(s) > 3:
             return False
-        if s[0] == '0' and len(s) != 1:
-            return False
-        if len(s) == 3 and int(s) > 255:
-            return False
-        return True
+        return int(s) <= 255 if s[0] != '0' else len(s) == 1

@@ -13,28 +13,24 @@ class Solution(object):
         if head is None:
             return None
 
-        pre = None
+        prev = None
         while head:
             tmp = head.next
-            head.next = pre
-            pre = head
+            head.next = prev
+            prev = head
             head = tmp
-        return pre
+        return prev
 
-class Solution(object):
-    def reverseList(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        if head is None:
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        if not head:
             return None
 
-        return self._reverse(head)
+        return self.reverse(head)
 
-    def _reverse(self, head, pre=None):
-        if head is None:
-            return pre
-        tmp = head.next
-        head.next = pre
-        return self._reverse(tmp, head)
+    def reverse(self, node, prev=None):
+        if not node:
+            return prev
+        tmp = node.next
+        node.next = prev
+        return self.reverse(tmp, node)

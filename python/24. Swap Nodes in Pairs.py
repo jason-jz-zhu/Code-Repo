@@ -22,3 +22,20 @@ class Solution:
             p2.next = p1
             curr = p1
         return dummy.next
+
+
+
+
+class Solution:
+    def swapPairs(self, head: 'ListNode') -> 'ListNode':
+        if not head:
+            return None
+        self.helper(head)
+        return head
+
+    def helper(self, curr):
+        if not curr or not curr.next:
+            return
+        curr.val, curr.next.val = curr.next.val, curr.val
+        self.helper(curr.next.next)
+        
