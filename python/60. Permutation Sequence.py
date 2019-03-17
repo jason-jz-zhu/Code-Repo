@@ -1,19 +1,14 @@
-class Solution(object):
-    def getPermutation(self, n, k):
-        """
-        :type n: int
-        :type k: int
-        :rtype: str
-        """
-        fac = [1]
-        for i in range(1, n + 1):
-            fac.append(fac[-1] * i)
-
-        nums = range(1, n + 1)
+class Solution:
+    def getPermutation(self, n: int, k: int) -> str:
         res = []
-        for i in range(n):
-            rank = (k - 1) / fac[n - i - 1]
-            k = (k - 1) % fac[n - i - 1] + 1
+        nums = list(range(1, n + 1))
+        fac = [1] * n
+        for i in range(1, n):
+            fac[i] = fac[i - 1] * i
+        k -= 1
+        for i in range(n, 0, -1):
+            rank = k // fac[i - 1]
+            k = k % fac[i - 1]
             res.append(nums[rank])
             nums.remove(nums[rank])
         return ''.join(str(d) for d in res)
