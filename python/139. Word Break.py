@@ -11,11 +11,13 @@ class Solution:
 
         for i in range(start, len(s)):
             sub_str = s[start: i + 1]
-            if sub_str in wordDict and self.dfs(s, i + 1, memo, wordDict):
+            if sub_str not in wordDict:
+                continue
+            if self.dfs(s, i + 1, memo, wordDict):
                 memo[start] = True
                 return True
         memo[start] = False
-        return Falses
+        return False
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:

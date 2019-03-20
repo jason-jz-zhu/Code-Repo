@@ -33,3 +33,16 @@ class Solution:
                     tmp.append(prev + curr)
             res = tmp
         return res
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits or len(digits) == 0:
+            return []
+
+        res = ['']
+        hashmap = {0: '', 1: '', 2: 'abc', 3: 'def', 4: 'ghi', 5: 'jkl', 6: 'mno', 7: 'pqrs', 8: 'tuv', 9: 'wxyz'}
+
+        for d in digits:
+            tmp = [prev + curr for prev in res for curr in hashmap[int(d)]]
+            res = tmp
+        return res

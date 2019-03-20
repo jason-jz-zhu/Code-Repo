@@ -1,29 +1,26 @@
-class Solution(object):
-    def wordBreak(self, s, wordDict):
-        """
-        :type s: str
-        :type wordDict: List[str]
-        :rtype: List[str]
-        """
-        if s is None or len(s) == 0 or wordDict is None:
-            return None
-        can_break = [True for i in xrange(len(s) + 1)]
-        Solution.res = []
-        partition = []
-        self.dfs(s, wordDict, partition, 0, can_break)
-        return Solution.res
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        res = []
+        can_break = [True] * len(s)
+        self.dfs(s, 0, set(wordDict), [], can_break, res)
+        return res
 
-    def dfs(self, s, wordDict, partition, start_index, can_break):
-        if start_index == len(s):
-            Solution.res.append(' '.join(partition))
+    def dfs(self, s, start, wordDict, path, can_break, res):
+        if start == len(s):
+            res.append(' '.join(path))
             return
-        if not can_break[start_index]:
+
+        if not can_break[start]:
             return
-        for i in xrange(start_index, len(s)):
-            sub_string = s[start_index: i + 1]
-            if sub_string not in wordDict:
+
+        for i in range(start, len(s)):
+            sub_str = s[start: i + 1]
+            if sub_str not in wordDict:
                 continue
-            before_change = len(Solution.res)
-            self.dfs(s, wordDict, partition + [sub_string], i + 1, can_break)
-            if len(Solution.res) == before_change:
+
+            before_change = len(res)
+            self.dfs(s, i + 1, wordDict, path + [sub_str], can_break, res)
+            if len(res) == before_change:
                 can_break[i + 1] = False
+
+        

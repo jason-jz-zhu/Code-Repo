@@ -1,22 +1,20 @@
 # dfs
 class Solution:
     def letterCasePermutation(self, S: str) -> List[str]:
-        if not S or len(S) == 0:
-            return ['']
         res = []
-        self.dfs(list(S), 0, res)
+        self.dfs(S, 0, '', res)
         return res
 
-    def dfs(self, S, index, res):
-        if index == len(S):
-            res.append(''.join(S))
+    def dfs(self, S, i, path, res):
+        if len(path) == len(S):
+            res.append(path)
             return
-
-        self.dfs(S, index + 1, res)
-        if S[index].isalpha():
-            S[index] = chr(ord(S[index]) ^ 32)
-            self.dfs(S, index + 1, res)
-            S[index] = chr(ord(S[index]) ^ 32)
+        # keep curr
+        self.dfs(S, i + 1, path + S[i], res)
+        if not S[i].isalpha():
+            return
+        # change to opposite
+        self.dfs(S, i + 1, path + chr(ord(S[i]) ^ (1 << 5)), res)
 
 
 # bfs

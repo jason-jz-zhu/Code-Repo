@@ -1,17 +1,12 @@
-class Solution(object):
-    def isMatch(self, s, p):
-        """
-        :type s: str
-        :type p: str
-        :rtype: bool
-        """
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
         if not p:
             return not s
-        firstMatch = bool(s) and (s[0] == p[0] or p[0] == '.')
+        first_match = bool(s) and (p[0] == s[0] or p[0] == '.')
         if len(p) > 1 and p[1] == '*':
-            return self.isMatch(s, p[2:]) or (firstMatch and self.isMatch(s[1:], p))
+            return self.isMatch(s, p[2:]) or (first_match and self.isMatch(s[1:], p))
         else:
-            return firstMatch and self.isMatch(s[1:], p[1:])
+            return first_match and self.isMatch(s[1:], p[1:])
 
 class Solution(object):
     def isMatch(self, text, pattern):

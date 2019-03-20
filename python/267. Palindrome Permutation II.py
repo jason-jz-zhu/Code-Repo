@@ -1,31 +1,24 @@
-class Solution(object):
-    def generatePalindromes(self, s):
-        """
-        :type s: str
-        :rtype: List[str]
-        """
-        import collections
-        if s is None or len(s) == 0:
-            return []
+class Solution:
+    def generatePalindromes(self, s: str) -> List[str]:
         counter = collections.Counter(s)
-        mid = ''.join(k for k, v in counter.iteritems() if v % 2)
-        chars = ''.join(k * (v / 2) for k, v in counter.iteritems())
-        return self.helper(mid, chars) if len(mid) < 2 else []
+        mid = ''.join([k for k, v in counter.items() if v % 2])
+        chars = ''.join([k * (v // 2) for k, v in counter.items()])
+        if len(mid) >= 2:
+            return []
 
-    def helper(self, mid, chars):
         res = []
         visited = [False] * len(chars)
-        self.dfs(chars, visited, mid, [], res)
+        self.dfs(chars, mid, visited, '', res)
         return res
 
-    def dfs(self, chars, visited, mid, path, res):
+    def dfs(self, chars, mid, visited, path, res):
         if len(path) == len(chars):
-            half = ''.join(path)
-            res.append(half + mid + half[::-1])
+            tmp = path + mid + path[::-1]
+            res.append(tmp)
             return
         for i in range(len(chars)):
-            if visited[i] or (i != 0 and chars[i] == chars[i - 1] and not visited[i - 1]):
+            if visited[i] or (i != 0 and not visited[i - 1] and chars[i - 1] == chars[i]):
                 continue
             visited[i] = True
-            self.dfs(chars, visited, mid, path + [chars[i]], res)
+            self.dfs(chars, mid, visited, path + chars[i], res)
             visited[i] = False

@@ -1,12 +1,9 @@
 class Solution:
     def splitIntoFibonacci(self, S: str) -> List[int]:
-        if not S or len(S) == 0:
-            return []
-
         res = []
         self.max_int = 2 ** 31 - 1
         self.dfs(S, 0, [], res)
-        return res[0] if res else []
+        return res
 
     def dfs(self, S, start, path, res):
         if start == len(S) and len(path) >= 3:
@@ -14,18 +11,18 @@ class Solution:
             return True
 
         for i in range(start, len(S)):
-            substr = S[start: i + 1]
-            if len(substr) > 1 and substr[0] == '0':
+            sub_str = S[start: i + 1]
+            if len(sub_str) > 1 and sub_str[0] == '0':
                 break
-            num = int(substr)
-            if num > self.max_int:
+            d = int(sub_str)
+            if d > self.max_int:
                 break
             if len(path) >= 2:
-                s = path[-1] + path[-2]
-                if num > s:
+                s = sum(path[-2:])
+                if d > s:
                     break
-                elif num < s:
+                elif d < s:
                     continue
-            if self.dfs(S, i + 1, path + [num], res):
+            if self.dfs(S, i + 1, path + [d], res):
                 return True
         return False

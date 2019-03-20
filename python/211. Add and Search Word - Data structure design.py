@@ -1,7 +1,7 @@
 class TrieNode:
     def __init__(self):
-        self.childs = {}
-        self.isWord = False
+        self.children = collections.defaultdict(TrieNode)
+        self.is_word = False
 
 class WordDictionary:
 
@@ -11,39 +11,34 @@ class WordDictionary:
         """
         self.root = TrieNode()
 
-    def addWord(self, word):
+    def addWord(self, word: str) -> None:
         """
         Adds a word into the data structure.
-        :type word: str
-        :rtype: void
         """
-        curr = self.root
+        node = self.root
         for w in word:
-            if w not in curr.childs:
-                curr.childs[w] = TrieNode()
-            curr = curr.childs[w]
-        curr.isWord = True
+            node = node.children[w]
+        node.is_word = True
 
-    def search(self, word):
+    def search(self, word: str) -> bool:
         """
         Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
-        :type word: str
-        :rtype: bool
         """
-        def dfs(w, curr, i):
-            if i == len(w):
-                return curr.isWord
-            if w[i] == '.':
-                for child in curr.childs.values():
-                    if dfs(w, child, i + 1):
+        def dfs(word, node, i):
+            if i == len(word):
+                return node.is_word
+            if word[i] == '.':
+                for child in node.children.values():
+                    if dfs(word, child, i + 1):
                         return True
-            elif w[i] in curr.childs:
-                if dfs(w, curr.childs[w[i]], i + 1):
+            elif word[i] in node.children:
+                if dfs(word, node.children[word[i]], i + 1):
                     return True
             return False
 
-        curr = self.root
-        return dfs(word, curr, 0)
+        node = self.root
+        return dfs(word, node, 0)
+
 
 
 # Your WordDictionary object will be instantiated and called as such:
