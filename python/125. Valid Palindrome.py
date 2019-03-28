@@ -1,23 +1,13 @@
-class Solution(object):
-    def isPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-        if s is None:
-            return False
-
-        if len(s) == 0:
-            return True
-
-        start, end = 0, len(s) - 1
-        while start < end:
-            while start < end and not s[start].isalpha() and not s[start].isdigit():
-                start += 1
-            while start < end and not s[end].isalpha() and not s[end].isdigit():
-                end -= 1
-            if start < end and s[start].lower() != s[end].lower():
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        left, right = 0, len(s) - 1
+        while left < right:
+            while left < right and not s[left].isalpha() and not s[left].isdigit():
+                left += 1
+            while left < right and not s[right].isalpha() and not s[right].isdigit():
+                right -= 1
+            if left < right and s[left].lower() != s[right].lower():
                 return False
-            start += 1
-            end-= 1
+            left += 1
+            right -= 1
         return True

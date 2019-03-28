@@ -1,25 +1,18 @@
 # log(n)
-class Solution(object):
-    def minSubArrayLen(self, s, nums):
-        """
-        :type s: int
-        :type nums: List[int]
-        :rtype: int
-        """
-        if nums is None or len(nums) == 0:
+class Solution:
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        if not nums or len(nums) == 0:
             return 0
-
-        r_sum = start = end = 0
         res = float('inf')
-        while end < len(nums):
-            if r_sum < s:
-                r_sum += nums[end]
-            end += 1
-            while r_sum >= s:
-                res = min(res, end - start)
-                r_sum -= nums[start]
-                start += 1
-
+        left = right = 0
+        windows_sum = 0
+        while right < len(nums):
+            windows_sum += nums[right]
+            while left <= right and windows_sum >= s:
+                res = min(res, right - left + 1)
+                windows_sum -= nums[left]
+                left += 1
+            right += 1
         return 0 if res == float('inf') else res
 
 #  nlog(n)

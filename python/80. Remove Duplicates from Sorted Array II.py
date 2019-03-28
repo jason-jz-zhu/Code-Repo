@@ -1,18 +1,12 @@
-class Solution(object):
-    def removeDuplicates(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        if nums is None:
-            return 0
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
         if len(nums) < 2:
             return len(nums)
-
-        end = 0
-
-        for i in xrange(len(nums)):
-            if end < 2 or nums[i] != nums[end - 1] or nums[i] != nums[end - 2]:
-                nums[end] = nums[i]
-                end += 1
-        return end
+        left = right = 0
+        while right < len(nums):
+            if right < 2 or nums[left - 2] != nums[right] or nums[left - 1] != nums[right]:
+                nums[left] = nums[right]
+                left += 1
+            right += 1
+        return left
+        

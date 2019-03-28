@@ -1,39 +1,48 @@
-class Solution(object):
-    def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        if s is None or len(s) == 0:
-            return 0
-        hashset = set()
-        start = end = 0
-        res = -1
-        while end < len(s):
-            if s[end] not in hashset:
-                hashset.add(s[end])
-                end += 1
-                res = max(res, end - start)
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        visited = collections.defaultdict(int)
+        left = right = 0
+        res=  0
+        while right < len(s):
+            visited[s[right]] += 1
+            while left <= right and visited[s[right]] > 1:
+                visited[s[left]] -= 1
+                if visited[s[left]] == 0:
+                    del visited[s[left]]
+                left += 1
+            res = max(res, right - left + 1)
+            right += 1
+        return res
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        res = 0
+        right = 0
+        visited = set()
+        for left in range(len(s)):
+            while right < len(s):
+                if s[right] not in visited:
+                    res = max(res, right - left + 1)
+                    visited.add(s[right])
+                    right += 1
+                else:
+                    break
+            visited.remove(s[left])
+        return res
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        left = right = 0
+        res = 0
+        visited = set()
+        while right < len(s):
+            if s[right] not in visited:
+                res = max(res, right - left + 1)
+                visited.add(s[right])
+                right += 1
             else:
-                hashset.remove(s[start])
-                start += 1
-
-        return 0 if res == -1 else res
-
-
-
-
-class Solution(object):
-    def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        left = res = 0
-        hashmap = {}
-        for i in xrange(len(s)):
-            if s[i] in hashmap and left <= hashmap[s[i]]:
-                left = hashmap[s[i]] + 1
-            hashmap[s[i]] = i
-            res = max(res, i - left + 1)
+                visited.remove(s[left])
+                left += 1
         return res

@@ -1,16 +1,10 @@
-class Solution(object):
-    def groupAnagrams(self, strs):
-        """
-        :type strs: List[str]
-        :rtype: List[List[str]]
-        """
-        if strs is None or len(strs) == 0:
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        if not strs or len(strs) == 0:
             return []
 
         hashmap = collections.defaultdict(list)
-
-        for s in strs:
-            key = ''.join(sorted(s))
-            hashmap[key].append(s)
-
-        return hashmap.values()
+        for word in strs:
+            sorted_word = ''.join(sorted(word))
+            hashmap[sorted_word].append(word)
+        return list(hashmap.values())
