@@ -26,4 +26,3 @@ class Solution:
             if up > down or left > right:
                 return res
             direction = (direction + 1) % 4
-        return res

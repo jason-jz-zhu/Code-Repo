@@ -49,8 +49,40 @@ class PeekingIterator:
         """
         return self.cache is not None
 
-# Your PeekingIterator object will be instantiated and called as such:
-# iter = PeekingIterator(Iterator(nums))
-# while iter.hasNext():
-#     val = iter.peek()   # Get the next element but not advance the iterator.
-#     iter.next()         # Should return the same value as [val].
+# work with all types
+class PeekingIterator:
+    def __init__(self, iterator):
+        """
+        Initialize your data structure here.
+        :type iterator: Iterator
+        """
+        self.iter = iterator
+        self.done = False
+        if self.iter.hasNext():
+            self.top = self.iter.next()
+        else:
+            self.done = True
+
+    def peek(self):
+        """
+        Returns the next element in the iteration without advancing the iterator.
+        :rtype: int
+        """
+        return self.top
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        tmp = self.top
+        if self.iter.hasNext():
+            self.top = self.iter.next()
+        else:
+            self.done = True
+        return tmp
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        return not self.done

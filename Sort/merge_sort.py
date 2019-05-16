@@ -23,7 +23,7 @@ def merge(left, right):
         else:
             res.append(right[j])
             j += 1
-    res += left or right
+    res += left[i:] or right[j:]
     return res
 
 print(merge_sort(nums))

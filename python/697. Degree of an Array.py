@@ -1,18 +1,11 @@
-class Solution(object):
-    def findShortestSubArray(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        import collections
-        if nums is None or len(nums) == 0:
+class Solution:
+    def findShortestSubArray(self, nums: List[int]) -> int:
+        if not nums or len(nums) == 0:
             return 0
+        max_degree = 0
+        nums_map = collections.defaultdict(list)
+        for i, num in enumerate(nums):
+            nums_map[num].append(i)
+            max_degree = max(max_degree, len(nums_map[num]))
 
-        counter = collections.Counter(nums)
-        first, last = {}, {}
-        for i, v in enumerate(nums):
-            if v not in first:
-                first[v] = i
-            last[v] = i
-        degree = max(counter.values())
-        return min(last[v] - first[v] + 1 for v in counter if counter[v] == degree)
+        return min(lst[-1] - lst[0] + 1 for num, lst in nums_map.items() if len(lst) == max_degree)
