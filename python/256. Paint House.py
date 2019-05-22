@@ -1,4 +1,19 @@
 class Solution:
+    def minCost(self, costs: List[List[int]]) -> int:
+        if costs is None or len(costs) == 0:
+            return 0
+
+        m = len(costs)
+        dp = [[float('inf') for _ in range(3)] for _ in range(m + 1)]
+        dp[0][0] = dp[0][1] = dp[0][2] = 0
+        for i in range(1, m + 1):
+            for j in range(3):
+                for k in range(3):
+                    if j != k:
+                        dp[i][j] = min(dp[i][j], dp[i - 1][k] + costs[i - 1][j])
+        return min(dp[-1])
+
+class Solution:
     def minCost(self, costs):
         """
         :type costs: List[List[int]]

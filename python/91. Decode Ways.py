@@ -1,22 +1,15 @@
-class Solution(object):
-    def numDecodings(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        if s is None or len(s) == 0 or int(s[0]) == 0:
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        if s is None or len(s) == 0:
             return 0
+        m = len(s)
+        dp = [0 for _ in range(m + 1)]
+        dp[0] = 1
+        for i in range(1, m + 1):
+            if s[i - 1] != '0':
+                dp[i] += dp[i - 1]
 
-        dp = [1, 1]
-        for i in range(2, len(s) + 1):
-            tmp = int(s[i - 2: i])
-            if 10 < tmp <= 26 and int(s[i - 1]) != 0:
-                dp.append(dp[i - 1] + dp[i - 2])
-            elif tmp == 10 or tmp == 20:
-                dp.append(dp[i - 2])
-            elif int(s[i - 1]) != 0:
-                dp.append(dp[i - 1])
-            else:
-                return 0
+            if i >= 2 and (s[i - 2] == '1' or (s[i - 2] == '2' and s[i - 1] <= '6')):
+                dp[i] += dp[i - 2]
+
         return dp[-1]
-        

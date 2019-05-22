@@ -5,10 +5,12 @@ class Solution:
         :type amount: int
         :rtype: int
         """
-        f = [float('inf') for _ in range(amount + 1)]
-        f[0] = 0
+        if coins is None or len(coins) == 0:
+            return -1
+        dp = [float('inf') for _ in range(amount + 1)]
+        dp[0] = 0
         for i in range(1, amount + 1):
-            for j in range(len(coins)):
-                if i >= coins[j]:
-                    f[i] = min(f[i], f[i - coins[j]] + 1)
-        return -1 if f[-1] == float('inf') else f[-1]
+            for coin in coins:
+                if i - coin >= 0 and dp[i - coin] != float('inf'):
+                    dp[i] = min(dp[i], dp[i - coin] + 1)
+        return -1 if dp[-1] == float('inf') else dp[-1]

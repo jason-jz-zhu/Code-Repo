@@ -1,23 +1,31 @@
 class Solution:
-    def uniquePaths(self, m, n):
-        """
-        :type m: int
-        :type n: int
-        :rtype: int
-        """
-        if m < 1 or n < 1:
-            return 0
-        f = [[0 for _ in range(n)] for _ in range(m)]
-        # init
-        f[0][0] = 1
-        for i in range(1, m):
-            f[i][0] = 1
-        for j in range(1, n):
-            f[0][j] = 1
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0 for _ in range(n)] for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    dp[i][j] = 1
+                    continue
+                if i > 0:
+                    dp[i][j] += dp[i - 1][j]
+                if j > 0:
+                    dp[i][j] += dp[i][j - 1]
+        return dp[-1][-1]
 
-        # tf
-        for i in range(1, m):
-            for j in range(1, n):
-                f[i][j] = f[i - 1][j] + f[i][j - 1]
 
-        return f[-1][-1]
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0 for _ in range(n)] for _ in range(2)]
+        now, old = 0, 1
+        for i in range(m):
+            now, old = old, now
+            for j in range(n):
+                if i == 0 and j == 0:
+                    dp[now][0] = 1
+                    continue
+                dp[now][j] = 0
+                if i > 0:
+                    dp[now][j] += dp[old][j]
+                if j > 0:
+                    dp[now][j] += dp[now][j - 1]
+        return dp[now][-1]
