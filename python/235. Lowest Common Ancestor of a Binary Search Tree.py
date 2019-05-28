@@ -13,7 +13,7 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        if not root or not p or not q:
+        if not root or root == p or root == q:
             return None
         while root:
             if p.val < root.val and q.val < root.val:
@@ -23,15 +23,9 @@ class Solution(object):
             else:
                 return root
 
-class Solution(object):
-    def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
-        if not root or not p or not q:
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root or root == p or root == q:
             return root
 
         if p.val < root.val and q.val < root.val:

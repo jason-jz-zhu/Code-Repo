@@ -1,23 +1,13 @@
-# stack
-class Solution(object):
-    def dailyTemperatures(self, temperatures):
-        """
-        :type temperatures: List[int]
-        :rtype: List[int]
-        """
-        if temperatures is None or len(temperatures) == 0:
+class Solution:
+    def dailyTemperatures(self, T: List[int]) -> List[int]:
+        if T is None or len(T) == 0:
             return []
-
-        stack = []
-        size = len(temperatures)
-        res = [0] * size
-        for i in range(size):
-            if not stack:
-                stack.append((temperatures[i], i))
-            else:
-                while stack and stack[-1][0] < temperatures[i]:
-                    idx = stack[-1][1]
-                    res[idx] = i - idx
-                    stack.pop()
-                stack.append((temperatures[i], i))
+        m = len(T)
+        res = [0] * m
+        stack = [0]
+        for i in range(1, m):
+            while stack and T[stack[-1]] < T[i]:
+                idx = stack.pop()
+                res[idx] = i - idx
+            stack.append(i)
         return res
