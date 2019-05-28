@@ -14,36 +14,24 @@ class Solution(object):
 
 
 class Type:
-    def __init__(self, count, word):
-        self.count = count
-        self.word = word
+    def __init__(self, cnt, w):
+        self.cnt = cnt
+        self.w = w
 
     def __lt__(self, other):
-        if self.count == other.count:
-            return self.word > other.word
-        return self.count < other.count
+        if self.cnt == other.cnt:
+            return self.w.lower() > other.w.lower()
+        return self.cnt < other.cnt
 
-    def __eq__(self, other):
-        return self.cnt == other.cnt and self.word == other.word
-
-class Solution(object):
-    def topKFrequent(self, words, k):
-        """
-        :type words: List[str]
-        :type k: int
-        :rtype: List[str]
-        """
-        import collections
-        import heapq
-        hashmap = collections.Counter(words)
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        counter = collections.Counter(words)
         heap = []
-
-        for word, cnt in hashmap.items():
-            heapq.heappush(heap, (Type(cnt, word), word))
+        for w, cnt in counter.items():
+            heapq.heappush(heap, Type(cnt, w))
             if len(heap) > k:
                 heapq.heappop(heap)
-
         res = []
         for _ in range(k):
-            res.append(heapq.heappop(heap)[1])
+            res.append(heapq.heappop(heap).w)
         return res[::-1]
