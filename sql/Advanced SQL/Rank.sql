@@ -1,4 +1,4 @@
--- 1
+-- 1 dense_rank
 /*
 Name	  Sales	Sales_Rank
 Greg	   50	      1
@@ -16,7 +16,7 @@ GROUP BY a1.Name, a1.Sales
 ORDER BY a1.Sales DESC, a1.Name DESC;
 
 
--- 2
+-- 2 rank
 /*
 Name	  Sales	Sales_Rank
 Greg	   50	      1
@@ -34,7 +34,7 @@ GROUP BY a1.Name, a1.Sales
 ORDER BY a1.Sales DESC, a1.Name DESC;
 
 
--- 3
+-- 3 row_number
 /*
 Name	  Sales	Sales_Rank
 Greg	   50	      1
