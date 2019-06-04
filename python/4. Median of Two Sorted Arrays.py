@@ -28,29 +28,27 @@ class Solution:
 
         return (c1 + c2) / 2
 
-
-
-
 class Solution:
-    def findMedianSortedArrays(self, nums1: 'List[int]', nums2: 'List[int]') -> 'float':
-        size = len(nums1) + len(nums2)
-        smaller = self.find_kth(nums1, 0, nums2, 0, (size + 1) // 2)
-        bigger = self.find_kth(nums1, 0, nums2, 0, (size + 2) // 2)
-        return (smaller + bigger) / 2
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        m, n = len(nums1), len(nums2)
+        left_idx, right_idx = (m + n + 1) // 2, (m + n + 2) // 2
+        left_val = self.find_kth(nums1, 0, nums2, 0, left_idx)
+        right_val = self.find_kth(nums1, 0, nums2, 0, right_idx)
+        return (left_val + right_val) / 2
 
-    def find_kth(self, nums1, i, nums2, j, k):
-        if i >= len(nums1):
-            return nums2[j + k - 1]
-        if j >= len(nums2):
-            return nums1[i + k - 1]
+    def find_kth(self, nums1, idx1, nums2, idx2, k):
+        if idx1 >= len(nums1):
+            return nums2[idx2 + k - 1]
+        if idx2 >= len(nums2):
+            return nums1[idx1 + k - 1]
         if k == 1:
-            return min(nums1[i], nums2[j])
-        v1 = nums1[i + k // 2 - 1] if i + k // 2 - 1 < len(nums1) else float('inf')
-        v2 = nums2[j + k // 2 - 1] if j + k // 2 - 1 < len(nums2) else float('inf')
-        if v1 < v2:
-            return self.find_kth(nums1, i + k // 2, nums2, j, k - k // 2)
+            return min(nums1[idx1], nums2[idx2])
+        val1 = idx1 + k // 2 - 1 if idx1 < len(nums1) else float('-inf')
+        val2 = idx2 + k // 2 - 1 if idx2 < len(nums2) else float('-inf')
+        if val1 < val2:
+            return self.find_kth(nums1, idx1 + k // 2, nums2, idx2, k - k // 2)
         else:
-            return self.find_kth(nums1, i, nums2, j + k // 2, k - k // 2)
+            return self.find_kth(nums1, idx1, nums2, idx2 + k // 2, k - k // 2)
 
 
 class Solution:

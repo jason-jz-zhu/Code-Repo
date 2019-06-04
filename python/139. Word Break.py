@@ -21,28 +21,6 @@ class Solution:
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        wordSet = set(wordDict)
-        memo = dict()
-        return self.helper(s, wordSet, memo)
-
-    def helper(self, s: str, wordSet: set, memo: dict) -> bool:
-        if s in memo:
-            return memo[s]
-
-        if s in wordSet:
-            memo[s] = True
-            return True
-
-        for i in range(1, len(s)):
-            remain = s[i:]
-            if remain in wordSet and self.helper(s[0:i], wordSet, memo):
-                memo[s] = True
-                return True
-        memo[s] = False
-        return False
-
-class Solution:
-    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         visited = [False] * len(s)
         q = collections.deque([0])
         while q:
@@ -57,23 +35,18 @@ class Solution:
             visited[start] = True
         return False
 
-class Solution(object):
-    def wordBreak(self, s, wordDict):
-        """
-        :type s: str
-        :type wordDict: List[str]
-        :rtype: bool
-        """
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         if s is None or len(s) == 0:
             return False
         if wordDict is None or len(wordDict) == 0:
             return False
-
-        map = collections.Counter(wordDict)
-        dp = [False for i in xrange(len(s) + 1)]
+        m = len(s)
+        dp = [False for _ in range(m + 1)]
         dp[0] = True
-        for i in xrange(1, len(s) + 1):
-            for j in xrange(i):
-                if dp[j] and s[j: i] in map:
-                    dp[i] = True
-        return dp[len(s)]
+        for j in range(1, m + 1):
+            for i in range(j):
+                if dp[i] and s[i: j] in set(wordDict):
+                    dp[j] = True
+                    break
+        return dp[-1]
