@@ -34,7 +34,8 @@ class Solution:
         for p in positions:
             p_x, p_y = p
             p_index = p_x * n + p_y
-            uf.set_father(p_index)
+            if p_index not in uf.father:
+                uf.set_father(p_index)
             for k in range(4):
                 x, y = p_x + dx[k], p_y + dy[k]
                 index = x * n + y
