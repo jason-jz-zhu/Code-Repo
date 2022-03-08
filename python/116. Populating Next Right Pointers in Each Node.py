@@ -55,3 +55,15 @@ class Solution:
         self.helper(node1.left, node1.right)
         self.helper(node2.left, node2.right)
         self.helper(node1.right, node2.left)
+
+        
+ class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root or not root.left:
+            return root
+        root.left.next = root.right
+        if root.next:
+            root.right.next = root.next.left
+        self.connect(root.left)
+        self.connect(root.right)
+        return root
