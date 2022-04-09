@@ -23,7 +23,18 @@ class Solution:
             curr = p1
         return dummy.next
 
-
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head or not head.next:
+            return head
+        
+        fst = head
+        secd = head.next
+        
+        fst.next = self.swapPairs(secd.next)
+        secd.next = fst
+        
+        return secd
 
 
 class Solution:
