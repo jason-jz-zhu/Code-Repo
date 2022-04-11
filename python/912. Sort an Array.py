@@ -22,3 +22,31 @@ class Solution:
         ans += left[left_idx:]
         ans += right[right_idx:]
         return ans
+
+    
+    
+// quick sort
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        self.qsort(nums, 0, len(nums) - 1)
+        return nums
+    
+    def qsort(self, lst, low, high):
+        if not lst or len(lst) == 1:
+            return lst
+        if low < high:
+            p = self.partition(lst, low, high)
+            self.qsort(lst, low, p - 1)
+            self.qsort(lst, p + 1, high)
+            
+    def partition(self, lst, low, high):
+
+        pivot = lst[high]
+        i = low
+        for j in range(low, high):
+            if lst[j] < pivot:
+                lst[i], lst[j] = lst[j], lst[i]
+                i += 1
+        
+        lst[i], lst[high] = lst[high], lst[i]
+        return i
