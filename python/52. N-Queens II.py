@@ -1,5 +1,40 @@
 class Solution:
     def totalNQueens(self, n: int) -> int:
+        
+        def backtrack(i):
+            nonlocal ans
+            if i == n:
+                ans += 1
+                return
+            
+            for j in range(n):
+                curr_diagonal = i - j
+                curr_anti_diagonal = i + j
+                if (j in cols 
+                    or curr_diagonal in diagonals 
+                    or curr_anti_diagonal in anti_diagonals):
+                    continue
+                
+                cols.add(j)
+                diagonals.add(curr_diagonal)
+                anti_diagonals.add(curr_anti_diagonal)
+                
+                backtrack(i + 1)
+                
+                cols.remove(j)
+                diagonals.remove(curr_diagonal)
+                anti_diagonals.remove(curr_anti_diagonal)
+            
+        cols, diagonals, anti_diagonals = set(), set(), set()
+        ans = 0
+        
+        backtrack(0)
+        
+        return ans
+
+
+class Solution:
+    def totalNQueens(self, n: int) -> int:
         self.cols = [False] * n
         self.diag = [False] * (2 ** n - 1)
         self.anti_diag = [False] * (2 ** n - 1)
