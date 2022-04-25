@@ -3,6 +3,56 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
+        def update(i, j, box_id, num, flag):
+            rows[i][num] = flag
+            cols[j][num] = flag
+            boxes[box_id][num] = flag
+        
+        def is_valid(i, j, box_id, num):
+            return rows[i][num] == 0 and cols[j][num] == 0 and boxes[box_id][num] == 0
+        
+        rows = [collections.defaultdict(int) for _ in range(9)]
+        cols = [collections.defaultdict(int) for _ in range(9)]
+        boxes = [collections.defaultdict(int) for _ in range(9)]
+            
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != '.':
+                    box_id = i // 3 * 3 + j //  3
+                    update(i, j, box_id, int(board[i][j]), 1)
+        
+        def fill(i, j):
+            if i == 9:
+                return True
+
+            next_j = (j + 1) % 9
+            next_i = i if next_j != 0 else i + 1
+            
+            if board[i][j] != '.':
+                return fill(next_i, next_j)
+            else:
+                for d in range(1, 10):
+                    box_id = i // 3 * 3 + j //  3
+                    if is_valid(i, j, box_id, d):
+                        update(i, j, box_id, d, 1)
+                        board[i][j] = str(d)
+                        if fill(next_i, next_j):
+                            return True
+                        
+                        board[i][j] = '.'
+                        update(i, j, box_id, d, 0)
+            return False
+                        
+                        
+        fill(0, 0)
+
+
+
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
         from collections import defaultdict
         self.rows = [defaultdict(int) for _ in range(9)]
         self.cols = [defaultdict(int) for _ in range(9)]
