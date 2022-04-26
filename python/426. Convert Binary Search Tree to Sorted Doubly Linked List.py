@@ -1,38 +1,53 @@
-"""
-# Definition for a Node.
-class Node:
-    def __init__(self, val, left, right):
-        self.val = val
-        self.left = left
-        self.right = right
-"""
 class Solution:
-    def treeToDoublyList(self, root):
-        """
-        :type root: Node
-        :rtype: Node
-        """
+    def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        
+        def helper(node):
+            nonlocal first, last
+            
+            if not node:
+                return
+            helper(node.left)
+            if last:
+                node.left = last
+                last.right = node
+            else:
+                first = node
+            
+            last = node
+            helper(node.right)
+        
+        
         if not root:
             return None
-        head = [None]
-        prev = [None]
-        self.inorder(root, prev, head)
-        prev[0].right = head[0]
-        head[0].left = prev[0]
-        return head[0]
+        first, last = None, None
+        helper(root)
+        last.right = first
+        first.left = last
+        return first
+    
+    
+ class Solution:
+    def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        
+        if root is None:
+            return None
 
-    def inorder(self, node, prev, head):
-        if not node:
-            return
 
-        self.inorder(node.left, prev, head)
-
-        if not head[0]:
-            head[0] = node
-            prev[0] = node
-        else:
-            prev[0].right = node
-            node.left = prev[0]
-            prev[0] = node
-
-        self.inorder(node.right, prev, head)
+        stack = []
+        last, first = None, None
+        while root or stack:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                if last:
+                    root.left = last
+                    last.right = root
+                else:
+                    first = root
+                last = root
+                root = root.right
+        last.right = first
+        first.left = last
+        return first
