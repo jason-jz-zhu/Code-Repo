@@ -35,6 +35,27 @@ class Solution:
         return res
 
 
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        if not heights or len(heights) == 0:
+            return 0
+        
+        def calculateArea(heights, start, end):
+            if start > end:
+                return 0
+            min_index = start
+            for i in range(start, end + 1):
+                if heights[min_index] > heights[i]:
+                    min_index = i
+            
+            return max(
+                heights[min_index] * (end - start + 1),
+                calculateArea(heights, start, min_index - 1),
+                calculateArea(heights, min_index + 1, end)
+            )
+        
+        return calculateArea(heights, 0, len(heights) - 1)    
+    
 # time limit exceeded
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
