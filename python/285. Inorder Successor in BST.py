@@ -80,7 +80,7 @@ class Solution:
         return self.ans
         
     def dfs(self, root, p):
-        if not root:
+        if not root or (self.find and self.ans):
             return 
         self.dfs(root.left, p)
         
