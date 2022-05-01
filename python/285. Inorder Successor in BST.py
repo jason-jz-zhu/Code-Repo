@@ -5,6 +5,29 @@
 #         self.left = None
 #         self.right = None
 
+# o(h) o (1)
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> Optional[TreeNode]:
+        ans = None
+        while root:
+            if root.val <= p.val:
+                root = root.right
+            else:
+                ans = root
+                root = root.left
+        return ans
+
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> Optional[TreeNode]:
+        if not root:
+            return None
+        if root.val <= p.val:
+            return self.inorderSuccessor(root.right, p)
+        else:
+            ans = self.inorderSuccessor(root.left, p)
+            return ans if ans else root
+    
+    
 # binary serach o(h) o (1)
 class Solution(object):
     def inorderSuccessor(self, root, p):
@@ -46,27 +69,25 @@ class Solution(object):
                 root = root.right
         return None
 
-
-class Solution(object):
-    def inorderSuccessor(self, root, p):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :rtype: TreeNode
-        """
+    
+class Solution:
+    def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> Optional[TreeNode]:
         if not root:
             return None
-        res = []
-        self.inorder(root, p, [False], res)
-        return res[0] if len(res) != 0 else None
-
-    def inorder(self, root, p, flag, res):
+        self.ans = None
+        self.find = False
+        self.dfs(root, p)
+        return self.ans
+        
+    def dfs(self, root, p):
         if not root:
-            return
-
-        self.inorder(root.left, p, flag, res)
-        if flag[0]:
-            res.append(root)
-        if p.val == root.val:
-            flag[0] = True
-        self.inorder(root.right, p, flag, res)
+            return 
+        self.dfs(root.left, p)
+        
+        if self.find and not self.ans:
+            self.ans = root
+            return 
+        if root.val == p.val:
+            self.find = True
+        
+        self.dfs(root.right, p)
