@@ -5,6 +5,21 @@
 #         self.left = None
 #         self.right = None
 
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if not nums or len(nums) == 0:
+            return None
+        return self.dfs(nums)
+    
+    def dfs(self, nums):
+        if not nums or len(nums) == 0:
+            return None
+        mid = len(nums) // 2
+        root = TreeNode(nums[mid])
+        root.left = self.dfs(nums[: mid])
+        root.right = self.dfs(nums[mid + 1:])
+        return root
+
 class Solution(object):
     def sortedArrayToBST(self, nums):
         """
