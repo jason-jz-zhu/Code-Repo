@@ -1,6 +1,30 @@
 # dfs
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        
+        def dfs(prev, curr):
+            if visited[curr]:
+                return True
+            
+            visited[curr] = True
+            for neighber in graph[curr]:
+                if prev == neighber:
+                    continue
+                if dfs(curr, neighber):
+                    return True
+            return False
+        
+        graph = defaultdict(list)
+        for start, end in edges:
+            graph[start].append(end)
+            graph[end].append(start)
+        
+        visited = [False for _ in range(n)]
+        has_circle = dfs(-1, 0)
+        return not has_circle and all(visited)
+    
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
         if n == 0:
             return False
         if len(edges) != n - 1:
