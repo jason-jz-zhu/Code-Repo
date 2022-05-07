@@ -52,6 +52,42 @@ class Solution:
         return False
 
 # union find
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        parents = [i for i in range(n)]
+        ranks = [1 for _ in range(n)]
+        cnt = n
+        
+        
+        def find(u):
+            while u != parents[u]:
+                parents[u] = parents[parents[u]]
+                u = parents[u]
+            return u
+        
+        def union(u, v):
+            nonlocal cnt
+            pu, pv = find(u), find(v)
+            if pu == pv:
+                return False
+            if ranks[pu] < ranks[pv]:
+                parents[pu] = pv
+            elif ranks[pu] > ranks[pv]:
+                parents[pv] = pu
+            else:
+                parents[pu] = pv
+                ranks[pu] += 1
+            cnt -= 1
+            return True
+            
+        for start, end in edges:
+            if not union(start, end):
+                return False
+        return cnt == 1
+
+
+
+
 class UnionFind:
     def __init__(self, n):
         self.father = [i for i in range(n)]
