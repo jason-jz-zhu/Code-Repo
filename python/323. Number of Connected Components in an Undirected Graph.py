@@ -64,3 +64,38 @@ class Solution(object):
         for node in graph[i]:
             if not visited[node]:
                 self.dfs(node, graph, visited)
+
+                
+# union find  
+class Solution:
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        parents = [i for i in range(n)]
+        ranks = [1 for _ in range(n)]
+        cnt = n
+        
+        def find(u):
+            while u != parents[u]:
+                parents[u] = parents[parents[u]]
+                u = parents[u]
+            return u
+        
+        def union(u, v):
+            nonlocal cnt
+            pu, pv = find(u), find(v)
+            if pu == pv:
+                return False
+            if ranks[pu] < ranks[pv]:
+                parents[pu] = pv
+            elif ranks[pu] > ranks[pv]:
+                parents[pv] = pu
+            else:
+                parents[pu] = pv
+                ranks[pu] += 1
+            cnt -= 1
+            return True
+        
+        for u, v in edges:
+            union(u, v)
+        return cnt
+        
+        
