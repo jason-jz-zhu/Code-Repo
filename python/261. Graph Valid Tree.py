@@ -84,10 +84,10 @@ class Solution:
         
         
         def find(u):
-            while u != parents[u]:
-                parents[u] = parents[parents[u]]
-                u = parents[u]
-            return u
+            if parents[u] == u:
+                return u
+            parents[u] = find(parents[u])
+            return parents[u]
         
         def union(u, v):
             nonlocal cnt
