@@ -99,7 +99,7 @@ class Solution:
             elif ranks[pu] > ranks[pv]:
                 parents[pv] = pu
             else:
-                parents[pu] = pv
+                parents[pv] = pu
                 ranks[pu] += 1
             cnt -= 1
             return True
