@@ -1,3 +1,42 @@
+# union find
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        whole = set(sum(equations, []))
+        parents = {c: c for c in whole}
+        vals = {c: 1.0 for c in whole}
+        
+        def find(u):
+            if parents[u] == u:
+                return u, vals[u]
+            parents[u], val = find(parents[u])
+            vals[u] *= val
+            return parents[u], vals[u]
+        
+        def union(u, v, val):
+            pu, puval = find(u)
+            pv, pvval = find(v)
+            if pu == pv: return 
+            parents[pu] = parents[pv]
+            vals[pu] = val * pvval / puval
+            
+        for (u, v), val in zip(equations, values):
+            union(u, v, val)
+        
+        ans = []
+        for u, v in queries:
+            if u not in whole or v not in whole:
+                ans.append(-1.0)
+                continue
+            pu, puval = find(u)
+            pv, pvval = find(v)
+            if pu == pv:
+                ans.append(puval/pvval)
+            else:
+                ans.append(-1.0)
+        return ans
+        
+
+
 # dfs
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
