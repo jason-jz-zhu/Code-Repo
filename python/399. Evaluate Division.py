@@ -40,29 +40,34 @@ class Solution:
 # dfs
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        graph = collections.defaultdict(dict)
+        graph = defaultdict(dict)
+        
+        def dfs(start, end, visited):
+            if start not in graph or end not in graph:
+                return -1.0
+            if start == end:
+                return 1.0
+            if start in graph and end in graph[start]:
+                return graph[start][end]
+            visited.add(start)
+            for nxt in graph[start]:
+                if nxt in visited:
+                    continue
+                v = dfs(nxt, end, visited)
+                if v > 0:
+                    return v * graph[start][nxt]
+            return -1.0
+        
         for (x, y), v in zip(equations, values):
             graph[x][y] = v
             graph[y][x] = 1.0 / v
-        res = [self.dfs(x, y, set(), graph) if x in graph and y in graph else -1.0 for x, y in queries]
-        return res
-
-    def dfs(self, start, end, visited, graph):
-
-        if start not in graph:
-            return -1.0
-        if start == end:
-            return 1.0
-        if start in graph and end in graph[start]:
-            return graph[start][end]
-        visited.add(start)
-        for n in graph[start]:
-            if n in visited:
-                continue
-            d = self.dfs(n, end, visited, graph)
-            if d > 0:
-                return d * graph[start][n]
-        return -1.0
+        ans = []
+        for x, y in queries:
+            if x in graph and y in graph:
+                ans.append(dfs(x, y, set()))
+            else:
+                ans.append(-1.0)
+        return ans
 
 # union find
 class UnionFind:
