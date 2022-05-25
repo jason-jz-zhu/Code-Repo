@@ -1,5 +1,19 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        
+        def dfs(curr, path):
+            if curr == len(graph) - 1:
+                ans.append(path)
+                return
+            for nxt in graph[curr]:
+                dfs(nxt, path + [nxt])
+        
+        ans = []
+        dfs(0, [0])
+        return ans
+
+class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
         res = []
         self.dfs(graph, 0, [0], res)
         return res
