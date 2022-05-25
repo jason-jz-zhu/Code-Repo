@@ -80,3 +80,26 @@ class Solution:
         return False
         
         
+#bfs 
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        graph = defaultdict(list)
+        for start, end in edges:
+            graph[start].append(end)
+            graph[end].append(start)
+        visited = set()
+        
+        q = deque([source])
+        while q:
+            node = q.popleft()
+            if node == destination:
+                return True
+            if node in visited:
+                continue
+            visited.add(node)
+            
+            for nxt in graph[node]:
+                q.append(nxt)
+        return False
+        
+        
