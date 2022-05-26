@@ -29,7 +29,7 @@ class Solution:
             return True
         return False
         
-            
+# it is not DAG and have loop, so it need visited      
 # dfs
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
