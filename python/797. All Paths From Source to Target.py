@@ -1,3 +1,5 @@
+# it is DAG, but need to find all path, no need visited, but need backtrack for path
+# dfs
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
         
