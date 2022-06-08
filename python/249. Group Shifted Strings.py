@@ -1,23 +1,10 @@
-class Solution(object):
-    def groupStrings(self, strings):
-        """
-        :type strings: List[str]
-        :rtype: List[List[str]]
-        """
-        if strings is None or len(strings) == 0:
-            return []
-
-        hashmap = collections.defaultdict(list)
-
+class Solution:
+    def groupStrings(self, strings: List[str]) -> List[List[str]]:
+        hashmap = defaultdict(list)
         for s in strings:
-            key = self.hashStr(s)
+            key = ()
+            for i in range(len(s) - 1):
+                tmp = 26 + ord(s[i + 1]) - ord(s[i])
+                key += (tmp % 26,)
             hashmap[key].append(s)
-
-        return hashmap.values()
-
-    def hashStr(self, s):
-        res = ''
-        for i in range(1, len(s)):
-            res += unichr((ord(s[i]) - ord(s[i - 1]) + 26) % 26)
-        return res
-        
+        return list(hashmap.values())
