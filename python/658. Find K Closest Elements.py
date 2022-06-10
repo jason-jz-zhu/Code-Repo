@@ -33,8 +33,8 @@ class Solution(object):
             return arr
         start, end = 0, len(arr) - k
         while start + 1 < end:
-            mid = start + (end - start) / 2
-            if abs(x - arr[mid]) > abs(x - arr[mid + k]):
+            mid = start + (end - start) // 2
+            if x - arr[mid] > arr[mid + k] - x:
                 start = mid
             else:
                 end = mid
