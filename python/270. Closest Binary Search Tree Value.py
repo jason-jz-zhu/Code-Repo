@@ -20,6 +20,27 @@ class Solution(object):
             root = root.left if target < root.val else root.right
         return res
 
+class Solution:
+    def closestValue(self, root: Optional[TreeNode], target: float) -> int:
+        
+        def dfs(node):
+            nonlocal ans
+            if not node:
+                return
+            ans = ans if abs(target - ans) < abs(target - node.val) else node.val
+            if target < node.val:
+                dfs(node.left)
+            else:
+                dfs(node.right)
+        
+        if not root:
+            return -1
+        ans = root.val
+        dfs(root)
+        return ans
+    
+    
+    
 class Solution(object):
     def closestValue(self, root, target):
         """
