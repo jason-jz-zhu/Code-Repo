@@ -1,29 +1,24 @@
 class Solution:
-    def myAtoi(self, str):
-        """
-        :type str: str
-        :rtype: int
-        """
-        if str is None:
+    def myAtoi(self, s: str) -> int:
+        if not s:
             return 0
-        str = str.strip()
-        if len(str) == 0:
+        s = s.strip()
+        if len(s) == 0:
             return 0
-
+        
         res = 0
         sign = 1
         i = 0
-        if str[i] == '+':
+        if s[i] == "+":
             i += 1
-        elif str[i] == '-':
-            i += 1
+        elif s[i] == "-":
             sign = -1
-
-        for j in range(i, len(str)):
-            if not str[j].isdigit():
+            i += 1
+        for j in range(i, len(s)):
+            if not s[j].isdigit():
                 break
-            res = res * 10 + int(str[j])
-            if res > float('inf'):
+            res = res * 10 + int(s[j])
+            if res > float("inf"):
                 break
         res *= sign
         if res >= 2 ** 31:

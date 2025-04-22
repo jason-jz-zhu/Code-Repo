@@ -5,29 +5,30 @@ class Node:
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 """
-# dfs
+
+from typing import Optional
 class Solution:
-    def cloneGraph(self, node: 'Node') -> 'Node':
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+
         if not node:
             return None
+        self.graph = {}
+        self.visit = set()
+        self._helper(node)
+        return self.graph[node]
         
-        def dfs(n):
-            if n in visited:
-                return
-            if n not in graph:
-                graph[n] = Node(n.val)
-            visited.add(n)
-            for nxt in n.neighbors:
-                if nxt not in graph:
-                    graph[nxt] = Node(nxt.val)
-                graph[n].neighbors.append(graph[nxt])
-                dfs(nxt)
-        
-        
-        graph = {}
-        visited = set()
-        dfs(node)
-        return graph[node]
+    def _helper(self, n):
+        if n in self.visit:
+            return
+        if n not in self.graph:
+            self.graph[n] = Node(n.val)
+        self.visit.add(n)
+        for nxt in n.neighbors:
+            if nxt not in self.graph:
+                self.graph[nxt] = Node(nxt.val)
+            self.graph[n].neighbors.append(self.graph[nxt])
+            self._helper(nxt)
+            
 
 # dfs
 class Solution:

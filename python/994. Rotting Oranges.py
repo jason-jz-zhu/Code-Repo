@@ -1,4 +1,35 @@
+from collections import deque
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        q = deque()
+        m, n = len(grid), len(grid[0])
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 2:
+                    q.append((i, j))
+        
+        dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        step = 0
+        while q:
+            step += 1
+            sz = len(q)
+            for _ in range(sz):
+                point = q.popleft()
+                for dir in dirs:
+                    x, y = point[0] + dir[0], point[1] + dir[1]
+                    if 0 <= x < m and 0 <= y < n and grid[x][y] == 1:
+                        grid[x][y] = 2
+                        q.append((x, y))
 
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    return -1
+        return step - 1 if step else 0  
+
+
+
+# ---------2025--------
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         

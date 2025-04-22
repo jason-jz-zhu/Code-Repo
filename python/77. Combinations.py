@@ -1,5 +1,23 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
+        self.res = []
+        track = []
+        self.backtrack(1, n, k, track)
+        return self.res
+
+    def backtrack(self, start, n, k, track):
+        if len(track) == k:
+            self.res.append(track.copy())
+            return
+        for i in range(start, n + 1):
+            track.append(i)
+            self.backtrack(i + 1, n, k, track)
+            track.pop()
+
+# -----------2025----------
+
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
         res = []
         self.dfs(n, k, 1, [], res)
         return res

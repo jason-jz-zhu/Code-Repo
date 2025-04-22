@@ -1,3 +1,18 @@
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        lo, hi = 0, len(numbers) - 1
+
+        while lo < hi:
+            s = numbers[lo] + numbers[hi]
+            if s < target:
+                lo += 1
+            elif s > target:
+                hi -= 1
+            else:
+                return [lo + 1, hi + 1]
+        return []
+
+# -------2025----
 class Solution(object):
     def twoSum(self, numbers, target):
         """

@@ -1,5 +1,38 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
+        window, need = {}, {}
+        for c in t:
+            need[c] = need.get(c, 0) + 1
+
+        left = right = 0
+        valid = 0
+        start = 0
+        lenght = float("inf")
+
+        while right < len(s):
+            c = s[right]
+            right += 1
+            if c in need:
+                window[c] = window.get(c, 0) + 1
+                if window[c] == need[c]:
+                    valid += 1
+            while valid == len(need):
+                if right - left < lenght:
+                    start = left
+                    lenght = right - left
+
+                d = s[left]
+                left += 1
+                if d in need:
+                    if window[d] == need[d]:
+                        valid -= 1
+                    window[d] -= 1
+        
+        return "" if lenght == float("inf") else s[start: start + lenght]
+        
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
         res = ''
         left = right = 0
         s_visited = collections.defaultdict(int)

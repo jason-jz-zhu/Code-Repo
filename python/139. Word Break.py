@@ -1,3 +1,89 @@
+# dp
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        self.wordDict = wordDict
+        self.memo = [-1 for _ in range(len(s))]
+        return self.dp(s, 0)
+
+    def dp(self, s, i):
+        # base case, s[i..] is an empty string
+        if i == len(s):
+            return True
+        if self.memo[i] == 0:
+            return False
+        if self.memo[i] == 1:
+            return True
+        
+        # Traverse all prefixes of s[i..], check which prefixes exist in wordDict
+        for length in range(1, len(s) - i + 1):
+            # s[i..len) exists in wordDict
+            prefix = s[i: i + length]
+            if prefix in self.wordDict:
+                sub_problem = self.dp(s, i + length)
+                if sub_problem is True:
+                    self.memo[i] = 1
+                    return True
+        
+        self.memo[i] = 0
+        # All words have been tried, unable to form the entire s
+        return False
+
+
+
+# add memo
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        self.res = False
+        track = []
+        self.memo = set()
+        self.backtrack(s, wordDict, 0, track)
+        return self.res
+
+    def backtrack(self, s, wordDict, i, track):
+        if self.res:
+            return
+        if i == len(s):
+            self.res = True
+            return
+        suffix = s[i:]
+        if suffix in self.memo:
+            return
+        for word in wordDict:
+            length = len(word)
+            if i + length > len(s) or s[i: i + length] != word:
+                continue
+            track.append(word)
+            self.backtrack(s, wordDict, i + length, track)
+            track.pop()
+        
+        if not self.res:
+            self.memo.add(suffix)
+
+# time limited
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        self.res = False
+        track = []
+        self.backtrack(s, wordDict, 0, track)
+        return self.res
+
+    def backtrack(self, s, wordDict, i, track):
+        if self.res:
+            return
+        if i == len(s):
+            self.res = True
+            return
+
+        for word in wordDict:
+            length = len(word)
+            if i + length > len(s) or s[i: i + length] != word:
+                continue
+            track.append(word)
+            self.backtrack(s, wordDict, i + length, track)
+            track.pop()
+
+# --------2025
+
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
 

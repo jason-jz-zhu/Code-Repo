@@ -1,3 +1,43 @@
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        n = len(nums)
+        res = []
+        for i in range(n - 2):
+            if i > 0 and nums[i] == nums[i - 1]:  # Skip duplicate values
+                continue
+            target = - nums[i]
+            start = i + 1
+            pairs = self.twoSumTarget(nums, start, target)
+            for pair in pairs:
+                pair.append(nums[i])
+                res.append(pair)
+
+        return res
+
+    def twoSumTarget(self, nums, start, target):
+        lo, hi = start, len(nums) - 1
+        res = []
+        while lo < hi:
+            s = nums[lo] + nums[hi]
+            left, right = nums[lo], nums[hi]
+            if s < target:
+                while lo < hi and nums[lo] == left:
+                    lo += 1
+            elif s > target:
+                while lo < hi and nums[hi] == right:
+                    hi -= 1
+            else:
+                res.append([left, right])
+                while lo < hi and nums[lo] == left:
+                    lo += 1
+                while lo < hi and nums[hi] == right:
+                    hi -= 1
+        return res
+
+
+# ------------2025------------
 class Solution(object):
     def threeSum(self, nums):
         """

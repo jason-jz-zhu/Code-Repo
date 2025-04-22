@@ -1,3 +1,43 @@
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        if not height or len(height) < 3:
+            return 0
+        n = len(height)
+        res = 0
+        l_max = [0] * n
+        r_max = [0] * n
+        l_max[0] = height[0]
+        r_max[n - 1] = height[n - 1]
+        for i in range(1, n):
+            l_max[i] = max(height[i], l_max[i - 1])
+        for j in range(n - 2, -1, -1):
+            r_max[j] = max(height[j], r_max[j + 1])
+
+        for i in range(1, n - 1):
+            res += min(l_max[i], r_max[i]) - height[i]
+        
+        return res
+
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        left, right = 0, len(height) - 1
+        l_max, r_max = 0, 0
+        res = 0
+
+        while left < right:
+            l_max = max(l_max, height[left])
+            r_max = max(r_max, height[right])
+
+            if l_max < r_max:
+                res += l_max - height[left]
+                left += 1
+            else:
+                res += r_max - height[right]
+                right -= 1
+        return res
+
+# -----
 
 # montone decreate stack
 class Solution:
@@ -48,24 +88,4 @@ class Solution(object):
 
 
 
-class Solution(object):
-    def trap(self, height):
-        """
-        :type height: List[int]
-        :rtype: int
-        """
-        if height is None or len(height) < 3:
-            return 0
 
-        start, end = 0, len(height) - 1
-        left_most = right_most = res = 0
-        while start < end:
-            if height[start] <= height[end]:
-                left_most = max(left_most, height[start])
-                res += left_most - height[start]
-                start += 1
-            else:
-                right_most = max(right_most, height[end])
-                res += right_most - height[end]
-                end -= 1
-        return res

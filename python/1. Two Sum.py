@@ -1,3 +1,25 @@
+
+
+
+
+# hash
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        if not nums or len(nums) == 0:
+            return []
+        
+        cache = {}
+
+        for i in range(len(nums)):
+            tmp = target - nums[i]
+            if tmp in cache:
+                return [cache[tmp], i]
+            cache[nums[i]] = i
+        return []
+
+
+
+# ---------------2025
 class Solution(object):
     def twoSum(self, nums, target):
         """
