@@ -1,3 +1,32 @@
+# bfs 2025
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        if n == 1:
+            return [0]
+
+        graph = [[] for _ in range(n)]
+        for edge in edges:
+            graph[edge[0]].append(edge[1])
+            graph[edge[1]].append(edge[0])
+
+        q = collections.deque()
+        for i in range(n):
+            if len(graph[i]) == 1:
+                q.append(i)
+
+        nodeCount = n
+        while nodeCount > 2:
+            sz = len(q)
+            nodeCount -= sz
+            for _ in range(sz):
+                cur = q.popleft()
+
+                for neighbor in graph[cur]:
+                    graph[neighbor].remove(cur)
+                    if len(graph[neighbor]) == 1:
+                        q.append(neighbor)
+        return list(q)
+
 # topological
 class Solution(object):
     def findMinHeightTrees(self, n, edges):
